@@ -1,0 +1,6 @@
+@include('inc.head')
+@include('inc.topbar')
+@include('inc.topmenu')
+@yield('content')
+@include('inc.footer')
+@include('inc.enddocument')
