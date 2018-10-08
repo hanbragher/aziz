@@ -11,7 +11,7 @@
                     <li><a href="/"><i class="material-icons">home</i></a></li>
                     <li><a href="/page"><i class="material-icons">explore</i></a></li>
                     <li><a href="/item"><i class="material-icons">place</i></a></li>
-                    <li><a href="mobile.html"><i class="material-icons">wallpaper</i></a></li>
+                    <li><a href="/blog"><i class="material-icons">wallpaper</i></a></li>
                     <li><a href="mobile.html"><i class="material-icons">add</i></a></li>
                     <li><a href="sass.html">Sass</a></li>
                     <li><a href="badges.html">Components</a></li>
