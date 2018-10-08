@@ -5,6 +5,15 @@
     @endsection
 
 @section('content')
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v3.1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 
     <div class="row">
         <div class="col s12">
@@ -16,9 +25,6 @@
     </div>
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
-
-
-
 
     <div class="row center">
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
@@ -35,15 +41,13 @@
 
         <div class="col s12 m12 l8">
             <div class="row">
-
-
                 <div class="row">
                     <div class="col s12">
                         <ul class="tabs">
                             <li class="tab col s3"><a href="#test1">inform</a></li>
                             <li class="tab col s3"><a class="active" href="#test2">nkerner</a></li>
                             <li class="tab col s3"><a href="#test3">qartez</a></li>
-                            <li class="tab col s3"><a href="#test4">Test 4</a></li>
+                            <li class="tab col s3"><a href="#test4">Comments</a></li>
                         </ul>
                     </div>
                     <div id="test1" class="col s12">Test 1</div>
@@ -57,11 +61,10 @@
                     <div id="test3" class="col s12">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11464.644258196766!2d44.88619372202204!3d40.79609652152879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4041aba4d266d437%3A0x293121c72328670b!2z0JzQvtC90LDRgdGC0YvRgNGMINCQ0LPQsNGA0YbQuNC9!5e1!3m2!1sru!2s!4v1539005943475" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
                     </div>
-                    <div id="test4" class="col s12">Test 4</div>
+                    <div id="test4" class="col s12">
+                        <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="10"></div>
+                    </div>
                 </div>
-
-
-
             </div>
         </div>
 
