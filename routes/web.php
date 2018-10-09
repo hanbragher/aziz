@@ -10,12 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('test',['uses'=>'TestController@test']);
 
 Route::get('/', function () {
     return view('index');
 });
 Route::get('/page', function () {
     return view('page');
+});
+
+Route::get('/mypage', function () {
+    return view('profile.my');
 });
 
 Route::get('/item', function () {
@@ -25,6 +30,20 @@ Route::get('/item', function () {
 Route::get('/blog', function () {
     return view('blog.index');
 });
+
+Route::get('/myblog', function () {
+    return view('blog.my');
+});
+
+Route::get('/newpost', function () {
+    return view('blog.create');
+});
+
+Route::get('/messeges', function () {
+    return view('chat.index');
+});
+
+
 
 Auth::routes();
 

@@ -2,10 +2,9 @@
 
 @section('links')
 
-    @endsection
+@endsection
 
 @section('content')
-
     <div class="row">
         <div class="col s12">
             <div class="parallax-container" style="height:300px;">
@@ -17,17 +16,11 @@
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
 
-    <div class="row center">
+    <div class="row">
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2">
-            <div class="collection">
-                <a href="#!" class="collection-item">Agartcin</a>
-                <a href="#!" class="collection-item active">Gosh</a>
-                <a href="#!" class="collection-item">Saint Sargis Chapel</a>
-                <a href="#!" class="collection-item">Aragatsotn</a>
-                <a href="#!" class="collection-item">Kotayk</a>
-            </div>
+            @include('widgets.mysidenav')
         </div>
 
         <div class="col s12 m12 l8">
@@ -53,7 +46,7 @@
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11464.644258196766!2d44.88619372202204!3d40.79609652152879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4041aba4d266d437%3A0x293121c72328670b!2z0JzQvtC90LDRgdGC0YvRgNGMINCQ0LPQsNGA0YbQuNC9!5e1!3m2!1sru!2s!4v1539005943475" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
                     </div>
                     <div id="test4" class="col s12">
-                        comments
+                        <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="10"></div>
                     </div>
                 </div>
             </div>

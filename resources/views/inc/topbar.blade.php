@@ -13,12 +13,11 @@
                     <li><a href="/item"><i class="material-icons">place</i></a></li>
                     <li><a href="/blog"><i class="material-icons">wallpaper</i></a></li>
                     <li><a href="mobile.html"><i class="material-icons">add</i></a></li>
-                    <li><a href="sass.html">Sass</a></li>
-                    <li><a href="badges.html">Components</a></li>
                     <li><a href="#">Log in</a></li>
                     <li><a href="#">Sign in</a></li>
                     <li><a class='dropdown-trigger btn' href='#' data-target='dropdown_lang'><i class="material-icons">language</i></a></li>
-                    <li><a class='dropdown-trigger btn' href='#' data-target='dropdown_profile'><i class="material-icons">account_circle</i></a></li>
+                    <li><a class='btn' href='/mypage'><i class="material-icons">account_circle</i></a></li>
+                    <li><a href="#">Log out</a></li>
                 </ul>
             </div>
             <div class="col s4 m4 l2">
@@ -60,13 +59,4 @@
     <li><a href="#!">Russian</a></li>
     <li><a href="#!">Armenian</a></li>
     <li><a href="#!">BarBar</a></li>
-</ul>
-
-<ul id='dropdown_profile' class='dropdown-content'>
-    <li><a href="#!">one</a></li>
-    <li><a href="#!">two</a></li>
-    <li class="divider" tabindex="-1"></li>
-    <li><a href="#!">three</a></li>
-    <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
 </ul>

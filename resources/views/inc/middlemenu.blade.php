@@ -5,6 +5,7 @@
             </div>
             <div class="col s12 m12 l8 ">
                 <ul>
+                    <li><img class="materialboxed z-depth-3" height="64" src="images/parallax1.jpg"></li>
                     <li><a href="/"><i class="material-icons">home</i></a></li>
                     <li><a href="/page"><i class="material-icons">people</i></a></li>
                     <li><a href="collapsible.html"><i class="material-icons">place</i></a></li>
