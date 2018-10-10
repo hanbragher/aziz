@@ -15,7 +15,8 @@ Route::post('test',['uses'=>'TestController@test']);
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
+
 Route::get('/page', function () {
     return view('page');
 });
@@ -48,7 +49,10 @@ Route::get('/messeges', function () {
     return view('chat.index');
 });
 
-
+Route::get( '/logout', [
+    'as' => 'logout',
+    'uses' => 'HomeController@logout',
+] );
 
 Auth::routes();
 

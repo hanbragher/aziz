@@ -17,7 +17,8 @@
                     <li><a href="#">Sign in</a></li>
                     <li><a class='dropdown-trigger btn' href='#' data-target='dropdown_lang'><i class="material-icons">language</i></a></li>
                     <li><a class='btn' href='/mypage'><i class="material-icons">account_circle</i></a></li>
-                    <li><a href="#">Log out</a></li>
+                    <li><a href="{{ route('logout') }}" >Log out</a></li>
+
                 </ul>
             </div>
             <div class="col s4 m4 l2">
