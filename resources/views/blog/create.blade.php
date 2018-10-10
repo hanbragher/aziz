@@ -8,9 +8,7 @@
 
     <div class="row">
         <div class="col s12">
-            <div class="parallax-container" style="height:300px;">
-                <div class="parallax"><img src="images/parallax2.jpg"></div>
-            </div>
+            @include('widgets.parallax')
             @include('inc.middlemenu')
         </div>
     </div>
@@ -25,20 +23,32 @@
         </div>
 
         <div class="col s12 m12 l8">
-            <form action="/test">
-
+            <form action="/test" method="post">
+                @csrf
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s4">
                         <input id="input_text" type="text" data-length="100" name="title">
                         <label for="input_text">Title</label>
                     </div>
-                    <div class="file-field input-field col s6">
+                </div>
+
+                <div class="row">
+                    <div class="file-field input-field col s5">
                         <div class="btn">
-                            <span>File</span>
+                            <span>Cover image</span>
                             <input type="file">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate"  name="mmm">
+                            <input class="file-path validate"  name="cover" placeholder="choose cover image" >
+                        </div>
+                    </div>
+                    <div class="file-field input-field col s7">
+                        <div class="btn">
+                            <span>Gallery photos</span>
+                            <input type="file" multiple>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate"  name="gallery" placeholder="upload max 10 images into post gallery">
                         </div>
                     </div>
                 </div>

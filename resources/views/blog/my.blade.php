@@ -14,9 +14,7 @@
 
     <div class="row">
         <div class="col s12">
-            <div class="parallax-container" style="height:300px;">
-                <div class="parallax"><img src="images/parallax2.jpg"></div>
-            </div>
+            @include('widgets.parallax')
             @include('inc.middlemenu')
         </div>
     </div>
@@ -36,7 +34,6 @@
                     <div class="col s6 m4 l3">
                         @include('widgets.card')
                     </div>
-
                 @endfor
             </div>
         </div>

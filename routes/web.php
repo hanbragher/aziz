@@ -11,6 +11,7 @@
 |
 */
 Route::get('test',['uses'=>'TestController@test']);
+Route::post('test',['uses'=>'TestController@test']);
 
 Route::get('/', function () {
     return view('index');
@@ -29,6 +30,10 @@ Route::get('/item', function () {
 
 Route::get('/blog', function () {
     return view('blog.index');
+});
+
+Route::get('/editblog', function () {
+    return view('blog.edit');
 });
 
 Route::get('/myblog', function () {
