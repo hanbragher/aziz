@@ -17,8 +17,10 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('text')->nullable();
-            $table->integer("general_image")->unsigned()->default(null);
+
+            $table->integer("general_image")->nullable()->unsigned()->default(null);
             $table->foreign("general_image")->references("id")->on("images");
+
             $table->timestamps();
             $table->softDeletes();
         });

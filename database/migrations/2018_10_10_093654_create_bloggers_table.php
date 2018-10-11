@@ -19,9 +19,11 @@ class CreateBloggersTable extends Migration
             $table->foreign("user_id")->references("id")->on("users");
             $table->string('name')->nullable();
             $table->text('description')->nullable();
-            $table->integer("avatar_id")->unsigned()->default(null);
+
+            $table->integer("avatar_id")->nullable()->unsigned()->default(null);
             $table->foreign("avatar_id")->references("id")->on("images");
-            $table->integer("cover_id")->unsigned()->default(null);
+
+            $table->integer("cover_id")->nullable()->unsigned()->default(null);
             $table->foreign("cover_id")->references("id")->on("images");
         });
     }

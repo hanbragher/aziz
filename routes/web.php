@@ -13,6 +13,20 @@
 Route::get('test',['uses'=>'TestController@test']);
 Route::post('test',['uses'=>'TestController@test']);
 
+
+Route::get("/posts/my/", [
+    "as" => "posts.my",
+    //'middleware' => ['auth'], //todo sarqel policy blogger
+    'uses' => 'Posts\PostController@myPosts'
+
+]);
+
+Route::resource('/posts', 'Posts\PostController');
+
+
+
+
+
 Route::get('/', function () {
     return view('index');
 })->name('index');
@@ -37,9 +51,7 @@ Route::get('/editblog', function () {
     return view('blog.edit');
 });
 
-Route::get('/myblog', function () {
-    return view('blog.my');
-});
+
 
 Route::get('/newpost', function () {
     return view('blog.create');
@@ -47,6 +59,10 @@ Route::get('/newpost', function () {
 
 Route::get('/messeges', function () {
     return view('chat.index');
+});
+
+Route::get('/settings', function () {
+    return view('profile.edit');
 });
 
 Route::get( '/logout', [

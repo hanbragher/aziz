@@ -19,7 +19,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 ">
-            @include('widgets.mysidenav')
+            @include('widgets.mysidenav', ['active'=>'newpost'])
         </div>
 
         <div class="col s12 m12 l8">
@@ -62,9 +62,10 @@
                 </div>
 
 
-                <div class="chips chips-autocomplete" type="text"></div>
+                <div class="chips chips-autocomplete"></div>
 
-                <button class="btn">send</button>
+                <button class="btn" id="button" >Publish<i class="material-icons right">send</i></button>
+
             </form>
 
 
@@ -80,7 +81,18 @@
             $('input#input_text, textarea#textarea2').characterCounter();
         });
 
+
+
         $('.chips-autocomplete').chips({
+            placeholder: 'Enter a tag',
+            secondaryPlaceholder: '+Tag',
+            data: [{
+                tag: 'Apple',
+            }, {
+                tag: 'Microsoft',
+            }, {
+                tag: 'Google',
+            }],
             autocompleteOptions: {
                 data: {
                     @for($i=1; $i<=15; $i++)
@@ -94,6 +106,13 @@
                 minLength: 1
             }
         });
+
+        $('#button').click(function(){
+            var dataString = JSON.stringify(M.Chips.getInstance($('.chips')).chipsData);
+
+        });
+
+
 
 
 

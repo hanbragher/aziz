@@ -21,8 +21,8 @@
 
 <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-        {{--<a href="#"><img class="activator" src="images/card.jpg"></a>--}}
-        <a href="#"><img  src="images/card.jpg"></a>
+        {{--<a href="#"><img class="activator" src="/images/card.jpg"></a>--}}
+        <a href="#"><img  src="/images/card.jpg"></a>
     </div>
     <div class="card-content">
         <span><a href="/editblog"><i class="material-icons">edit</i></a></span>

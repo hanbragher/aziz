@@ -18,13 +18,13 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 ">
-            @include('widgets.mysidenav')
+            @include('widgets.mysidenav', ['active'=>'messeges'])
         </div>
 
         <div class="col s12 m12 l8">
             <ul class="collection">
                 <li class="collection-item avatar">
-                    <img src="images/card.jpg" alt="" class="circle">
+                    <img src="/images/card.jpg" alt="" class="circle">
                     <span class="title">Title</span>
                     <p>First Line <br>
                         Second Line
@@ -32,7 +32,7 @@
                     <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
                 </li>
                 <li class="collection-item avatar">
-                    <img src="images/card.jpg" alt="" class="circle">
+                    <img src="/images/card.jpg" alt="" class="circle">
                     <span class="title">Title</span>
                     <p>First Line <br>
                         Second Line
@@ -40,7 +40,7 @@
                     <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
                 </li>
                 <li class="collection-item avatar">
-                    <img src="images/card.jpg" alt="" class="circle">
+                    <img src="/images/card.jpg" alt="" class="circle">
                     <span class="title">Title</span>
                     <p>First Line <br>
                         Second Line

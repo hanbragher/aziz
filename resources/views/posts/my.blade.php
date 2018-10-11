@@ -25,7 +25,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 ">
-            @include('widgets.mysidenav')
+            @include('widgets.mysidenav', ['active'=>'myposts'])
         </div>
 
         <div class="col s12 m12 l8">

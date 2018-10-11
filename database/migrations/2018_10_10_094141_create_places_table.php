@@ -17,10 +17,15 @@ class CreatePlacesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('text')->nullable();
-            $table->integer("image_id")->unsigned()->default(null);
+
+            $table->string('map')->nullable();
+
+            $table->integer("image_id")->nullable()->unsigned()->default(null);
             $table->foreign("image_id")->references("id")->on("images");
-            $table->integer("city_id")->unsigned()->default(null);
+
+            $table->integer("city_id")->nullable()->unsigned()->default(null);
             $table->foreign("city_id")->references("id")->on("cities");
+
             $table->timestamps();
         });
     }

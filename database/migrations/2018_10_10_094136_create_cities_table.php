@@ -16,7 +16,8 @@ class CreateCitiesTable extends Migration
         Schema::create('cities', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer("region_id")->unsigned()->default(null);
+
+            $table->integer("region_id")->nullable()->unsigned()->default(null);
             $table->foreign("region_id")->references("id")->on("regions");
         });
     }
