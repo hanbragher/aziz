@@ -18,21 +18,25 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 ">
-            @include('widgets.mysidenav', ['active'=>'messeges'])
+            @include('widgets.mysidenav', ['active'=>'mynotes'])
         </div>
 
         <div class="col s12 m12 l8">
-            <ul class="collection">
-                @for($i=1; $i<10; $i++)
-                    @include('inc.chat')
-                @endfor
-            </ul>
+            <form action="#">
+                <div class="input-field">
+                    <input value="Alvin" id="first_name2" type="text" class="validate">
+                    <label class="active" for="first_name2">Note</label>
+                </div>
+                <a class='btn' href="{{route('notes.index')}}" > <i class="material-icons left">chevron_left</i> Back</a>
+                <button class="btn">Update<i class="material-icons right">send</i></button>
+            </form>
         </div>
 
         <div class="col s12 m6 l1">
 
         </div>
     </div>
+
 
 @endsection
 

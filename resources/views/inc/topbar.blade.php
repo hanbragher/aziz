@@ -8,6 +8,7 @@
             <div class="col s4 m4 l8">
                 <a href="#!" class="brand-logo">Logo</a>
                 <ul class="right hide-on-med-and-down">
+                    <li><a href="{{route('profiles.show', 1)}}"><i class="material-icons">account_circle</i></a></li>
                     <li><a href="/"><i class="material-icons">home</i></a></li>
                     <li><a href="/page"><i class="material-icons">explore</i></a></li>
                     <li><a href="/item"><i class="material-icons">place</i></a></li>

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Posts;
+namespace App\Http\Controllers\Notes;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PostController extends Controller
+class NoteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return view('notes.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        //
     }
 
     /**
@@ -57,7 +57,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        dump($id);
+        return view('notes.edit');
     }
 
     /**
@@ -82,10 +82,4 @@ class PostController extends Controller
     {
         //
     }
-
-    public function myPosts($id = null)
-    {
-        return view('posts.my');
-    }
-
 }

@@ -18,21 +18,20 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 ">
-            @include('widgets.mysidenav', ['active'=>'messeges'])
+            @include('widgets.mysidenav', ['active'=>'mynotes'])
         </div>
 
         <div class="col s12 m12 l8">
-            <ul class="collection">
                 @for($i=1; $i<10; $i++)
-                    @include('inc.chat')
+                    @include('inc.note', ['editable'=>true])
                 @endfor
-            </ul>
         </div>
 
         <div class="col s12 m6 l1">
 
         </div>
     </div>
+
 
 @endsection
 

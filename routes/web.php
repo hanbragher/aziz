@@ -23,6 +23,10 @@ Route::get("/posts/my/", [
 
 Route::resource('/posts', 'Posts\PostController');
 
+Route::resource('/notes', 'Notes\NoteController');
+
+Route::resource('/profiles', 'Profiles\ProfileController');
+
 
 
 
@@ -61,9 +65,7 @@ Route::get('/messeges', function () {
     return view('chat.index');
 });
 
-Route::get('/settings', function () {
-    return view('profile.edit');
-});
+
 
 Route::get( '/logout', [
     'as' => 'logout',

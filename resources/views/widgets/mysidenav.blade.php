@@ -3,6 +3,6 @@
     <a href="{{route('posts.my')}}" class="collection-item @if($active == 'myposts') active @endif ">My posts</a>
     <a href="{{route('posts.create')}}" class="collection-item @if($active == 'newpost') active @endif ">New post</a>
     <a href="/messeges" class="collection-item @if($active == 'messeges') active @endif ">Messeges<i class="material-icons right">fiber_new</i></a>
-    <a href="/mycomments" class="collection-item @if($active == 'mycomments') active @endif ">My comments</a>
-    <a href="/settings" class="collection-item @if($active == 'settings') active @endif ">Profile settings</a>
+    <a href="{{route('notes.index')}}" class="collection-item @if($active == 'mynotes') active @endif ">My notes</a>
+    <a href="{{route('profiles.edit', 1)}}" class="collection-item @if($active == 'mysettings') active @endif ">Profile settings</a>
 </div>

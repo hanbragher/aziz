@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Posts;
+namespace App\Http\Controllers\Profiles;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PostController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        //
     }
 
     /**
@@ -46,7 +46,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('profile.show');
     }
 
     /**
@@ -57,7 +57,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        dump($id);
+        return view('profile.edit');
     }
 
     /**
@@ -82,10 +82,4 @@ class PostController extends Controller
     {
         //
     }
-
-    public function myPosts($id = null)
-    {
-        return view('posts.my');
-    }
-
 }

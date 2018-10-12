@@ -37,7 +37,7 @@
                             <li class="tab col s3"><a href="#test1">inform</a></li>
                             <li class="tab col s3"><a class="active" href="#test2">nkerner</a></li>
                             <li class="tab col s3"><a href="#test3">qartez</a></li>
-                            <li class="tab col s3"><a href="#test4">Comments</a></li>
+                            <li class="tab col s3"><a href="#test4">Notes</a></li>
                         </ul>
                     </div>
                     <div id="test1" class="col s12">Test 1</div>

@@ -22,10 +22,12 @@
 <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
         {{--<a href="#"><img class="activator" src="/images/card.jpg"></a>--}}
-        <a href="#"><img  src="/images/card.jpg"></a>
+        <a href="{{route('posts.show', 1)}}"><img  src="/images/card.jpg"></a>
     </div>
     <div class="card-content">
-        <span><a href="/editblog"><i class="material-icons">edit</i></a></span>
+        @if(!empty($editable) and $editable == true)
+        <span><a href="{{route('posts.edit', 1)}}"><i class="material-icons">edit</i></a></span>
+        @endif
         <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
         <a class="chip" href="#">tag</a> <a class="chip" href="#">tag</a>
     </div>

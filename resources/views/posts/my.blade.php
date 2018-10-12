@@ -32,7 +32,7 @@
             <div class="row">
                 @for ($i=1; $i<=10; $i++)
                     <div class="col s6 m4 l3">
-                        @include('widgets.card')
+                        @include('widgets.card', ['editable' => true])
                     </div>
                 @endfor
             </div>
