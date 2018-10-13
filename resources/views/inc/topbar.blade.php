@@ -6,13 +6,13 @@
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             </div>
             <div class="col s4 m4 l8">
-                <a href="#!" class="brand-logo">Logo</a>
+                <a href="/" class="brand-logo">Logo</a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{route('profiles.show', 1)}}"><i class="material-icons">account_circle</i></a></li>
                     <li><a href="/"><i class="material-icons">home</i></a></li>
                     <li><a href="/page"><i class="material-icons">explore</i></a></li>
                     <li><a href="/item"><i class="material-icons">place</i></a></li>
-                    <li><a href="/blog"><i class="material-icons">wallpaper</i></a></li>
+                    <li><a href="{{route('blogs.index')}}"><i class="material-icons">wallpaper</i></a></li>
                     <li><a href="mobile.html"><i class="material-icons">add</i></a></li>
                     <li><a href="#">Log in</a></li>
                     <li><a href="#">Sign in</a></li>

@@ -4,9 +4,42 @@
 
     <div class="row">
         <div class="col s12">
-            <div class="parallax-container">
+
+                <div class="slider">
+                    <ul class="slides">
+                        <li>
+                            <img src="/images/parallax1.jpg"> <!-- random image -->
+                            <div class="caption center-align">
+                                <h3>This is our big Tagline!</h3>
+                                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="https://lorempixel.com/580/250/nature/2"> <!-- random image -->
+                            <div class="caption left-align">
+                                <h3>Left Aligned Caption</h3>
+                                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="https://lorempixel.com/580/250/nature/3"> <!-- random image -->
+                            <div class="caption right-align">
+                                <h3>Right Aligned Caption</h3>
+                                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="https://lorempixel.com/580/250/nature/2"> <!-- random image -->
+                            <div class="caption center-align">
+                                <h3>This is our big Tagline!</h3>
+                                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            {{--<div class="parallax-container">
                 <div class="parallax"><img src="images/parallax1.jpg"></div>
-            </div>
+            </div>--}}
             @include('inc.middlemenu')
         </div>
     </div>
@@ -44,6 +77,14 @@
     <div class="col s12 m6 l2"><p>s12 m6 l3</p></div>
     <div class="col s12 m6 l3"><p>s12 m6 l3</p></div>
 </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.slider').slider({
+                indicators:false
+            });
+        });
+    </script>
 
 @endsection
 

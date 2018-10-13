@@ -23,6 +23,8 @@ Route::get("/posts/my/", [
 
 Route::resource('/posts', 'Posts\PostController');
 
+Route::resource('/blogs', 'Blogs\BlogController');
+
 Route::resource('/notes', 'Notes\NoteController');
 
 Route::resource('/profiles', 'Profiles\ProfileController');
