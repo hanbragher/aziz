@@ -29,6 +29,8 @@ Route::resource('/notes', 'Notes\NoteController');
 
 Route::resource('/profiles', 'Profiles\ProfileController');
 
+Route::resource('/places', 'Places\PlaceController');
+
 
 
 

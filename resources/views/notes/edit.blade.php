@@ -18,7 +18,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 ">
-            @include('widgets.mysidenav', ['active'=>'mynotes'])
+            @include('inc.mysidenav', ['active'=>'mynotes'])
         </div>
 
         <div class="col s12 m12 l8">

@@ -15,21 +15,21 @@
                             </div>
                         </li>
                         <li>
-                            <img src="https://lorempixel.com/580/250/nature/2"> <!-- random image -->
+                            <img src="https://images.pexels.com/photos/220444/pexels-photo-220444.jpeg?cs=srgb&dl=city-man-person-220444.jpg&fm=jpg"> <!-- random image -->
                             <div class="caption left-align">
                                 <h3>Left Aligned Caption</h3>
                                 <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
                             </div>
                         </li>
                         <li>
-                            <img src="https://lorempixel.com/580/250/nature/3"> <!-- random image -->
+                            <img src="https://images.pexels.com/photos/9816/pexels-photo-9816.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"> <!-- random image -->
                             <div class="caption right-align">
                                 <h3>Right Aligned Caption</h3>
                                 <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
                             </div>
                         </li>
                         <li>
-                            <img src="https://lorempixel.com/580/250/nature/2"> <!-- random image -->
+                            <img src="https://images.pexels.com/photos/40066/railway-40066.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"> <!-- random image -->
                             <div class="caption center-align">
                                 <h3>This is our big Tagline!</h3>
                                 <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
@@ -52,7 +52,7 @@
         <div class="row">
             @for ($i=1; $i<=10; $i++)
                 <div class="col s6 m4 l3">
-                    @include('widgets.card')
+                    @include('widgets.card', ['route' => route('posts.show', 1), 'title'=>'index'])
                 </div>
             @endfor
         </div>
@@ -81,7 +81,11 @@
     <script>
         $(document).ready(function(){
             $('.slider').slider({
-                indicators:false
+                indicators:false,
+                height:500,
+                duration:600,
+                interval:3000,
+
             });
         });
     </script>

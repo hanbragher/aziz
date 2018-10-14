@@ -25,14 +25,14 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 ">
-            @include('widgets.mysidenav', ['active'=>'myposts'])
+            @include('inc.mysidenav', ['active'=>'myposts'])
         </div>
 
         <div class="col s12 m12 l8">
             <div class="row">
                 @for ($i=1; $i<=10; $i++)
                     <div class="col s6 m4 l3">
-                        @include('widgets.card', ['editable' => true])
+                        @include('widgets.card', ['editable' => true, 'route'=> route('posts.show', 1)])
                     </div>
                 @endfor
             </div>

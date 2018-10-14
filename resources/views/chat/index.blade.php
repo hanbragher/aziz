@@ -18,7 +18,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 ">
-            @include('widgets.mysidenav', ['active'=>'messeges'])
+            @include('inc.mysidenav', ['active'=>'messeges'])
         </div>
 
         <div class="col s12 m12 l8">
