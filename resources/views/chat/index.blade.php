@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
-        <div class="col s12 m12 l2 ">
+        <div class="col s12 m12 l2 hide-on-med-and-down">
             @include('inc.mysidenav', ['active'=>'messeges'])
         </div>
 

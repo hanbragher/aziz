@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
-        <div class="col s12 m12 l2 ">
+        <div class="col s12 m12 l2 hide-on-med-and-down">
             @include('inc.mysidenav', ['active'=>'newpost'])
         </div>
 
@@ -62,7 +62,10 @@
                 </div>
 
 
-                <div class="chips chips-autocomplete"></div>
+                {{--<div class="chips chips-autocomplete"></div>--}}
+                <div class="chips chips-autocomplete">
+
+                </div>
 
                 <button class="btn" id="button" >Publish<i class="material-icons right">send</i></button>
 
@@ -107,8 +110,8 @@
             }
         });
 
-        $('#button').click(function(){
-            var dataString = JSON.stringify(M.Chips.getInstance($('.chips')).chipsData);
+        $('#chips').click(function(){
+            return JSON.stringify(M.Chips.getInstance($('.chips')).chipsData);
 
         });
 

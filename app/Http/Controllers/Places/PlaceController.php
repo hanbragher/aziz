@@ -16,7 +16,7 @@ class PlaceController extends Controller
     {
         //dump($request->all());
         //exit;
-        return view('places.index');
+        return view('places.index', ['place'=>$request->get('place')]);
 
     }
 

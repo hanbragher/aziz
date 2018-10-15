@@ -22,16 +22,16 @@
     <div class="row">
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
-        <div class="col s12 m12 l2">
-            @include('inc.places_sidenav', ['active'=> !empty($_GET['places']) ? $_GET['places'] : 'all'])
+        <div class="col s12 m12 l2 hide-on-med-and-down">
+            @include('inc.places_sidenav', ['active'=> !empty($_GET['place']) ? $_GET['place'] : 'all'])
         </div>
 
         <div class="col s12 m12 l8">
 
 
-                    @for ($i=1; $i<=10; $i++)
+                    @for ($i=1; $i<=9; $i++)
                         <div class="col s6 m4 l3">
-                            @include('widgets.card', ['i'=>$i, 'route'=>route('places.show', 1), 'title'=>"category".$i])
+                            @include('widgets.card', ['i'=>$i, 'route'=>route('places.show', 1), 'title'=>$place.$i])
                         </div>
                     @endfor
 

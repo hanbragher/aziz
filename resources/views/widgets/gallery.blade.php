@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-        <a href="/images/parallax1.jpg" class="big">
-            <img src="/images/card.jpg" alt="" title="">
+        <a href="https://picsum.photos/1920/10{{$i}}0.jpg" class="big">
+            <img src="https://picsum.photos/{{$i}}00.jpg" alt="" title="">
         </a>
     </div>
     {{--<div class="card-content">
