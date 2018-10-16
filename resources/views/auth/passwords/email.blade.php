@@ -1,47 +1,58 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col s12">
+            @include('widgets.home_slider')
         </div>
     </div>
-</div>
+
+    <div class="row center">
+        <div class="col s2 m3 l4"></div>
+
+        <div class="col s8 m6 l4">
+
+            <div class="row">
+
+                @if (session('status'))
+                    <span class="flow-text red-text">{{ session('status') }}</span>
+                @endif
+
+                @if ($errors->has('email'))
+                    <span class="flow-text red-text">sxal tvyalner</span>
+                @endif
+
+                <form method="POST" action="{{ route('password.email') }}">
+                    @csrf
+
+                    <div class="input-field">
+                        <i class="material-icons prefix">mail</i>
+                        <input value='{{ old('email') }}' id="email_inline" type="email" class="validate" name="email" required>
+                        <label for="email_inline">Email</label>
+                        <span class="helper-text" data-error="wrong" data-success="right">Helper text</span>
+                    </div>
+
+                    <button type="submit" class="btn">
+                        {{ __('Send Password Reset Link') }}
+                    </button>
+                </form>
+
+
+                <p>
+                    <a class="btn" href="{{ route('register') }}">
+                        der grancvac cheq
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="col s2 m3 l4"></div>
+    </div>
+
+    <script src="/js/slider_script.js"></script>
+
+
 @endsection
