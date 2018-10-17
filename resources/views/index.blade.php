@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.home_slider')
-            @include('inc.middlemenu')
+            @auth
+                @include('inc.middlemenu')
+            @endauth
         </div>
     </div>
 

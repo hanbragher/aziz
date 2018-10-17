@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Azizner;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -27,4 +27,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function avatar(){
+        return $this->hasOne("Azizner\Image", "id", "avatar_id");
+    }
+
+    public function cover(){
+        return $this->hasOne("Azizner\Image", "id", "cover_id");
+    }
+
 }

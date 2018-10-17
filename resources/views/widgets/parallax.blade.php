@@ -1,3 +1,3 @@
 <div class="parallax-container" style="height: 300px">
-    <div class="parallax"><img src="/images/parallax1690x300.jpg"></div>
+    <div class="parallax"><img src="{{!empty($cover) ? $cover : '/images/user_cover.png'}}"></div>
 </div>

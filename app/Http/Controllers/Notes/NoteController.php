@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Notes;
+namespace Azizner\Http\Controllers\Notes;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Azizner\Http\Controllers\Controller;
 
 class NoteController extends Controller
 {

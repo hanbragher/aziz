@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Profiles;
+namespace Azizner\Http\Controllers\Profiles;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Azizner\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -47,6 +48,11 @@ class ProfileController extends Controller
     public function show($id)
     {
         return view('profile.show');
+    }
+
+    public function myPage()
+    {
+        return view('profile.my');
     }
 
     /**

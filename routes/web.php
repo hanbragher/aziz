@@ -31,6 +31,12 @@ Route::resource('/profiles', 'Profiles\ProfileController');
 
 Route::resource('/places', 'Places\PlaceController');
 
+Route::get('/mypage', [
+    "as" => "profiles.my",
+    'uses' => 'Profiles\ProfileController@myPage'
+]);
+
+
 
 
 
@@ -43,9 +49,7 @@ Route::get('/page', function () {
     return view('page');
 });
 
-Route::get('/mypage', function () {
-    return view('profile.my');
-});
+
 
 Route::get('/item', function () {
     return view('item');

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Places;
+namespace Azizner\Http\Controllers\Places;
 
+use Azizner\Group;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Azizner\Http\Controllers\Controller;
 
 class PlaceController extends Controller
 {
@@ -16,6 +17,7 @@ class PlaceController extends Controller
     {
         //dump($request->all());
         //exit;
+
         return view('places.index', ['place'=>$request->get('place')]);
 
     }

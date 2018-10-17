@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Blogs;
+namespace Azizner\Http\Controllers\Blogs;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Azizner\Http\Controllers\Controller;
 
 class BlogController extends Controller
 {

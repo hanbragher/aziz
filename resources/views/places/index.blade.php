@@ -11,9 +11,9 @@
 
     <div class="row">
         <div class="col s12">
-            @include('widgets.parallax')
+            @include('widgets.parallax', ['cover'=>'/images/places_cover.jpg'])
 
-            @include('inc.middlemenu')
+            @include('inc.middlemenu', ['avatar'=> 'hide', 'header'=>!empty($place) ? $place : 'all'])
         </div>
     </div>
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
@@ -23,7 +23,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.places_sidenav', ['active'=> !empty($_GET['place']) ? $_GET['place'] : 'all'])
+            @include('inc.places_sidenav', ['active'=> !empty($place) ? $place : 'all'])
         </div>
 
         <div class="col s12 m12 l8">
