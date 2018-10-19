@@ -2,8 +2,13 @@
 
 namespace Azizner\Http\Controllers\Posts;
 
+use Azizner\Image;
+use Azizner\Post;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
+use Azizner\Tag;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -24,7 +29,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all()->pluck('name');
+        return view('posts.create', ['tags'=>$tags]);
     }
 
     /**
@@ -35,7 +41,51 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        dump($request->file('gallery'));
+        dump($request->all());
+        dump(!empty($obj = json_decode($request->get('tags'))));
+
+
+        $post = $user->blog->posts()->save( new Post([
+            "title"=>$request->get('title'),
+            "text"=>$request->get('text'),
+        ]));
+
+        if(!empty($obj = json_decode($request->get('tags')))){
+            $tags = null;
+            foreach ($obj as $item)
+            {
+                $tag = Tag::firstOrCreate(['name'=>$item->tag]);
+                $tags[] = $tag->id;
+            }
+            $post->tags()->attach($tags);
+        }
+
+        if($request->hasFile('main_image')){
+            $file = $request->file('main_image');
+            $extension = $request->main_image->extension();
+            $main_image_path = $file->move('images/post/'.$post->id, 'main_image.'.$extension)->getPathname();
+            $main_image = Image::create([
+                'file'=>'/'.$main_image_path
+            ]);
+            $post->update(['main_image'=>$main_image->id]);
+        }
+
+        if($request->hasFile('gallery')){
+            $image_ids = null;
+            foreach ($request->file('gallery') as $id => $file){
+                $extension = $file->extension();
+                $gallery_image_path = $file->move('images/post/'.$post->id, 'image'.$id.'.'.$extension)->getPathname();
+                $image = Image::create([
+                    'file'=>'/'.$gallery_image_path
+                ]);
+                $image_ids[] = $image->id;
+            }
+            $post->images()->attach($image_ids);
+        }
+
+        exit;
     }
 
     /**
@@ -57,7 +107,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        dump($id);
+        $post = Post::find($id);
+        $tags = Tag::all()->pluck('name');
+        return view('posts.edit', ['post'=>$post, 'tags'=>$tags]);
     }
 
     /**
@@ -85,6 +137,7 @@ class PostController extends Controller
 
     public function myPosts($id = null)
     {
+
         return view('posts.my');
     }
 

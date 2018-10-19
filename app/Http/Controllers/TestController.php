@@ -2,13 +2,16 @@
 
 namespace Azizner\Http\Controllers;
 
+use Azizner\User;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
     public function test(Request $request){
-        dump($request->all());
-        dump($request->json()->all());
+        $user = User::find(1);
+        dump($user->blog->posts->first()->images);
+        dump($user->blog->posts);
+        dump($user->blog->posts);
 
     }
 

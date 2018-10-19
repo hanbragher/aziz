@@ -23,11 +23,11 @@
         </div>
 
         <div class="col s12 m12 l8">
-            <form action="/test" method="post">
+            <form action="{{route('posts.store')}}" method="post" id="form" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="input-field col s4">
-                        <input id="input_text" type="text" data-length="100" name="title">
+                        <input id="input_text" type="text" data-length="100" name="title" required>
                         <label for="input_text">Title</label>
                     </div>
                 </div>
@@ -35,17 +35,17 @@
                 <div class="row">
                     <div class="file-field input-field col s5">
                         <div class="btn">
-                            <span>Cover image</span>
-                            <input type="file">
+                            <span>Main image</span>
+                            <input type="file" name="main_image">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate"  name="cover" placeholder="choose cover image" >
+                            <input class="file-path validate" placeholder="choose main image" >
                         </div>
                     </div>
                     <div class="file-field input-field col s7">
                         <div class="btn">
                             <span>Gallery photos</span>
-                            <input type="file" multiple>
+                            <input type="file" name="gallery[]" multiple>
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate"  name="gallery" placeholder="upload max 10 images into post gallery">
@@ -56,28 +56,25 @@
 
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="textarea1" class="materialize-textarea" name="text"></textarea>
+                        <textarea id="textarea1" class="materialize-textarea" name="text" required></textarea>
                         <label for="textarea1">Textarea</label>
                     </div>
                 </div>
 
-
-                {{--<div class="chips chips-autocomplete"></div>--}}
                 <div class="chips chips-autocomplete">
-
                 </div>
 
-                <button class="btn" id="button" >Publish<i class="material-icons right">send</i></button>
+                <button class="btn" >Publish<i class="material-icons right">send</i></button>
 
             </form>
 
 
 
         </div>
-
         <div class="col s12 m6 l1">
 
         </div>
+
     </div>
     <script>
         $(document).ready(function() {
@@ -98,21 +95,19 @@
             }],
             autocompleteOptions: {
                 data: {
-                    @for($i=1; $i<=15; $i++)
-                    'Apple{{$i}}': null,
-                    @endfor
-                    'Apple': null,
-                    'Microsoft': null,
-                    'Google': null
+                    @foreach($tags as $tag)
+                    '{{$tag}}': null,
+                    @endforeach
                 },
                 limit: Infinity,
                 minLength: 1
             }
         });
 
-        $('#chips').click(function(){
-            return JSON.stringify(M.Chips.getInstance($('.chips')).chipsData);
-
+        $('#form').submit(function(e){
+            var data = JSON.stringify(M.Chips.getInstance($('.chips')).chipsData);
+            $(this).append('<input type="hidden" name="tags" value='+data+'>');
+            return true;
         });
 
 

@@ -19,7 +19,7 @@
         <div class="row">
             @for ($i=1; $i<=10; $i++)
                 <div class="col s6 m4 l3">
-                    @include('widgets.card', ['route' => route('posts.show', 1), 'title'=>'index'])
+                    @include('widgets.test_card', ['route' => route('posts.show', 1), 'title'=>'index'])
                 </div>
             @endfor
         </div>

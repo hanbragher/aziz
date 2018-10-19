@@ -15,6 +15,7 @@ class GroupSeeder extends Seeder
         "monastery",
         "church",
         "garden",
+        "museum",
         "shop",
         "eat"
     ];

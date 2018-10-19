@@ -30,9 +30,24 @@
 
         <div class="col s12 m12 l8">
             <div class="row">
+                @foreach($user->blog->posts as $post)
+                    <div class="col s6 m4 l3">
+                        @include('widgets.card', [
+                         'editable' => true,
+                         'route'=> route('posts.show', $post->id),
+                         'mainImage'=> $post->image,
+                         'id' => $post->id,
+                         'title' => $post->title,
+                         'tags' => $post->tags,
+                         'text' => $post->text
+                         ])
+                    </div>
+
+                @endforeach
+
                 @for ($i=1; $i<=10; $i++)
                     <div class="col s6 m4 l3">
-                        @include('widgets.card', ['editable' => true, 'route'=> route('posts.show', 1), 'title'=> 'mypost'.$i])
+                        @include('widgets.test_card', ['editable' => true, 'route'=> route('posts.show', 1), 'title'=> 'mypost'.$i])
                     </div>
                 @endfor
             </div>

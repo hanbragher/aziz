@@ -36,4 +36,12 @@ class User extends Authenticatable
         return $this->hasOne("Azizner\Image", "id", "cover_id");
     }
 
+    public function blog(){
+        return $this->belongsTo("Azizner\Blogger", "id", "user_id");
+    }
+
+
+
+
+
 }
