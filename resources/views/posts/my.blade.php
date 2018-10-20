@@ -18,6 +18,9 @@
             @include('inc.middlemenu', ['avatar'=>'/images/parallax1.jpg', 'header'=>'My posts'])
         </div>
     </div>
+
+    @include('inc.notifications')
+
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
 

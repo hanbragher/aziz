@@ -8,7 +8,7 @@ class Post extends Model
 {
     protected $table  = 'posts';
     public $appends = ['image'];
-    protected $fillable = ['blogger_id', 'title','text','main_image'];
+    protected $fillable = ['blogger_id', 'title','text','main_image', 'updated_at'];
 
     public function tags(){
         return $this->belongsToMany("Azizner\Tag", "post_tag");
@@ -20,6 +20,10 @@ class Post extends Model
 
     public function main_img(){
         return $this->belongsTo("Azizner\Image", "main_image", "id");
+    }
+
+    public function blogger(){
+        return $this->belongsTo("Azizner\Blogger", "blogger_id", "id");
     }
 
     public function getImageAttribute()

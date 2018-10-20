@@ -2,6 +2,8 @@
 
 namespace Azizner\Providers;
 
+use Azizner\Policies\PostPolicy;
+use Azizner\Post;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -13,7 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'Azizner\Model' => 'Azizner\Policies\ModelPolicy',
+        //'Azizner\Model' => 'Azizner\Policies\ModelPolicy',
+        Post::class =>PostPolicy::class,
     ];
 
     /**

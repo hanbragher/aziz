@@ -12,4 +12,8 @@ class Blogger extends Model
     public function posts(){
         return $this->hasMany("Azizner\Post", "blogger_id", "id");
     }
+
+    public function user(){
+        return $this->belongsTo("Azizner\User", "user_id", "id");
+    }
 }

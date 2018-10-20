@@ -18,6 +18,9 @@
             @include('inc.middlemenu', ['avatar'=>'/images/parallax1.jpg', 'header'=>'My posts'])
         </div>
     </div>
+
+    @include('inc.notifications')
+
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
 
@@ -34,20 +37,26 @@
 
 
                 <!-- Modal Structure -->
-                <div id="modal1" class="modal">
-                    <div class="modal-content">
-                        <h4>Modal Header</h4>
-                        <p>A bunch of text</p>
-                        <input id="image_id" name="image_id" value="">
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-                    </div>
+                <div id="image_delete" class="modal">
+                    <form action="{{route('posts.update', $post->id)}}" method="post" id="form" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
+                        <div class="modal-content">
+                            <h4>Delete confirmation</h4>
+                            <p>Do you want to remove image from post?</p>
+                            <input id="image_id" name="image_id" value="" type="hidden">
+                            <input id="post_id" name="post_id" value="" type="hidden">
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <button class="btn red">Delete</button>
+                        </div>
+                    </form>
                 </div>
 
 
 
-                <form action="{{route('posts.update', 9)}}" method="post" id="form" enctype="multipart/form-data">
+                <form action="{{route('posts.update', $post->id)}}" method="post" id="form" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="row">
@@ -73,7 +82,7 @@
                                 <input type="file" name="gallery[]" multiple>
                             </div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate"  name="gallery" placeholder="upload max 10 images into post gallery">
+                                <input class="file-path validate"  name="gallery" placeholder="can upload max 10 images into post gallery">
                             </div>
                         </div>
                     </div>
@@ -81,12 +90,14 @@
                     @if($post->images->first())
                         <div class="row">
                             @foreach($post->images as $image)
-                                <div class="col col s4 m3 l2">
-                                    <div class="card">
+                                <div class="col col s6 m3 l2">
+                                    <div class="card small">
                                         <div class="card-image">
-                                            <img height="150" src="{{$image->file}}">
-
-                                                <a data-id='{{$image->id}}' href="#modal1" class="modal-open btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">delete_forever</i></a>
+                                            <img class="materialboxed"  src="{{$image->file}}">
+                                        </div>
+                                        <div class="card-action">
+                                            <p><a class="teal-text" href="{{$image->file}}" download><i class="material-icons">file_download</i></a></p>
+                                            <a data-imageid='{{$image->id}}' data-postid='{{$post->id}}' href="#delete_image" class="modal-open btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">delete_forever</i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +118,7 @@
                     <div class="chips chips-autocomplete">
                     </div>
 
-                    <button class="btn" >Publish<i class="material-icons right">send</i></button>
+                    <button class="btn" >Update<i class="material-icons right">send</i></button>
 
                 </form>
 
@@ -125,7 +136,8 @@
             var instance = M.Modal.init(elems[0]);
             $("a.modal-open").click(function () {
 
-                $("input#image_id").val($(this).data("id"));
+                $("input#image_id").val($(this).data("imageid"));
+                $("input#post_id").val($(this).data("postid"));
                 instance.open()
             })
         });

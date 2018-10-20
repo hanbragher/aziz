@@ -11,7 +11,7 @@ class Image extends Model
     protected $fillable = ['file'];
 
 
-    public function posts(){
-        return $this->belongsToMany("azizner\Post", "post_image");
-    }
+   public function posts(){
+        return $this->belongsToMany("Azizner\Post", "post_image");
+   }
 }
