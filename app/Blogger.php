@@ -8,6 +8,7 @@ class Blogger extends Model
 {
     protected $table  = 'bloggers';
     public $timestamps = false;
+    protected $fillable = ['user_id', 'name', 'description', 'avatar_id', 'cover_id'];
 
     public function posts(){
         return $this->hasMany("Azizner\Post", "blogger_id", "id");

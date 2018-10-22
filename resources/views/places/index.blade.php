@@ -31,7 +31,7 @@
 
                     @for ($i=1; $i<=9; $i++)
                         <div class="col s6 m4 l3">
-                            @include('widgets.card', ['i'=>$i, 'route'=>route('places.show', 1), 'title'=>$place.$i])
+                            @include('widgets.test_card', ['i'=>$i, 'route'=>route('places.show', 1), 'title'=>$place.$i])
                         </div>
                     @endfor
 

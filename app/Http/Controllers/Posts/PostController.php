@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 use Azizner\Tag;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
@@ -33,7 +34,6 @@ class PostController extends Controller
     {
         $user = Auth::user();
 
-        dump($user->b);exit;
 
         if(!$user->is_blogger){
             return redirect()->back()->withErrors('No permission, you should be blogger for a create new post');
@@ -56,10 +56,6 @@ class PostController extends Controller
             return redirect()->back()->withErrors('No permission, you should be blogger for a create new post');
         }
 
-        dump($request->file('gallery'));
-        dump($request->all());
-        dump(!empty($obj = json_decode($request->get('tags'))));
-
 
         $post = $user->blog->posts()->save( new Post([
             "title"=>$request->get('title'),
@@ -79,7 +75,7 @@ class PostController extends Controller
         if($request->hasFile('main_image')){
             $file = $request->file('main_image');
             $extension = $request->main_image->extension();
-            $main_image_path = $file->move('images/post/'.$post->id, md5_file($file).'.'.$extension)->getPathname();
+            $main_image_path = $file->move('blogs/'.$user->blog->id.'/'.$post->id, md5($file).Carbon::now()->timestamp.'.'.$extension)->getPathname();
             $main_image = Image::create([
                 'file'=>'/'.$main_image_path
             ]);
@@ -90,7 +86,7 @@ class PostController extends Controller
             $image_ids = null;
             foreach ($request->file('gallery') as $file){
                 $extension = $file->extension();
-                $gallery_image_path = $file->move('images/post/'.$post->id, md5_file($file).'.'.$extension)->getPathname();
+                $gallery_image_path = $file->move('blogs/'.$user->blog->id.'/'.$post->id, md5($file).Carbon::now()->timestamp.'.'.$extension)->getPathname();
                 $image = Image::create([
                     'file'=>'/'.$gallery_image_path
                 ]);
@@ -98,8 +94,8 @@ class PostController extends Controller
             }
             $post->images()->attach($image_ids);
         }
+        return redirect()->route('posts.my')->with('message' , 'The post successfully created!');
 
-        exit;
     }
 
     /**
@@ -154,6 +150,8 @@ class PostController extends Controller
                 return redirect()->back()->withErrors('khkh');
             };
             $post->images()->detach($request->get('image_id'));
+            unlink(public_path($image->file));
+            $image->delete();
             $post->update(['updated_at'=>Carbon::now()]);
             return redirect()->back()->with('message' , 'Picture has been deleted!');
         }
@@ -177,7 +175,7 @@ class PostController extends Controller
         if($request->hasFile('main_image')){
             $file = $request->file('main_image');
             $extension = $request->main_image->extension();
-            $main_image_path = $file->move('images/post/'.$post->id, md5_file($file).'.'.$extension)->getPathname();
+            $main_image_path = $file->move('blogs/'.$user->blog->id.'/'.$post->id, md5($file).Carbon::now()->timestamp.'.'.$extension)->getPathname();
             $main_image = Image::create([
                 'file'=>'/'.$main_image_path
             ]);
@@ -188,7 +186,7 @@ class PostController extends Controller
             $image_ids = null;
             foreach ($request->file('gallery') as $file){
                 $extension = $file->extension();
-                $gallery_image_path = $file->move('images/post/'.$post->id, md5_file($file).'.'.$extension)->getPathname();
+                $gallery_image_path = $file->move('blogs/'.$user->blog->id.'/'.$post->id, md5($file).Carbon::now()->timestamp.'.'.$extension)->getPathname();
                 $image = Image::create([
                     'file'=>'/'.$gallery_image_path
                 ]);
@@ -209,7 +207,65 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        $post = Post::find($id);
+
+        if($user->cannot("destroy", $post)){
+            return redirect()->back()->withErrors('khkh');
+        }
+
+        $post->tags()->detach();
+        $post->images()->detach();
+
+        if($main_image_id = $post->main_image){
+            $main_image = Image::find($main_image_id);
+            if(is_file(public_path($main_image->file))){
+                unlink(public_path($main_image->file));
+            }
+        }
+
+        if(is_dir(public_path('blogs/'.$user->blog->id.'/'.$post->id))){
+            File::deleteDirectory(public_path('blogs/'.$user->blog->id.'/'.$post->id));
+        }
+
+        $post->delete();
+
+        if(!empty($main_image)){
+            $main_image->delete();
+        }
+
+        return redirect()->back()->with('message' , 'The post successfully deleted!');
+
+
+
+        /*if($post->tags()->first()){
+            $post->tags()->detach();
+        }
+
+        if($main_image_id = $post->main_image){
+            unlink(public_path($main_image = Image::find($main_image_id)->file));
+            $main_image->delete();
+        }
+
+        if($post->images()->first()){
+            foreach ($post->images as $image){
+                $post->images()->detach($image->id);
+                unlink(public_path($image->file));
+                $image->delete();
+            }
+        }*/
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     public function myPosts($id = null)

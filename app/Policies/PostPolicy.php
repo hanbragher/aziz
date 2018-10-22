@@ -29,6 +29,15 @@ class PostPolicy
         return false;
     }
 
+    public function destroy(User $user, Post $post)
+    {
+        if($user->blog->id === $post->blogger->id and $user->is_blogger)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public function edit(User $user, Post $post)
     {
         if($user->blog->id === $post->blogger->id and $user->is_blogger)

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotePicturesTable extends Migration
+class CreatePhotosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateNotePicturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('note_pictures', function (Blueprint $table) {
+        Schema::create('photos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("note_id")->unsigned()->default(null);
-            $table->foreign("note_id")->references("id")->on("notes");
             $table->integer("image_id")->unsigned()->default(null);
             $table->foreign("image_id")->references("id")->on("images");
+            $table->string("title",255);
+            $table->timestamps();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateNotePicturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('note_pictures');
+        Schema::dropIfExists('photos');
     }
 }

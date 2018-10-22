@@ -38,7 +38,7 @@
 
                 <!-- Modal Structure -->
                 <div id="image_delete" class="modal">
-                    <form action="{{route('posts.update', $post->id)}}" method="post" id="form" enctype="multipart/form-data">
+                    <form action="{{route('posts.update', $post->id)}}" method="post" id="form1" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
                         <div class="modal-content">
@@ -131,6 +131,7 @@
         </div>
     </div>
     <script>
+
         $(document).ready(function(){
             var elems = document.getElementsByClassName('modal');;
             var instance = M.Modal.init(elems[0]);
@@ -141,8 +142,8 @@
                 instance.open()
             })
         });
-    </script>
-    <script>
+
+
 
         $(document).ready(function() {
             $('input#input_text, textarea#textarea2').characterCounter();

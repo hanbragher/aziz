@@ -3,6 +3,7 @@
 namespace Azizner\Http\Controllers;
 
 use Azizner\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -11,7 +12,9 @@ class TestController extends Controller
         $user = User::find(1);
         dump($user->blog->posts->first()->images);
         dump($user->blog->posts);
-        dump($user->blog->posts);
+        dump(Carbon::now());
+        dump(Carbon::now()->timestamp);
+
 
     }
 

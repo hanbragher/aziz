@@ -9,9 +9,12 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>'/images/parallax1690x300.jpg'])
-            @include('inc.middlemenu', ['avatar'=>'/images/parallax1.jpg', 'header'=>'New post'])
+            @include('inc.middlemenu', ['avatar'=>$user->avatar?$user->avatar:'none', 'header'=>'New post'])
         </div>
     </div>
+
+    @include('inc.notifications')
+
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
 

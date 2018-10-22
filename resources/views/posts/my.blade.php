@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>'/images/parallax1690x300.jpg'])
-            @include('inc.middlemenu', ['avatar'=>'/images/parallax1.jpg', 'header'=>'My posts'])
+            @include('inc.middlemenu', ['avatar'=>$user->avatar?$user->avatar:'none', 'header'=>'My posts'])
         </div>
     </div>
 
@@ -60,6 +60,7 @@
 
         </div>
     </div>
+
 
 
 @endsection

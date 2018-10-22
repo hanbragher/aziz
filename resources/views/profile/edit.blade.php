@@ -3,10 +3,13 @@
 @section('content')
     <div class="row">
         <div class="col s12">
-            @include('widgets.parallax', ['cover'=>'/images/parallax1690x300.jpg'])
-            @include('inc.middlemenu', ['avatar'=>'/images/parallax1.jpg', 'header'=>'Profile settings'])
+            @include('widgets.parallax', ['cover'=>$user->cover])
+            @include('inc.middlemenu', ['avatar'=>$user->avatar?$user->avatar:'none', 'header'=>'Profile settings'])
         </div>
     </div>
+
+    @include('inc.notifications')
+
     <div class="col s12 m4 l1 hide-on-med-and-down">
 
     </div>
@@ -20,15 +23,16 @@
 
         <div class="col s12 m12 l8">
 
-            <form action="/test" method="post">
+            <form action="{{route('profiles.update', $user->id)}}"  method="post" enctype="multipart/form-data">
+                @method('PUT')
                 @csrf
                 <div class="row">
                     <div class="input-field col s4">
-                        <input id="input_text" type="text" data-length="100" name="first_name">
+                        <input id="input_text" type="text" data-length="100" name="first_name" value="{{$user->first_name}}">
                         <label for="input_text">First Name</label>
                     </div>
                     <div class="input-field col s4">
-                        <input id="input_text" type="text" data-length="100" name="last_name">
+                        <input id="input_text" type="text" data-length="100" name="last_name" value="{{$user->last_name}}">
                         <label for="input_text">Last Name</label>
                     </div>
                 </div>
@@ -37,42 +41,50 @@
                     <div class="file-field input-field col s6 m6 l4">
                         <div class="btn">
                             <span>Avatar</span>
-                            <input type="file">
+                            <input type="file" name="avatar">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate"  name="avatar" placeholder="your avatar" >
+                            <input class="file-path validate"  placeholder="your avatar" >
                         </div>
                     </div>
                     <div class="file-field input-field col s6 m6 l4">
                         <div class="btn">
                             <span>Cover image</span>
-                            <input type="file">
+                            <input type="file" name="cover">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate"  name="cover" placeholder="your cover image" >
+                            <input class="file-path validate"   placeholder="your cover image" >
                         </div>
                     </div>
                 </div>
 
+                @if($user->is_blogger)
                 <div class="row">
                     <div class="input-field col s6 m6 l4">
-                        <input value="Alvin" id="input_text" type="text" data-length="100" name="blog_name">
+                        <input value="{{$user->blog->name}}" id="input_text" type="text" data-length="100" name="blog_name">
                         <label for="input_text">Blog Name</label>
                     </div>
                     <div class="file-field input-field col s6 m6 l4">
                         <div class="btn">
                             <span>Blog Cover image</span>
-                            <input type="file">
+                            <input type="file" name="blog_cover">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate"  name="cover" placeholder="blog cover image" >
+                            <input class="file-path validate"   placeholder="blog cover image" >
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="input-field col s12 m12 l8">
+                        <textarea id="textarea1" class="materialize-textarea" name="description" required>{{$user->blog->description}}</textarea>
+                        <label for="textarea1">Blog description</label>
+                    </div>
+                </div>
+                @endif
 
                 <div class="row">
                     <label>
-                        <input id="indeterminate-checkbox" type="checkbox" name="check" checked="checked"/>
+                        <input id="indeterminate-checkbox" type="checkbox" name="is_blogger" {{$user->is_blogger? 'checked=""' : ''}}/>
                         <span>I'm a blogger</span>
                     </label>
                 </div>

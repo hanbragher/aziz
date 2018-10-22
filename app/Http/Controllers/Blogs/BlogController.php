@@ -82,4 +82,5 @@ class BlogController extends Controller
     {
         //
     }
+
 }

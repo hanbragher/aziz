@@ -1,6 +1,6 @@
 <div class="collection ">
     <a href="/mypage" class="collection-item @if($active == 'mypage') active @endif ">My page</a>
-    @if($user->blog->posts->first())
+    @if(!empty($user->blog) and $user->blog->posts->first())
         <a href="{{route('posts.my')}}" class="collection-item @if($active == 'myposts') active @endif ">My posts</a>
     @endif
     @if($user->is_blogger)
