@@ -13,6 +13,7 @@
         </form>
 
         @endif
+
         <span class="card-title  grey-text text-darken-4 truncate">{{$title}}</span>
             <i class="material-icons right card-title activator">more_vert</i>
         @if(!empty($tags))
@@ -22,6 +23,7 @@
         @endif
 
     </div>
+
     <div class="card-reveal">
         <i class="material-icons right card-title">close</i>
         <span class="card-title grey-text text-darken-4">{{$title}}</span>

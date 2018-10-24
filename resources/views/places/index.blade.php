@@ -13,7 +13,7 @@
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>'/images/places_cover.jpg'])
 
-            @include('inc.middlemenu', ['avatar'=> 'hide', 'header'=>!empty($place) ? $place : 'all'])
+            @include('inc.middlemenu', ['avatar' => 'hide', 'header'=>!empty($place) ? $place : 'all'])
         </div>
     </div>
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>

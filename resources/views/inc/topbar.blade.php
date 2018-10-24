@@ -8,9 +8,10 @@
             <div class="col s4 m4 l8">
                 <a href="/" class="brand-logo">Logo</a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{route('profiles.show', 1)}}"><i class="material-icons">account_circle</i></a></li>
-                    <li><a href="{{route('places.index', ['places'=>'all'])}}"><i class="material-icons">explore</i></a></li>
-                    <li><a href="{{route('blogs.index')}}"><i class="material-icons">wallpaper</i></a></li>
+                    <li><a href="{{route('places.index', ['places'=>'all'])}}">Go Explore</a></li>
+                    <li><a href="#">See Photos</a></li>
+                    <li><a href="{{route('posts.index')}}">Read posts</a></li>
+                    <li><a href="{{route('posts.index')}}">Advert</a></li>
                     @auth
                         <li><a class='btn' href='/mypage'><i class="material-icons">account_circle</i></a></li>
                     @else

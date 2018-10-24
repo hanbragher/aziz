@@ -11,9 +11,9 @@
 
     <div class="row">
         <div class="col s12">
-            @include('widgets.parallax')
+            @include('widgets.parallax', ['cover'=>'/images/places_cover.jpg'])
 
-            @include('inc.middlemenu')
+            @include('inc.middlemenu', ['avatar'=> 'hide', 'header'=>!empty($place) ? $place : 'all'])
         </div>
     </div>
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
@@ -31,9 +31,9 @@
             <div class="row">
                 <div class="col s12">
                     <ul class="tabs">
-                        <li class="tab col s3"><a href="#test1">inform</a></li>
-                        <li class="tab col s3"><a class="active" href="#test2">nkerner</a></li>
-                        <li class="tab col s3"><a href="#test3">qartez</a></li>
+                        <li class="tab col s3"><a href="#test1">Inf</a></li>
+                        <li class="tab col s3"><a class="active" href="#test2">Pictures</a></li>
+                        <li class="tab col s3"><a href="#test3">Map</a></li>
                         <li class="tab col s3"><a href="#test4">Notes</a></li>
                     </ul>
                 </div>
@@ -41,7 +41,7 @@
                 <div id="test2" class="col s12">
                     @for ($i=1; $i<=9; $i++)
                         <div class="gallery col s6 m4 l3">
-                            @include('widgets.gallery', ['i'=>$i])
+                            @include('widgets.test_gallery', ['i'=>$i])
                         </div>
                     @endfor
                 </div>

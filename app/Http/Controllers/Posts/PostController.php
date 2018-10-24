@@ -22,7 +22,8 @@ class PostController extends Controller
      */
     public function index()
     {
-
+        $posts = Post::orderBy('created_at', 'desc')->paginate(2);
+        return view('posts.index', ['posts'=>$posts]);
     }
 
     /**
@@ -106,7 +107,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        return view('posts.show', ['post'=>$post]);
     }
 
     /**
@@ -169,7 +171,7 @@ class PostController extends Controller
                 $tag = Tag::firstOrCreate(['name'=>$item->tag]);
                 $tags[] = $tag->id;
             }
-            $post->tags()->attach($tags);
+            $post->tags()->sync($tags);
         }
 
         if($request->hasFile('main_image')){
