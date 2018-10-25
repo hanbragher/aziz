@@ -25,20 +25,22 @@
                     align="left"
                     vspace="5" hspace="5">{{$post->text}}</p>
 
+
             <div class="divider"></div>
 
-            @for ($i=1; $i<=9; $i++)
+            @foreach($post->images as $image)
                 <div class="gallery col s4 m3 l2">
-                    @include('widgets.test_gallery', ['i'=>$i])
+                    @include('widgets.test_gallery', ['image'=>$image])
                 </div>
-            @endfor
+            @endforeach
 
         </div>
 
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
 
-    <div class="row center">
+    <div class="row">
+        <a href="{{URL::previous()}}">Back</a>
         {{--{{$post->links()}}--}}
     </div>
 
@@ -46,6 +48,7 @@
 
     <script>
         $('.gallery a ').simpleLightbox();
+
     </script>
 
 @endsection

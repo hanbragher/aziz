@@ -15,7 +15,7 @@
                     @auth
                         <li><a class='btn' href='/mypage'><i class="material-icons">account_circle</i></a></li>
                     @else
-                        <li><a href="{{route('login')}}">Log in</a></li>
+                        <li><a href="{{route('login')}}" class="white black-text">Log in</a></li>
                         <li><a href="{{route('register')}}">Sign up</a></li>
                     @endauth
                     <li><a class='dropdown-trigger btn' href='#' data-target='dropdown_lang'><i class="material-icons">language</i></a></li>
