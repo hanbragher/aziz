@@ -25,3 +25,5 @@
 
     </div>
 </nav>
+
+{{--//todo nayel avatari zoomy--}}
