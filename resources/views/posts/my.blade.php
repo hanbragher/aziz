@@ -38,7 +38,7 @@
                         @include('widgets.card', [
                          'editable' => true,
                          'route'=> route('posts.show', $post->id),
-                         'mainImage'=> $post->image,
+                         'mainImage'=> $post->thumb,
                          'id' => $post->id,
                          'title' => $post->title,
                          'tags' => $post->tags,
@@ -48,11 +48,11 @@
 
                 @endforeach
 
-                @for ($i=1; $i<=10; $i++)
+                {{--@for ($i=1; $i<=10; $i++)
                     <div class="col s6 m4 l3">
                         @include('widgets.test_card', ['editable' => true, 'route'=> route('posts.show', 1), 'title'=> 'mypost'.$i])
                     </div>
-                @endfor
+                @endfor--}}
             </div>
         </div>
 

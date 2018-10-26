@@ -1,7 +1,11 @@
 @extends('layouts.layout')
 
 @section('links')
+    <link href="/css/simplelightbox.min.css" rel="stylesheet">
+@endsection
 
+@section('links_after')
+    <script src="/js/simple-lightbox.min.js"></script>
 @endsection
 
 @section('content')
@@ -14,7 +18,7 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>'/images/parallax1690x300.jpg'])
-            @include('inc.middlemenu', ['avatar'=>$post->image, 'header'=>'My posts'])
+            @include('inc.middlemenu', ['avatar'=>$post->thumb, 'header'=> '<a href="'.route('posts.show', $post->id).'" target="blank"><i class="material-icons">open_in_new</i></a>' ])
         </div>
     </div>
 
@@ -63,6 +67,7 @@
                             <input value='{{$post->title}}' id="input_text" type="text" data-length="100" name="title" required>
                             <label for="input_text">Title</label>
                         </div>
+
                     </div>
 
                     <div class="row">
@@ -86,18 +91,21 @@
                         </div>
                     </div>
 
+
+
+
                     @if($post->images->first())
-                        <div class="row">
+                        <div class="row ">
                             @foreach($post->images as $image)
                                 <div class="col col s6 m3 l2">
-                                    <div class="card small">
-                                        <div class="card-image">
-                                            <img class="materialboxed"  src="{{$image->file}}">
+                                    <div class="card">
+                                        <div class="card-image waves-effect waves-block waves-light gallery">
+                                            <a href="{{$image->file}}" class="big">
+                                                <img class="" src="{{$image->thumb}}">
+                                            </a>
                                         </div>
-                                        <div class="card-action">
-                                            <p><a class="teal-text" href="{{$image->file}}" download><i class="material-icons">file_download</i></a></p>
-                                            <a data-imageid='{{$image->id}}' data-postid='{{$post->id}}' href="#delete_image" class="modal-open btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">delete_forever</i></a>
-                                        </div>
+                                        <p><a class="teal-text" href="{{$image->file}}" download><i class="material-icons">file_download</i></a></p>
+                                        <a data-imageid='{{$image->id}}' data-postid='{{$post->id}}' href="#delete_image" class="modal-open btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">delete_forever</i></a>
                                     </div>
                                 </div>
                             @endforeach
@@ -129,7 +137,12 @@
 
         </div>
     </div>
+
+
     <script>
+
+        $('.gallery a ').simpleLightbox();
+
 
         $(document).ready(function(){
             var elems = document.getElementsByClassName('modal');;
@@ -174,9 +187,6 @@
             $(this).append('<input type="hidden" name="tags" value='+data+'>');
             return true;
         });
-
-
-
 
 
     </script>

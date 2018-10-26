@@ -1,6 +1,6 @@
-<div class="card medium">
+<div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-        <a href="{{route('posts.show', $post->id)}}"><img  src="{{$post->image}}"></a>
+        <a href="{{route('posts.show', $post->id)}}"><img  src="{{$post->thumb}}"></a>
     </div>
     <div class="card-content">
 
@@ -11,7 +11,7 @@
         <i class="material-icons right card-title activator">more_vert</i>
         @if(!empty($post->tags))
             @foreach($post->tags as $tag)
-                <a class="chip" href="#">{{$tag->name}}</a>
+                <a class="chip" href="{{route('posts.index', ['tag'=>$tag->name])}}">{{$tag->name}}</a>
             @endforeach
         @endif
 

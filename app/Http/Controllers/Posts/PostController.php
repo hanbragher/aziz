@@ -3,6 +3,7 @@
 namespace Azizner\Http\Controllers\Posts;
 
 use Azizner\Blogger;
+use Azizner\Http\Controllers\ImageController;
 use Azizner\Image;
 use Azizner\Post;
 use Carbon\Carbon;
@@ -20,10 +21,25 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(2);
         return view('posts.index', ['posts'=>$posts]);
+        dump($tag = Tag::where('name', $request->get('tag'))->first());
+        exit;
+        if($request->has('tag')) {
+            $tag = Tag::where('name', $request->get('tag'))->first();
+        }
+        //todo nayel
+
+        /*if(!empty($tag))
+
+
+            $posts = $tag->posts()->orderBy('created_at', 'desc')->paginate(2);
+        }else{
+            $posts = Post::orderBy('created_at', 'desc')->paginate(2);
+        }
+        return view('posts.index', ['posts'=>$posts]);*/
     }
 
     /**
@@ -49,8 +65,11 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
     {
+
         $user = Auth::user();
 
         if(!$user->is_blogger){
@@ -74,24 +93,14 @@ class PostController extends Controller
         }
 
         if($request->hasFile('main_image')){
-            $file = $request->file('main_image');
-            $extension = $request->main_image->extension();
-            $main_image_path = $file->move('blogs/'.$user->blog->id.'/'.$post->id, md5($file).Carbon::now()->timestamp.'.'.$extension)->getPathname();
-            $main_image = Image::create([
-                'file'=>'/'.$main_image_path
-            ]);
-            $post->update(['main_image'=>$main_image->id]);
+            $main_image_id = ImageController::store('blogs/'.$user->blog->id.'/'.$post->id, $request->file('main_image'));
+            $post->update(['main_image'=>$main_image_id]);
         }
 
         if($request->hasFile('gallery')){
             $image_ids = null;
             foreach ($request->file('gallery') as $file){
-                $extension = $file->extension();
-                $gallery_image_path = $file->move('blogs/'.$user->blog->id.'/'.$post->id, md5($file).Carbon::now()->timestamp.'.'.$extension)->getPathname();
-                $image = Image::create([
-                    'file'=>'/'.$gallery_image_path
-                ]);
-                $image_ids[] = $image->id;
+                $image_ids[] = ImageController::store('blogs/'.$user->blog->id.'/'.$post->id, $file);
             }
             $post->images()->attach($image_ids);
         }
@@ -107,6 +116,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
+
         $post = Post::find($id);
         //$post = Post::all()->currentPage($id);
         return view('posts.show', ['post'=>$post]);
@@ -148,13 +158,12 @@ class PostController extends Controller
         }
 
         if($request->has('image_id') and $request->has('post_id')) {
-            $image = Image::find($request->get('image_id'));
-            if (empty($image->posts->find($id)->first())) {
+            $old_image = Image::find($request->get('image_id'));
+            if (empty($old_image->posts->find($id)->first())) {
                 return redirect()->back()->withErrors('khkh');
             };
             $post->images()->detach($request->get('image_id'));
-            unlink(public_path($image->file));
-            $image->delete();
+            ImageController::destroy($old_image);
             $post->update(['updated_at'=>Carbon::now()]);
             return redirect()->back()->with('message' , 'Picture has been deleted!');
         }
@@ -176,26 +185,20 @@ class PostController extends Controller
         }
 
         if($request->hasFile('main_image')){
-            $file = $request->file('main_image');
-            $extension = $request->main_image->extension();
-            $main_image_path = $file->move('blogs/'.$user->blog->id.'/'.$post->id, md5($file).Carbon::now()->timestamp.'.'.$extension)->getPathname();
-            $main_image = Image::create([
-                'file'=>'/'.$main_image_path
-            ]);
-            $post->update(['main_image'=>$main_image->id]);
+            $old_main_image = Image::find($post->main_image);
+            $main_image_id = ImageController::store('blogs/'.$user->blog->id.'/'.$post->id, $request->file('main_image'));
+            $post->update(['main_image'=>$main_image_id]);
+            ImageController::destroy($old_main_image);
         }
 
         if($request->hasFile('gallery')){
+
             $image_ids = null;
             foreach ($request->file('gallery') as $file){
-                $extension = $file->extension();
-                $gallery_image_path = $file->move('blogs/'.$user->blog->id.'/'.$post->id, md5($file).Carbon::now()->timestamp.'.'.$extension)->getPathname();
-                $image = Image::create([
-                    'file'=>'/'.$gallery_image_path
-                ]);
-                $image_ids[] = $image->id;
+                $image_ids[] = ImageController::store('blogs/'.$user->blog->id.'/'.$post->id, $file);
             }
             $post->images()->attach($image_ids);
+
         }
 
         return redirect()->back()->with('message' , 'The post successfully updated!');
@@ -217,14 +220,21 @@ class PostController extends Controller
             return redirect()->back()->withErrors('khkh');
         }
 
-        $post->tags()->detach();
+        $old_images = $post->images;
         $post->images()->detach();
+
+        if(!empty($old_images)){
+            foreach ($old_images as $image){
+                ImageController::destroy($image);
+            }
+        }
+
+        $post->tags()->detach();
 
         if($main_image_id = $post->main_image){
             $main_image = Image::find($main_image_id);
-            if(is_file(public_path($main_image->file))){
-                unlink(public_path($main_image->file));
-            }
+        }else{
+            $main_image = null;
         }
 
         if(is_dir(public_path('blogs/'.$user->blog->id.'/'.$post->id))){
@@ -232,48 +242,14 @@ class PostController extends Controller
         }
 
         $post->delete();
-
-        if(!empty($main_image)){
-            $main_image->delete();
-        }
+        ImageController::destroy($main_image);
 
         return redirect()->back()->with('message' , 'The post successfully deleted!');
-
-
-
-        /*if($post->tags()->first()){
-            $post->tags()->detach();
-        }
-
-        if($main_image_id = $post->main_image){
-            unlink(public_path($main_image = Image::find($main_image_id)->file));
-            $main_image->delete();
-        }
-
-        if($post->images()->first()){
-            foreach ($post->images as $image){
-                $post->images()->detach($image->id);
-                unlink(public_path($image->file));
-                $image->delete();
-            }
-        }*/
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
     public function myPosts($id = null)
     {
-
         return view('posts.my');
     }
 

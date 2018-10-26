@@ -14,7 +14,7 @@
                     @elseif(!empty($avatar) and $avatar != 'hide' )
                         <li><img class="materialboxed z-depth-3" height="64" src="{{$avatar}}"></li>
                     @endif
-                    <li class="right">{{!empty($header)? $header : null}}</li>
+                    <li class="right">{!! !empty($header)? $header : null !!}</li>
                 </ul>
 
             </div>

@@ -8,7 +8,7 @@ class Image extends Model
 {
     protected $table  = 'images';
     public $timestamps = false;
-    protected $fillable = ['file'];
+    protected $fillable = ['file', 'thumb'];
 
 
    public function posts(){
