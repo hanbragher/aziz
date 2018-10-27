@@ -29,9 +29,9 @@
             <form action="{{route('posts.store')}}" method="post" id="form" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="input-field col s4">
-                        <input id="input_text" type="text" data-length="100" name="title" required>
-                        <label for="input_text">Title</label>
+                    <div class="input-field col s12 m6 l6">
+                        <input value='{{old("title")}}' id="input_text" type="text" data-length="100" name="title" required>
+                        <label>Title</label>
                     </div>
                 </div>
 
@@ -39,19 +39,21 @@
                     <div class="file-field input-field col s5">
                         <div class="btn">
                             <span>Main image</span>
-                            <input type="file" name="main_image">
+                            <input type="file" name="main_image" accept="image/*">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate" placeholder="choose main image" >
+                            <input class="file-path validate" placeholder="set main photo" >
+                            <label>max 2MB</label>
                         </div>
                     </div>
                     <div class="file-field input-field col s7">
                         <div class="btn">
                             <span>Gallery photos</span>
-                            <input type="file" name="gallery[]" multiple>
+                            <input type="file" name="gallery[]" multiple accept="image/*">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate"  name="gallery" placeholder="upload max 10 images into post gallery">
+                            <input class="file-path validate" placeholder="up to 12 images into gallery" >
+                            <label>max 2MB each</label>
                         </div>
                     </div>
                 </div>
@@ -59,7 +61,7 @@
 
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="textarea1" class="materialize-textarea" name="text" required></textarea>
+                        <textarea id="textarea1" class="materialize-textarea" name="text" required>{{old("text")}}</textarea>
                         <label for="textarea1">Textarea</label>
                     </div>
                 </div>
@@ -89,13 +91,6 @@
         $('.chips-autocomplete').chips({
             placeholder: 'Enter a tag',
             secondaryPlaceholder: '+Tag',
-            data: [{
-                tag: 'Apple',
-            }, {
-                tag: 'Microsoft',
-            }, {
-                tag: 'Google',
-            }],
             autocompleteOptions: {
                 data: {
                     @foreach($tags as $tag)

@@ -40,7 +40,7 @@
                 <div class="divider"></div>
                 @foreach($post->images as $image)
                     <div class="gallery col s4 m3 l2">
-                        @include('inc.gallery', ['image'=>$image])
+                        @include('inc.gallery', ['image'=>$image, "title"=>false])
                     </div>
                 @endforeach
 

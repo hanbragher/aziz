@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>'/images/parallax1690x300.jpg'])
-            @include('inc.middlemenu', ['avatar'=>$post->thumb, 'header'=> '<a href="'.route('posts.show', $post->id).'" target="blank"><i class="material-icons">open_in_new</i></a>' ])
+            @include('inc.middlemenu', ['avatar'=>$post->image, 'header'=> '<a href="'.route('posts.show', $post->id).'" target="blank"><i class="material-icons">open_in_new</i></a>' ])
         </div>
     </div>
 
@@ -40,7 +40,7 @@
 
 
                 <!-- Modal Structure -->
-                <div id="image_delete" class="modal">
+                <div id="image_delete" class="modal delete">
                     <form action="{{route('posts.update', $post->id)}}" method="post" id="form1" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
@@ -49,10 +49,29 @@
                             <p>Do you want to remove image from post?</p>
                             <input id="image_id" name="image_id" value="" type="hidden">
                             <input id="post_id" name="post_id" value="" type="hidden">
+                            <input name="destroy" value='destroy' type="hidden">
                         </div>
                         <div class="modal-footer">
                             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
                             <button class="btn red">Delete</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="image_delete" class="modal title">
+                    <form action="{{route('posts.update', $post->id)}}" method="post" id="form1" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
+                        <div class="modal-content input-field">
+                            <h4>Image title</h4>
+                            <input id="image_id" name="image_id" value="" type="hidden">
+                            <input id="post_id" name="post_id" value="" type="hidden">
+                            <input name="set_title" value="set_title" type="hidden">
+                            <input id="image_title" name="image_title" value="" placeholder="max 100 character" data-length="100">
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                            <button class="btn">Save</button>
                         </div>
                     </form>
                 </div>
@@ -78,6 +97,7 @@
                             </div>
                             <div class="file-path-wrapper">
                                 <input class="file-path validate" placeholder="Change main image" >
+                                <label>max 2MB</label>
                             </div>
                         </div>
                         <div class="file-field input-field col s7">
@@ -86,7 +106,8 @@
                                 <input type="file" name="gallery[]" multiple>
                             </div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate"  name="gallery" placeholder="can upload max 10 images into post gallery">
+                                <input class="file-path validate"  name="gallery" placeholder="can upload max {{10-$post->images->count()}} images into post gallery">
+                                <label>max 2MB each</label>
                             </div>
                         </div>
                     </div>
@@ -100,12 +121,14 @@
                                 <div class="col col s6 m3 l2">
                                     <div class="card">
                                         <div class="card-image waves-effect waves-block waves-light gallery">
-                                            <a href="{{$image->file}}" class="big">
-                                                <img class="" src="{{$image->thumb}}">
+                                            <a href="{{$image->file}}" class="big" >
+                                                <img class="" src="{{$image->thumb}}" title="{{$image->title}}">
                                             </a>
                                         </div>
+                                        <a data-imageid='{{$image->id}}' data-postid='{{$post->id}}' data-imagetitle='{{$image->title}}' href="#delete_image" class="modal-open-title truncate grey-text center" >{{!empty($image->title)?$image->title:'Add title'}}</a>
+
                                         <p><a class="teal-text" href="{{$image->file}}" download><i class="material-icons">file_download</i></a></p>
-                                        <a data-imageid='{{$image->id}}' data-postid='{{$post->id}}' href="#delete_image" class="modal-open btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">delete_forever</i></a>
+                                        <a data-imageid='{{$image->id}}' data-postid='{{$post->id}}' href="#delete_image" class="modal-open-delete btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">delete_forever</i></a>
                                     </div>
                                 </div>
                             @endforeach
@@ -145,9 +168,9 @@
 
 
         $(document).ready(function(){
-            var elems = document.getElementsByClassName('modal');;
+            var elems = document.getElementsByClassName('modal delete');;
             var instance = M.Modal.init(elems[0]);
-            $("a.modal-open").click(function () {
+            $("a.modal-open-delete").click(function () {
 
                 $("input#image_id").val($(this).data("imageid"));
                 $("input#post_id").val($(this).data("postid"));
@@ -155,10 +178,22 @@
             })
         });
 
+        $(document).ready(function(){
+            var elems = document.getElementsByClassName('modal title');;
+            var instance = M.Modal.init(elems[0]);
+            $("a.modal-open-title").click(function () {
+
+                $("input#image_id").val($(this).data("imageid"));
+                $("input#post_id").val($(this).data("postid"));
+                $("input#image_title").val($(this).data("imagetitle"));
+                instance.open()
+            })
+        });
+
 
 
         $(document).ready(function() {
-            $('input#input_text, textarea#textarea2').characterCounter();
+            $('input#input_text, input#image_title, textarea#textarea2').characterCounter();
         });
 
 

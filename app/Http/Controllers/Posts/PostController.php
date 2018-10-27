@@ -13,6 +13,7 @@ use Azizner\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -21,6 +22,30 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct() {
+        $this->middleware(['auth'])->only(['create', 'edit', 'store', 'update', 'destroy', 'myPosts']);
+    }
+
+    protected function validator(array $data)
+    {
+        $rules = [
+            'title' => ['required_without:image_id', 'string', 'max:100'],
+            'main_image' => [ 'image', 'mimes:jpeg,bmp,png', 'max:2048'],
+            'gallery' => [ 'max:12' ],
+            'gallery.*' => [ 'image', 'mimes:jpeg,bmp,png', 'max:2048'],
+            'text' => ['required_without:image_id', 'string'],
+            'image_id' => ['numeric'],
+            'post_id' => ['numeric'],
+            'destroy' => ['string', 'in:destroy'],
+            'set_title' => ['string', 'in:set_title'],
+            'image_title' => ['nullable', 'string', 'max:100'],
+        ];
+
+        return Validator::make($data, $rules);
+    }
+
+
     public function index(Request $request)
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate(2);
@@ -70,12 +95,16 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
+        $validator = $this->validator($request->all());
+        if($validator->fails()){
+            //return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors('Something wrong, check fields')->withInput();
+        }
         $user = Auth::user();
 
         if(!$user->is_blogger){
             return redirect()->back()->withErrors('No permission, you should be blogger for a create new post');
         }
-
 
         $post = $user->blog->posts()->save( new Post([
             "title"=>$request->get('title'),
@@ -104,8 +133,8 @@ class PostController extends Controller
             }
             $post->images()->attach($image_ids);
         }
-        return redirect()->route('posts.my')->with('message' , 'The post successfully created!');
 
+        return redirect()->route('posts.edit', $post->id)->with('message' , 'The post successfully created!');
     }
 
     /**
@@ -150,6 +179,12 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = $this->validator($request->all());
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+            //return redirect()->back()->withErrors('Something wrong, check fields')->withInput();
+        }
+
         $user = Auth::user();
         $post = Post::find($id);
 
@@ -160,12 +195,21 @@ class PostController extends Controller
         if($request->has('image_id') and $request->has('post_id')) {
             $old_image = Image::find($request->get('image_id'));
             if (empty($old_image->posts->find($id)->first())) {
-                return redirect()->back()->withErrors('khkh');
+                return redirect()->back()->withErrors('Permission denied');
             };
-            $post->images()->detach($request->get('image_id'));
-            ImageController::destroy($old_image);
-            $post->update(['updated_at'=>Carbon::now()]);
-            return redirect()->back()->with('message' , 'Picture has been deleted!');
+
+            if($request->get('destroy') == 'destroy'){
+                $post->images()->detach($request->get('image_id'));
+                ImageController::destroy($old_image);
+                $post->update(['updated_at'=>Carbon::now()]);
+                return redirect()->back()->with('message' , 'Picture has been deleted!');
+            }
+            if($request->get('set_title') == 'set_title'){
+                $old_image->update([
+                   'title'=> $request->get('image_title')
+                ]);
+                return redirect()->back()->with('message' , 'Picture has been updated!');
+            }
         }
 
         $post->update([

@@ -17,6 +17,7 @@ class CreateImagesTable extends Migration
             $table->increments('id');
             $table->string("file",255);
             $table->string("thumb",255)->nullable();
+            $table->string("title",255)->nullable();
         });
     }
 

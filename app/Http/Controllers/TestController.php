@@ -13,7 +13,9 @@ class TestController extends Controller
 {
     public function test(Request $request){
 
-        if(is_file('/blogs/1/54\a695373814a0fc78a7277ef9669bd2621540554756.jpeg')){unlink(public_path('/blogs/1/54\a695373814a0fc78a7277ef9669bd2621540554756.jpeg'));};
+        //ImageController::secureStore(storage_path('app/images'), 'images/card.jpg'); exit;
+
+        //if(is_file('/blogs/1/54\a695373814a0fc78a7277ef9669bd2621540554756.jpeg')){unlink(public_path('/blogs/1/54\a695373814a0fc78a7277ef9669bd2621540554756.jpeg'));};
 
 
 
