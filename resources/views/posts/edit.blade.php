@@ -125,7 +125,7 @@
                                                 <img class="" src="{{$image->thumb}}" title="{{$image->title}}">
                                             </a>
                                         </div>
-                                        <a data-imageid='{{$image->id}}' data-postid='{{$post->id}}' data-imagetitle='{{$image->title}}' href="#delete_image" class="modal-open-title truncate grey-text center" >{{!empty($image->title)?$image->title:'Add title'}}</a>
+                                        <a data-imageid='{{$image->id}}' data-postid='{{$post->id}}' data-imagetitle='{{$image->title}}' href="#delete_image" class="modal-open-title truncate grey-text center" ><i class="material-icons tiny">create</i>{{!empty($image->title)?$image->title:'Add title'}}</a>
 
                                         <p><a class="teal-text" href="{{$image->file}}" download><i class="material-icons">file_download</i></a></p>
                                         <a data-imageid='{{$image->id}}' data-postid='{{$post->id}}' href="#delete_image" class="modal-open-delete btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">delete_forever</i></a>

@@ -193,7 +193,8 @@ class PostController extends Controller
         }
 
         if($request->has('image_id') and $request->has('post_id')) {
-            $old_image = Image::find($request->get('image_id'));
+            $old_image = Image::findOrFail($request->get('image_id'));
+            //todo  stugel nkari exaneliutyuny
             if (empty($old_image->posts->find($id)->first())) {
                 return redirect()->back()->withErrors('Permission denied');
             };
@@ -210,6 +211,7 @@ class PostController extends Controller
                 ]);
                 return redirect()->back()->with('message' , 'Picture has been updated!');
             }
+            return redirect()->back()->withErrors('Permission denied');
         }
 
         $post->update([
