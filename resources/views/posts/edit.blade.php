@@ -100,16 +100,24 @@
                                 <label>max 2MB</label>
                             </div>
                         </div>
+
                         <div class="file-field input-field col s7">
+                            @if(12-($images_count = $post->images->count()) > 0)
+
                             <div class="btn">
                                 <span>Gallery photos</span>
                                 <input type="file" name="gallery[]" multiple>
                             </div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate"  name="gallery" placeholder="can upload max {{10-$post->images->count()}} images into post gallery">
-                                <label>max 2MB each</label>
+                                <input class="file-path validate"  name="gallery" placeholder="can upload max {{12-$images_count}} images into gallery">
+
                             </div>
+                            @else
+                                <label>You have uploaded the maximum number of images for the gallery.</label>
+                            @endif
+
                         </div>
+
                     </div>
 
 

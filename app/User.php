@@ -39,6 +39,10 @@ class User extends Authenticatable
     public function blog(){
         return $this->belongsTo("Azizner\Blogger", "id", "user_id");
     }
+    
+    public function notes(){
+        return $this->belongsTo("Azizner\Note", "id", "user_id");
+    }
 
 
 

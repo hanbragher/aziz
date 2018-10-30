@@ -31,9 +31,31 @@ Route::resource('/profiles', 'Profiles\ProfileController');
 
 Route::resource('/places', 'Places\PlaceController');
 
+Route::resource('/adverts', 'Adverts\AdvertController');
+
 Route::get('/mypage', [
     "as" => "profiles.my",
     'uses' => 'Profiles\ProfileController@myPage'
+]);
+
+Route::get('/myadverts', [
+    "as" => "adverts.my",
+    'uses' => 'Adverts\AdvertController@myAdverts'
+]);
+
+Route::get('/profile/{id}/posts', [
+    "as" => "profile.posts",
+    'uses' => 'Posts\PostController@profilePosts'
+]);
+
+Route::get('/profile/{id}/notes', [
+    "as" => "profile.notes",
+    'uses' => 'Profiles\ProfileController@profileNotes'
+]);
+
+Route::get('/profile/{id}/adverts', [
+    "as" => "profile.adverts",
+    'uses' => 'Profiles\ProfileController@profileAdverts'
 ]);
 
 

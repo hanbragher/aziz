@@ -1,8 +1,16 @@
 <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
-        {{--<a href="#"><img class="activator" src="/images/card.jpg"></a>--}}
+        {{--@php
+        $img = public_path('/folder/454541');
+        $file = file_get_contents($img);
+        $type = mime_content_type($img);
+        @endphp
+
+        <a href="data:{{$type}};base64,{{base64_encode($file)}}" download><img src="data:{{$type}};base64,{{base64_encode($file)}}"></a>
+--}}
         <a href="{{$route}}"><img  src="https://picsum.photos/{{$i}}00.jpg"></a>
     </div>
+
     <div class="card-content">
         @if(!empty($editable) and $editable == true)
         <span><a href="{{route('posts.edit', 1)}}"><i class="material-icons">edit</i></a></span>

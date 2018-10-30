@@ -11,7 +11,7 @@
                     <li><a href="{{route('places.index', ['places'=>'all'])}}">Go Explore</a></li>
                     <li><a href="#">See Photos</a></li>
                     <li><a href="{{route('posts.index')}}">Read posts</a></li>
-                    <li><a href="{{route('posts.index')}}">Advert</a></li>
+                    <li><a href="{{route('posts.index')}}">Adverts</a></li>
                     @auth
                         <li><a class='btn' href='/mypage'><i class="material-icons">account_circle</i></a></li>
                     @else

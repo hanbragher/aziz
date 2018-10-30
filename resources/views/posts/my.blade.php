@@ -33,7 +33,7 @@
 
         <div class="col s12 m12 l8">
             <div class="row">
-                @foreach($user->blog->posts as $post)
+                @foreach($posts as $post)
                     <div class="col s6 m4 l3">
                         @include('widgets.card', [
                          'editable' => true,
@@ -48,11 +48,9 @@
 
                 @endforeach
 
-                {{--@for ($i=1; $i<=10; $i++)
-                    <div class="col s6 m4 l3">
-                        @include('widgets.test_card', ['editable' => true, 'route'=> route('posts.show', 1), 'title'=> 'mypost'.$i])
-                    </div>
-                @endfor--}}
+            </div>
+            <div class="row center">
+                {{$posts->appends($_GET)->links()}}
             </div>
         </div>
 

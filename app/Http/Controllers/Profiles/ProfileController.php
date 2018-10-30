@@ -5,6 +5,7 @@ namespace Azizner\Http\Controllers\Profiles;
 use Azizner\Blogger;
 use Azizner\Http\Controllers\ImageController;
 use Azizner\Image;
+use Azizner\User;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -50,7 +51,22 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        return view('profile.show');
+        $show_user = User::findOrFail($id);
+        return view('profile.show', ['show_user'=>$show_user]);
+    }
+
+
+
+    public function profileNotes($id)
+    {
+        $show_user = User::findOrFail($id);
+        return view('profile.show', ['show_user'=>$show_user]);
+    }
+
+    public function profileAdverts($id)
+    {
+        $show_user = User::findOrFail($id);
+        return view('profile.show', ['show_user'=>$show_user]);
     }
 
     public function myPage()

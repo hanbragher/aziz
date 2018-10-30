@@ -6,6 +6,7 @@ use Azizner\Blogger;
 use Azizner\Http\Controllers\ImageController;
 use Azizner\Image;
 use Azizner\Post;
+use Azizner\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
@@ -65,6 +66,12 @@ class PostController extends Controller
             $posts = Post::orderBy('created_at', 'desc')->paginate(2);
         }
         return view('posts.index', ['posts'=>$posts]);*/
+    }
+
+    public function profilePosts($id)
+    {
+        $show_user = User::findOrFail($id);
+        return view('posts.profile_posts', ['show_user'=>$show_user]);
     }
 
     /**
@@ -193,8 +200,10 @@ class PostController extends Controller
         }
 
         if($request->has('image_id') and $request->has('post_id')) {
-            $old_image = Image::findOrFail($request->get('image_id'));
-            //todo  stugel nkari exaneliutyuny
+            if(empty($old_image = Image::find($request->get('image_id')))){
+                return redirect()->back()->withErrors('Permission denied');
+            };
+
             if (empty($old_image->posts->find($id)->first())) {
                 return redirect()->back()->withErrors('Permission denied');
             };
@@ -209,7 +218,7 @@ class PostController extends Controller
                 $old_image->update([
                    'title'=> $request->get('image_title')
                 ]);
-                return redirect()->back()->with('message' , 'Picture has been updated!');
+                return redirect()->back()->with('message' , 'Title has been updated!');
             }
             return redirect()->back()->withErrors('Permission denied');
         }
@@ -238,13 +247,16 @@ class PostController extends Controller
         }
 
         if($request->hasFile('gallery')){
-
+            $can_upload = 12-$post->images->count();
+            $uploaded = count($request->file('gallery'));
+            if($can_upload <= $uploaded-1){
+                return redirect()->back()->withErrors('Total count images of gallery should not be more 12 psc.')->withInput();
+            }
             $image_ids = null;
             foreach ($request->file('gallery') as $file){
                 $image_ids[] = ImageController::store('blogs/'.$user->blog->id.'/'.$post->id, $file);
             }
             $post->images()->attach($image_ids);
-
         }
 
         return redirect()->back()->with('message' , 'The post successfully updated!');
@@ -296,7 +308,9 @@ class PostController extends Controller
 
     public function myPosts($id = null)
     {
-        return view('posts.my');
+        $user = Auth::user();
+        $posts = $user->blog->posts()->paginate(1);
+        return view('posts.my', ['posts'=>$posts]);
     }
 
 }
