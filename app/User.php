@@ -41,7 +41,11 @@ class User extends Authenticatable
     }
     
     public function notes(){
-        return $this->belongsTo("Azizner\Note", "id", "user_id");
+        return $this->hasMany("Azizner\Note", "user_id", "id");
+    }
+
+    public function announcements(){
+        return $this->hasMany("Azizner\Announcement", "user_id", "id");
     }
 
 

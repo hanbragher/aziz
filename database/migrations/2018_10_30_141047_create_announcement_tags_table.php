@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdvertTagsTable extends Migration
+class CreateAnnouncementTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateAdvertTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('advert_tags', function (Blueprint $table) {
+        Schema::create('announcement_tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("advert_id")->unsigned()->default(null);
-            $table->foreign("advert_id")->references("id")->on("adverts");
+            $table->integer("announcement_id")->unsigned()->default(null);
+            $table->foreign("announcement_id")->references("id")->on("announcements");
             $table->integer("tag_id")->unsigned()->default(null);
             $table->foreign("tag_id")->references("id")->on("tags");
         });
@@ -29,6 +29,6 @@ class CreateAdvertTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('advert_tags');
+        Schema::dropIfExists('announcement_tag');
     }
 }

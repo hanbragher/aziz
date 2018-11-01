@@ -43,22 +43,6 @@
         <div class="col s12 m6 l3"><p>s12 m6 l3</p></div>
     </div>
 
-
-    <script>
-        $(document).ready(function(){
-            $('.sidenav.right').sidenav({edge:'right'});
-        });
-
-        $(document).ready(function(){
-            $('.sidenav.left').sidenav();
-        });
-
-        $('.dropdown-trigger').dropdown();
-
-        $(document).ready(function(){
-            $('.parallax').parallax();
-        });
-    </script>
 @endsection
 
 

@@ -16,7 +16,7 @@ class ImageController extends Controller
         $this->middleware(['auth']);
     }
 
-    static function store($folder, $file, $thumb = true, $secure = false, $resize = true){
+    static function store($folder, $file, $thumb = [true, 300, 300], $secure = false, $resize = true){
         if($secure === true){
             $folder = 'secure/'.$folder;
         }
@@ -35,10 +35,10 @@ class ImageController extends Controller
                 ->save($image_path);
         }
 
-        if($thumb === true){
+        if($thumb[0] === true){
             $thumb_save_to_path = $folder.'/thumb'.$image;
             \Intervention\Image\Facades\Image::make($image_path)
-                ->fit(300, 300)
+                ->fit($thumb[1], $thumb[2])
                 ->save($thumb_save_to_path);
             $thumb_path = '/'.$thumb_save_to_path;
         }else{

@@ -1,6 +1,11 @@
 <?php
 
-namespace Azizner\Http\Controllers\Posts;
+namespace Azizner\Http\Controllers\Announcements;
+
+use Azizner\Announcement;
+use Illuminate\Http\Request;
+use Azizner\Http\Controllers\Controller;
+use Azizner\Tag;
 
 use Azizner\Blogger;
 use Azizner\Http\Controllers\ImageController;
@@ -8,15 +13,12 @@ use Azizner\Image;
 use Azizner\Post;
 use Azizner\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Azizner\Http\Controllers\Controller;
-use Azizner\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class PostController extends Controller
+class AnnouncementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +27,7 @@ class PostController extends Controller
      */
 
     public function __construct() {
-        $this->middleware(['auth'])->only(['create', 'edit', 'store', 'update', 'destroy', 'myPosts']);
+        $this->middleware(['auth'])->only(['create', 'edit', 'store', 'update', 'destroy', 'myAnnouncements']);
     }
 
     protected function validator(array $data)
@@ -47,31 +49,17 @@ class PostController extends Controller
     }
 
 
-    public function index(Request $request)
+    public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(2);
-        return view('posts.index', ['posts'=>$posts]);
-        dump($tag = Tag::where('name', $request->get('tag'))->first());
-        exit;
-        if($request->has('tag')) {
-            $tag = Tag::where('name', $request->get('tag'))->first();
-        }
-        //todo nayel
-
-        /*if(!empty($tag))
-
-
-            $posts = $tag->posts()->orderBy('created_at', 'desc')->paginate(2);
-        }else{
-            $posts = Post::orderBy('created_at', 'desc')->paginate(2);
-        }
-        return view('posts.index', ['posts'=>$posts]);*/
+        $announcements = Announcement::orderBy('created_at', 'desc')->paginate(3);
+        return view('announcements.index', ['announcements'=>$announcements]);
     }
 
-    public function profilePosts($id)
+    public function myAnnouncements()
     {
-        $show_user = User::findOrFail($id);
-        return view('posts.profile_posts', ['show_user'=>$show_user]);
+        $user = Auth::user();
+        $announcements = $user->announcements()->paginate(2);
+        return view('announcements.my', ['announcements'=>$announcements]);
     }
 
     /**
@@ -81,13 +69,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-
-        if(!$user->is_blogger){
-            return redirect()->back()->withErrors('No permission, you should be blogger for a create new post');
-        }
         $tags = Tag::all()->pluck('name');
-        return view('posts.create', ['tags'=>$tags]);
+        return view('announcements.create', ['tags'=>$tags]);
     }
 
     /**
@@ -96,8 +79,6 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-
     public function store(Request $request)
     {
 
@@ -108,11 +89,7 @@ class PostController extends Controller
         }
         $user = Auth::user();
 
-        if(!$user->is_blogger){
-            return redirect()->back()->withErrors('No permission, you should be blogger for a create new post');
-        }
-
-        $post = $user->blog->posts()->save( new Post([
+        $announcement = $user->announcements()->save( new Announcement([
             "title"=>$request->get('title'),
             "text"=>$request->get('text'),
         ]));
@@ -124,23 +101,23 @@ class PostController extends Controller
                 $tag = Tag::firstOrCreate(['name'=>$item->tag]);
                 $tags[] = $tag->id;
             }
-            $post->tags()->attach($tags);
+            $announcement->tags()->attach($tags);
         }
 
         if($request->hasFile('main_image')){
-            $main_image_id = ImageController::store('images/blogs/'.$user->blog->id.'/'.$post->id, $request->file('main_image'));
-            $post->update(['main_image'=>$main_image_id]);
+            $main_image_id = ImageController::store('images/announcements/'.$user->id.'/'.$announcement->id, $request->file('main_image'));
+            $announcement->update(['main_image'=>$main_image_id]);
         }
 
         if($request->hasFile('gallery')){
             $image_ids = null;
             foreach ($request->file('gallery') as $file){
-                $image_ids[] = ImageController::store('images/blogs/'.$user->blog->id.'/'.$post->id, $file);
+                $image_ids[] = ImageController::store('images/announcements/'.$user->id.'/'.$announcement->id, $file);
             }
-            $post->images()->attach($image_ids);
+            $announcement->images()->attach($image_ids);
         }
 
-        return redirect()->route('posts.edit', $post->id)->with('message' , 'The post successfully created!');
+        return redirect()->route('announcements.edit', $announcement->id)->with('message' , 'The post successfully created!');
     }
 
     /**
@@ -151,10 +128,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-
-        $post = Post::find($id);
-        //$post = Post::all()->currentPage($id);
-        return view('posts.show', ['post'=>$post]);
+        //
     }
 
     /**
@@ -165,15 +139,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
+        $announcement = Announcement::findOrFail($id);
         $user = Auth::user();
-
-        if($user->cannot("edit", $post)){
-            return redirect()->back()->withErrors('No permission, you should be blogger for edit your own post');
+        if($user->cannot("edit", $announcement)){
+            return redirect()->back()->withErrors('No permission');
         }
-
         $tags = Tag::all()->pluck('name');
-        return view('posts.edit', ['post'=>$post, 'tags'=>$tags]);
+        return view('announcements.edit', ['announcement'=>$announcement, 'tags'=>$tags]);
     }
 
     /**
@@ -192,37 +164,37 @@ class PostController extends Controller
         }
 
         $user = Auth::user();
-        $post = Post::find($id);
+        $announcement = Announcement::findOrFail($id);
 
-        if($user->cannot("update", $post)){
-            return redirect()->back()->withErrors('khkh');
+        if($user->cannot("update", $announcement)){
+            return redirect()->back()->withErrors('Permission denied');
         }
 
-        if($request->has('image_id') and $request->has('post_id')) {
+        if($request->has('image_id') and $request->has('announcement_id')) {
             if(empty($old_image = Image::find($request->get('image_id')))){
                 return redirect()->back()->withErrors('Permission denied');
             };
 
-            if (empty($old_image->posts->find($id)->first())) {
+            if (empty($old_image->announcements->find($id)->first())) {
                 return redirect()->back()->withErrors('Permission denied');
             };
 
             if($request->get('destroy') == 'destroy'){
-                $post->images()->detach($request->get('image_id'));
+                $announcement->images()->detach($request->get('image_id'));
                 ImageController::destroy($old_image);
-                $post->update(['updated_at'=>Carbon::now()]);
+                $announcement->update(['updated_at'=>Carbon::now()]);
                 return redirect()->back()->with('message' , 'Picture has been deleted!');
             }
             if($request->get('set_title') == 'set_title'){
                 $old_image->update([
-                   'title'=> $request->get('image_title')
+                    'title'=> $request->get('image_title')
                 ]);
                 return redirect()->back()->with('message' , 'Title has been updated!');
             }
             return redirect()->back()->withErrors('Permission denied');
         }
 
-        $post->update([
+        $announcement->update([
             "title"=>$request->get('title'),
             "text"=>$request->get('text'),
             'updated_at'=>Carbon::now()
@@ -235,31 +207,30 @@ class PostController extends Controller
                 $tag = Tag::firstOrCreate(['name'=>$item->tag]);
                 $tags[] = $tag->id;
             }
-            $post->tags()->sync($tags);
+            $announcement->tags()->sync($tags);
         }
 
         if($request->hasFile('main_image')){
-            $old_main_image = Image::find($post->main_image);
-            $main_image_id = ImageController::store('images/blogs/'.$user->blog->id.'/'.$post->id, $request->file('main_image'));
-            $post->update(['main_image'=>$main_image_id]);
+            $old_main_image = Image::find($announcement->main_image);
+            $main_image_id = ImageController::store('images/announcements/'.$user->id.'/'.$announcement->id, $request->file('main_image'), $thumb = [true, 150, 150]);
+            $announcement->update(['main_image'=>$main_image_id]);
             ImageController::destroy($old_main_image);
         }
 
         if($request->hasFile('gallery')){
-            $can_upload = 12-$post->images->count();
+            $can_upload = 12-$announcement->images->count();
             $uploaded = count($request->file('gallery'));
             if($can_upload <= $uploaded-1){
                 return redirect()->back()->withErrors('Total count images of gallery should not be more 12 psc.')->withInput();
             }
             $image_ids = null;
             foreach ($request->file('gallery') as $file){
-                $image_ids[] = ImageController::store('images/blogs/'.$user->blog->id.'/'.$post->id, $file);
+                $image_ids[] = ImageController::store('images/announcements/'.$user->id.'/'.$announcement->id, $file);
             }
-            $post->images()->attach($image_ids);
+            $announcement->images()->attach($image_ids);
         }
 
         return redirect()->back()->with('message' , 'The post successfully updated!');
-
     }
 
     /**
@@ -271,14 +242,14 @@ class PostController extends Controller
     public function destroy($id)
     {
         $user = Auth::user();
-        $post = Post::find($id);
+        $announcement = Announcement::findOrFail($id);
 
-        if($user->cannot("destroy", $post)){
-            return redirect()->back()->withErrors('khkh');
+        if($user->cannot("destroy", $announcement)){
+            return redirect()->back()->withErrors('no permission');
         }
 
-        $old_images = $post->images;
-        $post->images()->detach();
+        $old_images = $announcement->images;
+        $announcement->images()->detach();
 
         if(!empty($old_images)){
             foreach ($old_images as $image){
@@ -286,30 +257,21 @@ class PostController extends Controller
             }
         }
 
-        $post->tags()->detach();
+        $announcement->tags()->detach();
 
-        if($main_image_id = $post->main_image){
+        if($main_image_id = $announcement->main_image){
             $main_image = Image::find($main_image_id);
         }else{
             $main_image = null;
         }
 
-        if(is_dir(public_path('images/blogs/'.$user->blog->id.'/'.$post->id))){
-            File::deleteDirectory(public_path('images/blogs/'.$user->blog->id.'/'.$post->id));
+        if(is_dir(public_path('images/announcements/'.$user->id.'/'.$announcement->id))){
+            File::deleteDirectory(public_path('images/blogs/'.$user->id.'/'.$announcement->id));
         }
 
-        $post->delete();
+        $announcement->delete();
         ImageController::destroy($main_image);
 
-        return redirect()->back()->with('message' , 'The post successfully deleted!');
-
+        return redirect()->back()->with('message' , 'The announcement successfully deleted!');
     }
-
-    public function myPosts($id = null)
-    {
-        $user = Auth::user();
-        $posts = $user->blog->posts()->paginate(1);
-        return view('posts.my', ['posts'=>$posts]);
-    }
-
 }

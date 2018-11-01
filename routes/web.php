@@ -31,16 +31,16 @@ Route::resource('/profiles', 'Profiles\ProfileController');
 
 Route::resource('/places', 'Places\PlaceController');
 
-Route::resource('/adverts', 'Adverts\AdvertController');
+Route::resource('/announcements', 'Announcements\AnnouncementController');
 
 Route::get('/mypage', [
     "as" => "profiles.my",
     'uses' => 'Profiles\ProfileController@myPage'
 ]);
 
-Route::get('/myadverts', [
-    "as" => "adverts.my",
-    'uses' => 'Adverts\AdvertController@myAdverts'
+Route::get('/myannouncements', [
+    "as" => "announcements.my",
+    'uses' => 'Announcements\AnnouncementController@myAnnouncements'
 ]);
 
 Route::get('/profile/{id}/posts', [
@@ -87,9 +87,7 @@ Route::get('/editblog', function () {
 
 
 
-Route::get('/newpost', function () {
-    return view('blog.create');
-});
+
 
 Route::get('/messeges', function () {
     return view('chat.index');

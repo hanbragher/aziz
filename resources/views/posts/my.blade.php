@@ -49,7 +49,9 @@
                 @endforeach
 
             </div>
+
             <div class="row center">
+
                 {{$posts->appends($_GET)->links()}}
             </div>
         </div>

@@ -18,7 +18,7 @@ class Post extends Model
         return $this->belongsToMany("Azizner\Image", "post_image");
     }
 
-    public function main_img(){
+    public function image(){
         return $this->belongsTo("Azizner\Image", "main_image", "id");
     }
 
@@ -29,7 +29,7 @@ class Post extends Model
     public function getImageAttribute()
     {
         if($this->main_img){
-            return $this->main_img->file;
+            return $this->image->file;
         }else{
             return '/images/card.jpg';
         }
@@ -38,7 +38,7 @@ class Post extends Model
     public function getThumbAttribute()
     {
         if($this->main_img){
-            return $this->main_img->thumb;
+            return $this->image->thumb;
         }else{
             return '/images/card.jpg';
         }

@@ -13,4 +13,8 @@ class Tag extends Model
     public function posts(){
         return $this->belongsToMany("Azizner\Post", 'post_tag');
     }
+
+    public function announcements(){
+        return $this->belongsToMany("Azizner\Announcement", 'announcement_tags');
+    }
 }

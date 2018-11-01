@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>$user->cover])
-            @include('inc.middlemenu', ['avatar'=>$user->avatar?$user->avatar:'none', 'header'=>'New post'])
+            @include('inc.middlemenu', ['avatar'=>$user->avatar?$user->avatar:'none', 'header'=>'New announcement'])
         </div>
     </div>
 
@@ -18,11 +18,11 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'newpost'])
+            @include('inc.mysidenav', ['active'=>'newannouncement'])
         </div>
 
         <div class="col s12 m12 l8">
-            <form action="{{route('posts.store')}}" method="post" id="form" enctype="multipart/form-data">
+            <form action="{{route('announcements.store')}}" method="post" id="form" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="input-field col s12 m6 l6">

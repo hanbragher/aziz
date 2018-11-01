@@ -15,7 +15,7 @@
 
     <a href="/messeges" class="collection-item @if($active == 'messeges') active @endif ">My messages<i class="material-icons right">fiber_new</i></a>
     <a href="{{route('notes.index')}}" class="collection-item @if($active == 'mynotes') active @endif ">My notes</a>
-    <a href="{{route('adverts.my')}}" class="collection-item @if($active == 'myadverts') active @endif ">My adverts</a>
-    <a href="{{route('adverts.create')}}" class="collection-item @if($active == 'newadvert') active @endif ">New Advert</a>
+    <a href="{{route('announcements.my')}}" class="collection-item @if($active == 'myannouncements') active @endif ">My announcements</a>
+    <a href="{{route('announcements.create')}}" class="collection-item @if($active == 'newannouncement') active @endif ">New announcements</a>
     <a href="{{route('profiles.edit', 1)}}" class="collection-item @if($active == 'mysettings') active @endif ">Profile settings</a>
 </div>

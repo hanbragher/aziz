@@ -14,15 +14,24 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'myadverts'])
+            @include('inc.mysidenav', ['active'=>'myannouncements'])
         </div>
 
         <div class="col s12 m12 l8">
             <div class="row">
-                @for($i=1; $i<10; $i++)
-                    @include('inc.advert', ['editable'=>true])
-                @endfor
+                @foreach($announcements as $announcement)
+                <div class="col s12 m12 l6 ">
+                    @include('inc.announcement', [
+                                'announcement' => $announcement,
+                                'editable'=>true
+                                ])
+                </div>
+                @endforeach
+            </div>
 
+            <div class="row center">
+
+                {{$announcements->appends($_GET)->links()}}
             </div>
 
 

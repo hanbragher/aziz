@@ -14,4 +14,8 @@ class Image extends Model
    public function posts(){
         return $this->belongsToMany("Azizner\Post", "post_image");
    }
+
+   public function announcements(){
+        return $this->belongsToMany("Azizner\Announcement", "announcement_image");
+   }
 }
