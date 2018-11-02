@@ -97,11 +97,9 @@ class ProfileController extends Controller
     public function update(Request $request, $id)
     {
         $user = Auth::user();
-        //dump($request->all());exit;
-        //dump($request->hasFile('avatar'));exit;
 
         if($user->id != $id){
-            dump('olala');
+            return redirect()->back()->withErrors('No permission');
         }
 
         $user->update([
@@ -109,18 +107,16 @@ class ProfileController extends Controller
             'last_name'=>$request->get('last_name'),
         ]);
 
-
-
         if($request->hasFile('avatar')){
             $old_avatar = Image::find($user->avatar_id);
-            $avatar_id = ImageController::store('users/'.$user->id, $request->file('avatar'));
+            $avatar_id = ImageController::store('images/users/'.$user->id, $request->file('avatar'));
             $user->update(['avatar_id'=>$avatar_id]);
             ImageController::destroy($old_avatar);
         }
 
         if($request->hasFile('cover')){
             $old_cover = Image::find($user->cover_id);
-            $cover_id = ImageController::store('users/'.$user->id, $request->file('cover'), false);
+            $cover_id = ImageController::store('images/users/'.$user->id, $request->file('cover'), false);
             $user->update(['cover_id'=>$cover_id]);
             ImageController::destroy($old_cover);
         }
@@ -128,6 +124,7 @@ class ProfileController extends Controller
 
         if($request->get('is_blogger') and $request->get('is_blogger') == 'on'){
             $blogger = Blogger::firstOrCreate(['user_id'=>$user->id]);
+            
             $user->update([
                 'is_blogger' => true,
             ]);

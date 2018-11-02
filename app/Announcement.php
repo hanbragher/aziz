@@ -10,6 +10,10 @@ class Announcement extends Model
     public $appends = ['image', 'thumb'];
     protected $fillable = ['title', 'text', 'user_id', 'main_image'];
 
+    public function user(){
+        return $this->belongsTo("Azizner\User", "user_id", "id");
+    }
+
     public function tags(){
         return $this->belongsToMany("Azizner\Tag", "announcement_tags");
     }
@@ -21,6 +25,7 @@ class Announcement extends Model
     public function img(){
         return $this->belongsTo("Azizner\Image", "main_image", "id");
     }
+
 
     public function getImageAttribute()
     {

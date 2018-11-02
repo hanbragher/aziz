@@ -18,7 +18,7 @@
             <i class="material-icons right card-title activator">more_vert</i>
         @if(!empty($tags))
             @foreach($tags as $tag)
-                <a class="chip" href="#">{{$tag->name}}</a>
+                <a class="chip" href="{{route('posts.index', ['tag'=>$tag->name])}}">{{$tag->name}}</a>
             @endforeach
         @endif
 

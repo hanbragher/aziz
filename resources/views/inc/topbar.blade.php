@@ -8,9 +8,9 @@
             <div class="col s4 m4 l8">
                 <a href="/" class="brand-logo">Logo</a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{route('places.index', ['places'=>'all'])}}">Go Explore</a></li>
-                    <li><a href="#">See Photos</a></li>
-                    <li><a href="{{route('posts.index')}}">Read posts</a></li>
+                    <li><a href="{{route('places.index', ['places'=>'all'])}}">Explore</a></li>
+                    <li><a href="#">Photos</a></li>
+                    <li><a href="{{route('posts.index')}}">Posts</a></li>
                     <li><a href="{{route('announcements.index')}}">Announcements</a></li>
                     @auth
                         <li><a class='btn' href='/mypage'><i class="material-icons">account_circle</i></a></li>
@@ -19,6 +19,7 @@
                         <li><a href="{{route('register')}}">Sign up</a></li>
                     @endauth
                     <li><a class='dropdown-trigger btn' href='#' data-target='dropdown_lang'><i class="material-icons">language</i></a></li>
+
                     @auth
                         <li><a href="{{ route('logout') }}" >Log out</a></li>
                     @endauth
@@ -32,6 +33,7 @@
     </div>
 </nav>
 </div>
+
 
 
 <ul id="slide-out" class="sidenav right">

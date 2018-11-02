@@ -11,6 +11,8 @@
         </div>
     </div>
 
+    @include('inc.notifications')
+
 <div class="row center">
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
 

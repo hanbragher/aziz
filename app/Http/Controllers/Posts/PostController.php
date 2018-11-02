@@ -49,23 +49,31 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(2);
-        return view('posts.index', ['posts'=>$posts]);
-        dump($tag = Tag::where('name', $request->get('tag'))->first());
-        exit;
-        if($request->has('tag')) {
-            $tag = Tag::where('name', $request->get('tag'))->first();
-        }
-        //todo nayel
 
-        /*if(!empty($tag))
-
-
-            $posts = $tag->posts()->orderBy('created_at', 'desc')->paginate(2);
+        if($request->has('tag')){
+            if(empty($tag = Tag::where('name', 'like', '%'.$request->get('tag').'%')->first()))
+            {
+                return redirect()->route('posts.index')->withErrors('No results');
+            }
+            $posts = $tag->posts()->paginate(3);
         }else{
-            $posts = Post::orderBy('created_at', 'desc')->paginate(2);
+            $posts = Post::orderBy('created_at', 'desc')->paginate(3);
         }
-        return view('posts.index', ['posts'=>$posts]);*/
+
+        return view('posts.index', ['posts'=>$posts]);
+
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $post = Post::findOrFail($id);
+        return view('posts.show', ['post'=>$post]);
     }
 
     public function profilePosts($id)
@@ -143,19 +151,7 @@ class PostController extends Controller
         return redirect()->route('posts.edit', $post->id)->with('message' , 'The post successfully created!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
 
-        $post = Post::find($id);
-        //$post = Post::all()->currentPage($id);
-        return view('posts.show', ['post'=>$post]);
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -195,7 +191,7 @@ class PostController extends Controller
         $post = Post::find($id);
 
         if($user->cannot("update", $post)){
-            return redirect()->back()->withErrors('khkh');
+            return redirect()->back()->withErrors('Permission denied');
         }
 
         if($request->has('image_id') and $request->has('post_id')) {
@@ -236,6 +232,8 @@ class PostController extends Controller
                 $tags[] = $tag->id;
             }
             $post->tags()->sync($tags);
+        }else{
+            $post->tags()->detach();
         }
 
         if($request->hasFile('main_image')){

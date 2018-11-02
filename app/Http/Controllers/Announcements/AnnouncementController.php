@@ -49,10 +49,18 @@ class AnnouncementController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $announcements = Announcement::orderBy('created_at', 'desc')->paginate(3);
-        return view('announcements.index', ['announcements'=>$announcements]);
+        if($request->has('tag')) {
+            if(empty($tag = Tag::where('name', 'like', '%'.$request->get('tag').'%')->first()))
+            {
+                return redirect()->route('announcements.index')->withErrors('No results');
+            }
+            $announcements = $tag->announcements()->paginate(3);
+        }else{
+            $announcements = Announcement::orderBy('created_at', 'desc')->paginate(3);
+        }
+            return view('announcements.index', ['announcements'=>$announcements]);
     }
 
     public function myAnnouncements()
@@ -60,6 +68,20 @@ class AnnouncementController extends Controller
         $user = Auth::user();
         $announcements = $user->announcements()->paginate(2);
         return view('announcements.my', ['announcements'=>$announcements]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+
+        $announcement = Announcement::findOrFail($id);
+        //$post = Post::all()->currentPage($id);
+        return view('announcements.show', ['announcement'=>$announcement]);
     }
 
     /**
@@ -105,7 +127,7 @@ class AnnouncementController extends Controller
         }
 
         if($request->hasFile('main_image')){
-            $main_image_id = ImageController::store('images/announcements/'.$user->id.'/'.$announcement->id, $request->file('main_image'));
+            $main_image_id = ImageController::store('images/announcements/'.$user->id.'/'.$announcement->id, $request->file('main_image'), $thumb = [true, 190, 190]);
             $announcement->update(['main_image'=>$main_image_id]);
         }
 
@@ -120,16 +142,7 @@ class AnnouncementController extends Controller
         return redirect()->route('announcements.edit', $announcement->id)->with('message' , 'The post successfully created!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -208,11 +221,15 @@ class AnnouncementController extends Controller
                 $tags[] = $tag->id;
             }
             $announcement->tags()->sync($tags);
-        }
+        }else{
+        $announcement->tags()->detach();
+    }
+
+
 
         if($request->hasFile('main_image')){
             $old_main_image = Image::find($announcement->main_image);
-            $main_image_id = ImageController::store('images/announcements/'.$user->id.'/'.$announcement->id, $request->file('main_image'), $thumb = [true, 150, 150]);
+            $main_image_id = ImageController::store('images/announcements/'.$user->id.'/'.$announcement->id, $request->file('main_image'), $thumb = [true, 190, 190]);
             $announcement->update(['main_image'=>$main_image_id]);
             ImageController::destroy($old_main_image);
         }

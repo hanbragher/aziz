@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card medium">
     <div class="card-image waves-effect waves-block waves-light">
         <a href="{{route('posts.show', $post->id)}}"><img  src="{{$post->thumb}}"></a>
     </div>

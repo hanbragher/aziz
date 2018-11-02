@@ -1,37 +1,30 @@
 @extends('layouts.layout')
 
+@section('links')
+    <link href="/css/simplelightbox.min.css" rel="stylesheet">
+@endsection
+@section('links_after')
+    <script src="/js/simple-lightbox.min.js"></script>
+@endsection
+
 @section('content')
 
     <div class="row">
         <div class="col s12">
             @include('widgets.home_slider')
-            @include('inc.tag-search-bar', ['route'=>route('announcements.index')])
         </div>
-
     </div>
-
-    @include('inc.notifications')
 
     <div class="row">
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l10">
-
-            @foreach($announcements as $announcement)
-                <div class="col s12 m12 l6 ">
-                    @include('inc.announcement', ['star'=>true])
-                </div>
-            @endforeach
-
+            @include('inc.show', ['data'=> $announcement])
         </div>
 
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>
-    </div>
 
-    <div class="row center">
-        {{$announcements->appends($_GET)->links()}}
     </div>
-
 
     <script src="/js/slider_mini_script.js"></script>
 
