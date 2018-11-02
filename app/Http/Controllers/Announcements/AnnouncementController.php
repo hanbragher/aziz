@@ -283,7 +283,7 @@ class AnnouncementController extends Controller
         }
 
         if(is_dir(public_path('images/announcements/'.$user->id.'/'.$announcement->id))){
-            File::deleteDirectory(public_path('images/blogs/'.$user->id.'/'.$announcement->id));
+            File::deleteDirectory(public_path('images/announcements/'.$user->id.'/'.$announcement->id));
         }
 
         $announcement->delete();
