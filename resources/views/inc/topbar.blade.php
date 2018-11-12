@@ -43,7 +43,7 @@
             <div class="background" >
                 <img  src="/images/mobile_cover.jpg">
             </div>
-            <a href="#user"><img class="circle" src="{{ !empty($user->avatar) ? $user->avatar->file : '/images/user_avatar.png'}}"></a>
+            <a href="#user"><img class="circle" src="{{ $user->avatar}}"></a>
             <a href="#name"><span class="white-text name">{{$user->first_name}} {{$user->last_name}}</span></a>
             <a href="#email"><span class="white-text email">{{$user->email}}</span></a>
             <a href="{{ route('logout') }}" >Log out</a>

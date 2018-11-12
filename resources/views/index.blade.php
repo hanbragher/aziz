@@ -6,7 +6,7 @@
         <div class="col s12">
             @include('widgets.home_slider')
             @auth
-            @include('inc.middlemenu', ['avatar'=>$user->avatar?$user->avatar:'none', 'header'=>'Profile settings'])
+            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'Profile settings'])
             @endauth
         </div>
     </div>

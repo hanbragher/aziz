@@ -29,6 +29,6 @@ class CreateAnnouncementTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('announcement_tag');
+        Schema::dropIfExists('announcement_tags');
     }
 }

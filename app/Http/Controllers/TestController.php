@@ -15,10 +15,10 @@ use ZipArchive;
 class TestController extends Controller
 {
     public function test(Request $request){
-        $user = User::find(1);
+        /*$user = User::find(1);
         dump($user->blog);
         dump($user->adverts);
-        exit;
+        exit;*/
 
         $public_dir = public_path('/folder/temp');
 

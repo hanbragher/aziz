@@ -32,7 +32,7 @@ class ImageController extends Controller
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })
-                ->save($image_path);
+                ->save();
         }
 
         if($thumb[0] === true){
@@ -62,23 +62,30 @@ class ImageController extends Controller
     }
 
 
-    public function downloadFromSecure(Request $request)
+    static function showFromSecure($image){
+        $image = public_path($image);
+        $imageData = base64_encode(file_get_contents($image));
+        return 'data: '.mime_content_type($image).';base64,'.$imageData;
+    }
+
+
+
+    static function downloadFromSecure($images)
     {
-        $user = Auth::user();
 
+        $temp_dir = public_path('/secure/temp');
 
-
-        $public_dir = public_path('/folder/temp');
-
-        $zipFileName = 'myZip.zip';
+        $zipFileName = 'attachments.zip';
 
         $zip = new ZipArchive;
 
-        $file_path = public_path('/folder/test.jpg');
 
-        if ($zip->open($public_dir . '/' . $zipFileName, ZipArchive::CREATE) === TRUE) {
+        if ($zip->open($temp_dir . '/' . $zipFileName, ZipArchive::CREATE) === TRUE) {
             // Add File in ZipArchive
-            $zip->addFile($file_path,'image.jpg');
+            foreach ($images as $image){
+                $zip->addFile(public_path($image->file),basename($image->file));
+            }
+
             // Close ZipArchive
             $zip->close();
         }
@@ -86,7 +93,7 @@ class ImageController extends Controller
             'Content-Type' => 'application/octet-stream',
         );
 
-        $filetopath=$public_dir.'/'.$zipFileName;
+        $filetopath=$temp_dir.'/'.$zipFileName;
         // Create Download Response
 
         if(file_exists($filetopath)) {

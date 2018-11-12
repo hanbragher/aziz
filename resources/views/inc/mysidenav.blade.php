@@ -16,7 +16,8 @@
     @endif--}}
     <p class="collection-item"></p>
 
-    <a href="/messeges" class="collection-item @if($active == 'messeges') active @endif ">My messages<i class="material-icons right">fiber_new</i></a>
+    <a href="{{route('messages.create')}}" class="collection-item @if($active == 'newmessege') active @endif ">New message</a>
+    <a href="{{route('messages.index')}}" class="collection-item @if($active == 'messeges') active @endif ">My messages @if($user->hasNewMessage()) <i class="material-icons right">fiber_new</i> @endif </a>
     <a href="{{route('notes.index')}}" class="collection-item @if($active == 'mynotes') active @endif ">My notes</a>
     <p class="collection-item"></p>
 

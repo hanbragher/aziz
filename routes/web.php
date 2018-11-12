@@ -33,6 +33,18 @@ Route::resource('/places', 'Places\PlaceController');
 
 Route::resource('/announcements', 'Announcements\AnnouncementController');
 
+Route::resource('/messages', 'Messages\MessageController');
+
+
+Route::get('/message', function () {
+    return Abort(404);
+});
+
+Route::post('/message', [
+    "as" => "messages.downloadAttachments",
+    'uses' => 'Messages\MessageController@downloadAttachment'
+]);
+
 Route::get('/mypage', [
     "as" => "profiles.my",
     'uses' => 'Profiles\ProfileController@myPage'
@@ -87,11 +99,6 @@ Route::get('/editblog', function () {
 
 
 
-
-
-Route::get('/messeges', function () {
-    return view('chat.index');
-});
 
 
 

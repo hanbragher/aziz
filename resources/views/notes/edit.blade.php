@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax')
-            @include('inc.middlemenu')
+            @include('inc.middlemenu', ['avatar'=>$user->avatar,])
         </div>
     </div>
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>

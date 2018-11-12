@@ -1,3 +1,30 @@
 .margin-bottom-0{
     margin-bottom: 0px !important;
 }
+
+ul.msg-tabs {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 48px;
+    width: 100%;
+    background-color: #fff;
+    margin: 0 auto;
+    white-space: nowrap;
+}
+
+li.inbox-col{
+    display: inline-block;
+    text-align: center;
+    line-height: 48px;
+    height: 48px;
+    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+    background-color: rgba(246,178,181,0.2);
+}
+
+
+a.active-tab {
+    color: #ee6e73;
+}

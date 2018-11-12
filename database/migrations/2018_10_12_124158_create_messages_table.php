@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMesssagesTable extends Migration
+class CreateMessagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,21 @@ class CreateMesssagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messsages', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('title')->nullable();
             $table->string('text')->nullable();
 
-            $table->integer("from")->unsigned()->default(null);
-            $table->foreign("from")->references("id")->on("users");
+            $table->integer("from_user")->unsigned()->nullable();
+            $table->foreign("from_user")->references("id")->on("users");
 
-            $table->integer("to")->unsigned()->default(null);
-            $table->foreign("to")->references("id")->on("users");
+            $table->integer("to_user")->unsigned()->nullable();
+            $table->foreign("to_user")->references("id")->on("users");
 
             $table->boolean('is_read')->default(false);
+            $table->boolean('skip_inbox')->default(false);
+            $table->boolean('skip_outbox')->default(false);
             $table->timestamps();
         });
     }
@@ -37,6 +39,6 @@ class CreateMesssagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messsages');
+        Schema::dropIfExists('messages');
     }
 }
