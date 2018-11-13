@@ -2,6 +2,8 @@
 
 namespace Azizner\Providers;
 
+use Azizner\Message;
+use Azizner\Policies\MessagePolicy;
 use Azizner\Policies\PostPolicy;
 use Azizner\Post;
 use Azizner\Policies\AnnouncementPolicy;
@@ -20,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         //'Azizner\Model' => 'Azizner\Policies\ModelPolicy',
         Post::class =>PostPolicy::class,
         Announcement::class =>AnnouncementPolicy::class,
+        Message::class=>MessagePolicy::class,
     ];
 
     /**

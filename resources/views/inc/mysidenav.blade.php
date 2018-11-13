@@ -27,5 +27,5 @@
     <a href="{{route('announcements.create')}}" class="collection-item @if($active == 'newannouncement') active @endif ">New announcement</a>
 
     <p class="collection-item"></p>
-    <a href="{{route('profiles.edit', 1)}}" class="collection-item @if($active == 'mysettings') active @endif ">Profile settings</a>
+    <a href="{{route('profiles.edit', $user->id)}}" class="collection-item @if($active == 'mysettings') active @endif ">Profile settings</a>
 </div>

@@ -75,18 +75,14 @@ class ImageController extends Controller
 
         $temp_dir = public_path('/secure/temp');
 
-        $zipFileName = 'attachments.zip';
+        $zipFileName = 'attachments-'.md5(Carbon::now()).'.zip';
 
         $zip = new ZipArchive;
 
-
         if ($zip->open($temp_dir . '/' . $zipFileName, ZipArchive::CREATE) === TRUE) {
-            // Add File in ZipArchive
             foreach ($images as $image){
                 $zip->addFile(public_path($image->file),basename($image->file));
             }
-
-            // Close ZipArchive
             $zip->close();
         }
         $headers = array(
@@ -94,8 +90,8 @@ class ImageController extends Controller
         );
 
         $filetopath=$temp_dir.'/'.$zipFileName;
-        // Create Download Response
 
+        // Create Download Response
         if(file_exists($filetopath)) {
             return response()->download($filetopath, $zipFileName, $headers)->deleteFileAfterSend(true);
         }

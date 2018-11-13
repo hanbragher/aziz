@@ -21,11 +21,9 @@
             @include('inc.mysidenav', ['active'=>'newmessege'])
         </div>
 
-        <div class="col s12 m12 l8">
+        <div class="col s12 m12 l8" id="!">
             <form action="{{route('messages.store')}}" method="post" id="form" enctype="multipart/form-data">
                 @csrf
-
-
                 <div class="row">
                     <div class="input-field col s12 m6 l6">
                         <input value='{{old("to")}}' id="to" type="email" data-length="100" name="to" required>

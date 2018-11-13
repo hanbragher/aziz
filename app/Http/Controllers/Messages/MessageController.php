@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -80,11 +81,11 @@ class MessageController extends Controller
         $validator = $this->validator($request->all());
         if($validator->fails()){
             //return redirect()->back()->withErrors($validator)->withInput();
-            return redirect()->back()->withErrors('Something wrong, check fields')->withInput();
+            return redirect(URL::previous().'#!')->withErrors('Something wrong, check fields')->withInput();
         }
 
         if(!$to = User::where('email', $request->get('to'))->first()){
-            return redirect()->back()->withErrors('Email address is invalid')->withInput()->with('scroll',true);
+            return redirect(URL::previous().'#!')->withErrors('Email address is invalid')->withInput();
         }
 
         $message = $user->outgoingMSG()->save( new Message([
@@ -111,9 +112,13 @@ class MessageController extends Controller
      */
     public function show(Request $request, $id)
     {
-
         $message = Message::findOrFail($id);
         $user = Auth::user();
+
+        if($user->cannot("show", $message)){
+            return redirect()->back()->withErrors('No permission');
+        }
+
         if($message->to->id == $user->id){
             $message->update([
                 'is_read'=>true,
@@ -126,7 +131,14 @@ class MessageController extends Controller
     public function downloadAttachment(Request $request)
     {
         //todo policy
+        $user = Auth::user();
         $message = Message::findOrFail($request->get('id'));
+
+        if($user->cannot("downloadAttachment", $message)){
+            return redirect()->back()->withErrors('No permission');
+        }
+
+
         $images = $message->images;
         return ImageController::downloadFromSecure($images);
 

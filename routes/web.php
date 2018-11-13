@@ -16,7 +16,6 @@ Route::post('test',['uses'=>'TestController@test']);
 
 Route::get("/posts/my/", [
     "as" => "posts.my",
-    //'middleware' => ['auth'], //todo sarqel policy blogger
     'uses' => 'Posts\PostController@myPosts'
 
 ]);

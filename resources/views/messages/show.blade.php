@@ -28,7 +28,7 @@
                     <p class="title">From: <a class="black-text" href="{{route('profiles.show', $message->from->id)}}">{{$message->from->first_name}} {{$message->from->last_name}} <i class="material-icons tiny">open_in_new</i></a></p>
                     <p class="title">To: {{$message->to->first_name}} {{$message->to->last_name}}</p>
                     <p>Time: {{$message->created_at}} </p>
-                    <a href='#' class="grey-text">delete</a> | <a href='#reply' class="grey-text">reply</a>
+                    <a href='#' class="grey-text"><i class="material-icons tiny">close</i> delete</a> | <a href='#!' class="grey-text"><i class="material-icons tiny">reply</i> reply </a>
 
                 </li>
 
@@ -51,11 +51,10 @@
                 </li>
             </ul>
 
-            <ul class="collection">
-               <li class="collection-item" id="reply">
-
-
-
+            <ul class="collapsible">
+                <li class='{{$errors->all()?"active":''}}' id="!">
+                    <div class="collapsible-header"><i class="material-icons">arrow_drop_down</i>Reply</div>
+                    <div class="collapsible-body">
                         <form action="{{route('messages.store')}}" method="post" id="form" enctype="multipart/form-data">
                             @csrf
 
@@ -97,11 +96,23 @@
 
                         </form>
 
+                    </div>
+                </li>
+
+            </ul>
+
+            {{--<ul class="collection">
+               <li class="collection-item" >
+
+
+
+
+
 
                </li>
 
 
-            </ul>
+            </ul>--}}
 
 
         </div>
