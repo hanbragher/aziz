@@ -2,6 +2,7 @@
 
 namespace Azizner\Http\Controllers\Messages;
 
+use Azizner\Announcement;
 use Azizner\Http\Controllers\ImageController;
 use Azizner\Image;
 use Azizner\Message;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,11 +32,12 @@ class MessageController extends Controller
     protected function validator(array $data)
     {
         $rules = [
-            'to'=>['required', 'string', 'email', 'max:255'],
+            'to'=>['required_without:announcement_id', 'string', 'email', 'max:255'],
             'title' => ['required', 'string', 'max:100'],
             'text' => ['nullable','string'],
             'photos' => [ 'max:12' ],
             'photos.*' => [ 'image', 'mimes:jpeg,bmp,png', 'max:2048'],
+            'announcement_id' => ['nullable', 'numeric'],
             /*'post_id' => ['numeric'],
             'destroy' => ['string', 'in:destroy'],*/
 
@@ -80,12 +83,22 @@ class MessageController extends Controller
 
         $validator = $this->validator($request->all());
         if($validator->fails()){
-            //return redirect()->back()->withErrors($validator)->withInput();
-            return redirect(URL::previous().'#!')->withErrors('Something wrong, check fields')->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
+            //return redirect(URL::previous().'#!')->withErrors('Something wrong, check fields')->withInput();
         }
 
-        if(!$to = User::where('email', $request->get('to'))->first()){
-            return redirect(URL::previous().'#!')->withErrors('Email address is invalid')->withInput();
+        if($request->has('announcement_id')){
+            if(!$announcement = Announcement::where('id', $request->get('announcement_id'))->first()){
+                return redirect(URL::previous().'#!')->withErrors('The announcement not available');
+            }
+
+            if(!$to = $announcement->user){
+                return redirect(URL::previous().'#!')->withErrors('The user not available');
+            }
+        }else{
+            if(!$to = User::where('email', $request->get('to'))->first()){
+                return redirect(URL::previous().'#!')->withErrors('Email address is invalid')->withInput();
+            }
         }
 
         $message = $user->outgoingMSG()->save( new Message([
@@ -97,11 +110,11 @@ class MessageController extends Controller
         if($request->hasFile('photos')){
             $image_ids = null;
             foreach ($request->file('photos') as $file){
-                $image_ids[] = ImageController::store('messages/'.$user->id.'/'.$message->id, $file, $thumb = [true, 150, 150], true, false);
+                $image_ids[] = ImageController::store('messages/'.$user->id.'/'.$message->id, $file, $thumb = [true, 130, 130], true, false);
             }
             $message->images()->attach($image_ids);
         }
-        return redirect()->route('messages.index')->with('message' , 'Message sent successfully!');
+        return redirect()->route('messages.show', $message->id)->with('message' , 'Message sent successfully!');
     }
 
     /**
@@ -116,7 +129,7 @@ class MessageController extends Controller
         $user = Auth::user();
 
         if($user->cannot("show", $message)){
-            return redirect()->back()->withErrors('No permission');
+            return Abort(404);
         }
 
         if($message->to->id == $user->id){
@@ -128,19 +141,14 @@ class MessageController extends Controller
         return view('messages.show', ['message'=>$message]);
     }
 
-    public function downloadAttachment(Request $request)
+    public function downloadAttachment($id)
     {
-        //todo policy
         $user = Auth::user();
-        $message = Message::findOrFail($request->get('id'));
-
+        $message = Message::findOrFail($id);
         if($user->cannot("downloadAttachment", $message)){
             return redirect()->back()->withErrors('No permission');
         }
-
-
-        $images = $message->images;
-        return ImageController::downloadFromSecure($images);
+        return ImageController::downloadFromSecure($message->images);
 
     }
 
@@ -175,6 +183,46 @@ class MessageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        $message = Message::findOrFail($id);
+
+        if($user->cannot("destroy", $message)){
+            return redirect()->back()->withErrors('No permission');
+        }
+
+        if($message->to->id === $user->id){
+            $message->update([
+                'skip_inbox'=>true,
+                'updated_at'=>Carbon::now()
+            ]);
+        }
+
+        if($message->from->id === $user->id){
+            $message->update([
+                'skip_outbox'=>true,
+                'updated_at'=>Carbon::now()
+            ]);
+        }
+
+        if($message->skip_inbox && $message->skip_outbox){
+            $old_images = $message->images;
+            $message->images()->detach();
+
+            if(!empty($old_images)){
+                foreach ($old_images as $image){
+                    ImageController::destroy($image);
+                }
+            }
+
+            if(is_dir(public_path('secure/messages/'.$message->from->id.'/'.$message->id))){
+                File::deleteDirectory(public_path('secure/messages/'.$message->from->id.'/'.$message->id));
+            }
+            $message->delete();
+
+        }
+
+        return redirect()->route('messages.index')->with('message' , 'Message deleted!');
+        //redirect()->route('messages.index');
+
     }
 }

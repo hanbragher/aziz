@@ -306,7 +306,7 @@ class PostController extends Controller
     public function myPosts($id = null)
     {
         $user = Auth::user();
-        $posts = $user->blog->posts()->paginate(1);
+        $posts = $user->blog->posts()->paginate(2);
         return view('posts.my', ['posts'=>$posts]);
     }
 

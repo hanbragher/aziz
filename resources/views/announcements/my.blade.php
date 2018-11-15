@@ -7,6 +7,24 @@
             @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'My announcements'])
         </div>
     </div>
+
+    @include('inc.notifications')
+
+    <div class="modal delete">
+        <form action="/" method="post" id="delete_announcement_form" enctype="multipart/form-data">
+            @method('DELETE')
+            @csrf
+            <div class="modal-content">
+                <h4>Delete confirmation</h4>
+                <p>Do you want to delete this message?</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+                <button class="btn red">Delete</button>
+            </div>
+        </form>
+    </div>
+
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
 
@@ -41,6 +59,18 @@
 
         </div>
     </div>
+
+    <script>
+        $(document).ready(function(){
+            var elems = document.getElementsByClassName('modal delete');
+            var instance = M.Modal.init(elems[0]);
+            $("a.modal-open-delete").click(function () {
+                document.getElementById('delete_announcement_form').action = $(this).data("announcementaction");
+                instance.open()
+            })
+        });
+
+    </script>
 
 @endsection
 

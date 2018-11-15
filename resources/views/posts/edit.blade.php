@@ -121,8 +121,6 @@
                     </div>
 
 
-
-
                     @if($post->images->first())
                         <div class="row ">
                             @foreach($post->images as $image)

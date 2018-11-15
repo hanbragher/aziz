@@ -25,9 +25,11 @@
 </div>
 
 <div class="row">
-    <a class='btn' href="{{URL::previous()}}">Back</a>
+    <a class='btn' href="{{URL::previous()}}"><i class="material-icons left">arrow_back</i>Back</a>
+    <a class='modal-trigger btn right' href="#modal-reply">Reply<i class="material-icons right">rotate_right</i></a>
 </div>
 
 <script>
     $('.gallery a ').simpleLightbox();
+
 </script>

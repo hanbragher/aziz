@@ -39,7 +39,7 @@ Route::get('/message', function () {
     return Abort(404);
 });
 
-Route::post('/message', [
+Route::post('/message/{id}', [
     "as" => "messages.downloadAttachments",
     'uses' => 'Messages\MessageController@downloadAttachment'
 ]);
@@ -52,6 +52,11 @@ Route::get('/mypage', [
 Route::get('/myannouncements', [
     "as" => "announcements.my",
     'uses' => 'Announcements\AnnouncementController@myAnnouncements'
+]);
+
+Route::post('/myannouncements/{id}/reply', [
+    "as" => "announcements.reply",
+    'uses' => 'Announcements\AnnouncementController@announcementReply'
 ]);
 
 Route::get('/profile/{id}/posts', [

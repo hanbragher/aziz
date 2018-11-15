@@ -13,6 +13,8 @@
 
 
         @if(!empty($star) and $star == true)
+            <a href="#!" class="secondary-content right"><i class="material-icons orange-text">star</i></a>
+        @else
             <a href="#!" class="secondary-content right"><i class="material-icons orange-text">star_border</i></a>
         @endif
 
@@ -36,14 +38,12 @@
         @if(!empty($editable) and $editable == true)
             <a href="{{route('announcements.edit', $announcement->id)}}" >Edit</a>
             <a href="{{route('announcements.show', $announcement->id)}}" >show</a>
-            <form action="{{route('announcements.destroy', $announcement->id)}}" method="post">
-                @method('DELETE')
-                @csrf
-                <button class="btn-floating halfway-fab waves-effect waves-light red" onclick="return confirm('remove announcement?')"><i class="material-icons">delete_forever</i></button>
-            </form>
+
+            <a data-announcementaction='{{route('announcements.destroy', $announcement->id)}}'  class="modal-open-delete btn-floating halfway-fab waves-effect waves-light red"  ><i class="material-icons">delete_forever</i></a>
+
         @else
             <a href="{{route('announcements.show', $announcement->id)}}">show more</a>
-            <a href="{{route('announcements.show', $announcement->id)}}">reply</a>
+            <a href="{{route('announcements.show', $announcement->id)}}#modal-reply">reply</a>
         @endif
 
     </div>

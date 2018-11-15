@@ -12,6 +12,7 @@
         <i class="secondary-content material-icons right">fiber_new</i>
     @endif
 
-    <a href='#' class="grey-text">delete</a>
+    <a data-messageaction='{{route('messages.destroy', $id)}}' class="modal-open-delete grey-text btn-flat modal-trigger">delete</a>
+
 
 </li>

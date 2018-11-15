@@ -114,7 +114,7 @@ class ProfileController extends Controller
 
         if($request->hasFile('avatar')){
             $old_avatar = Image::find($user->avatar_id);
-            $avatar_id = ImageController::store('images/users/'.$user->id, $request->file('avatar'));
+            $avatar_id = ImageController::store('images/users/'.$user->id, $request->file('avatar'), [true, 1000, 1000]);
             $user->update(['avatar_id'=>$avatar_id]);
             ImageController::destroy($old_avatar);
         }
