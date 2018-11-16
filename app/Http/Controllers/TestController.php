@@ -9,16 +9,28 @@ use Illuminate\Http\Request;
 use Azizner\Image;
 use Illuminate\Support\Facades\App;
 use ZipArchive;
+use Azizner\Announcement;
 
 
 
 class TestController extends Controller
 {
     public function test(Request $request){
-        /*$user = User::find(1);
-        dump($user->blog);
+        $user = User::find(1);
+        /*dump($user->blog);
         dump($user->adverts);
-        exit;*/
+        dump($user->favoriteAnnouncements);*/
+
+        /*$user->favoriteAnnouncements()->attach(1);*/
+        dump(route('favorites.store'));
+
+        dump($user->favoriteAnnouncements->contains(3));
+        dump($announcement = Announcement::where('id',50)->first());
+
+
+
+
+        exit;
 
         $public_dir = public_path('/folder/temp');
 

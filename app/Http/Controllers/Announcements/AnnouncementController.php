@@ -139,7 +139,7 @@ class AnnouncementController extends Controller
             $announcement->images()->attach($image_ids);
         }
 
-        return redirect()->route('announcements.edit', $announcement->id)->with('message' , 'The post successfully created!');
+        return redirect()->route('announcements.edit', $announcement->id)->with('message' , 'The announcement successfully created!');
     }
 
 
@@ -219,13 +219,11 @@ class AnnouncementController extends Controller
             {
                 $tag = Tag::firstOrCreate(['name'=>$item->tag]);
                 $tags[] = $tag->id;
-            }
+            };
             $announcement->tags()->sync($tags);
         }else{
-        $announcement->tags()->detach();
-    }
-
-
+            $announcement->tags()->detach();
+        }
 
         if($request->hasFile('main_image')){
             $old_main_image = Image::find($announcement->main_image);
@@ -247,7 +245,8 @@ class AnnouncementController extends Controller
             $announcement->images()->attach($image_ids);
         }
 
-        return redirect()->back()->with('message' , 'The post successfully updated!');
+        return redirect()->route('announcements.edit', $announcement->id)->with('message' , 'The announcement successfully updated!');
+
     }
 
     /**

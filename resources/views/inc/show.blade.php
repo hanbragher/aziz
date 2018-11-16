@@ -1,5 +1,6 @@
 <div class="row">
     <h5 class="flow text center">{{$data->title}}</h5>
+
     <p><img class="materialboxed" src="{{$data->image}}" height="150"
             align="left"
             vspace="5" hspace="5">

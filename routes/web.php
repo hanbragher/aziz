@@ -34,6 +34,8 @@ Route::resource('/announcements', 'Announcements\AnnouncementController');
 
 Route::resource('/messages', 'Messages\MessageController');
 
+Route::resource('/favorites', 'Favorites\FavoriteController');
+
 
 Route::get('/message', function () {
     return Abort(404);

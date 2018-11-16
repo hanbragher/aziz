@@ -46,4 +46,6 @@ class AnnouncementPolicy
         }
         return false;
     }
+
+
 }

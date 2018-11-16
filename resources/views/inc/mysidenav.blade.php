@@ -1,4 +1,4 @@
-<div class="collection ">
+<div class="collection">
     <a href="/mypage" class="collection-item @if($active == 'mypage') active @endif ">My page</a>
     <p class="collection-item"></p>
 
@@ -25,6 +25,7 @@
         <a href="{{route('announcements.my')}}" class="collection-item @if($active == 'myannouncements') active @endif ">My announcements</a>
     @endif
     <a href="{{route('announcements.create')}}" class="collection-item @if($active == 'newannouncement') active @endif ">New announcement</a>
+    <a href="{{route('favorites.index')}}" class="collection-item @if($active == 'favoritesindex') active @endif ">Favorites</a>
 
     <p class="collection-item"></p>
     <a href="{{route('profiles.edit', $user->id)}}" class="collection-item @if($active == 'mysettings') active @endif ">Profile settings</a>

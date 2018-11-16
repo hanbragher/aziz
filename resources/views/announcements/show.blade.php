@@ -41,7 +41,7 @@
     @else
         <div id='modal-reply' class="modal">
                 <div class="modal-content">
-                    <h4 class="center">Please log in before reply</h4>
+                    <h4 class="center">Please log in before</h4>
                 </div>
                 <div class="modal-footer">
                     <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
@@ -54,15 +54,20 @@
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l10">
+            @auth
+                <a href="#!" data-announcementid='{{$announcement->id}}' class="set-favorite secondary-content right"><i class="material-icons {{($user->favoriteAnnouncements->contains($announcement->id))?'orange-text':''}}">star</i></a>
+            @else
+                <a href="#modal-reply" class="modal-trigger secondary-content right"><i class="material-icons">star</i></a>
+            @endauth
             @include('inc.show', ['data'=> $announcement])
         </div>
-        {{--<a data-title='{{$announcement->title}}' href="#modal-reply" class="modal-trigger truncate grey-text center" ><i class="material-icons tiny">create</i>fbdfhdfh</a>--}}
 
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>
 
     </div>
 
     <script src="/js/slider_mini_script.js"></script>
+    <script src="/js/set-favorite.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -77,6 +82,7 @@
                 $('.modal').modal('open');
             }
         });
+
 
     </script>
 

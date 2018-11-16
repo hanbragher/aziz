@@ -32,20 +32,20 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'myannouncements'])
+            @include('inc.mysidenav', ['active'=>'favoritesindex'])
         </div>
 
         <div class="col s12 m12 l8">
             <div class="row">
                 @foreach($announcements as $announcement)
-                <div class="col s12 m12 l6 ">
-                    @include('inc.announcement', [
-                                'starable' => true,
-                                'star'=> $user->favoriteAnnouncements->contains($announcement->id),
-                                'announcement' => $announcement,
-                                'editable'=>true
-                                ])
-                </div>
+                    <div class="col s12 m12 l6 ">
+                        @include('inc.announcement', [
+                                    'starable' => true,
+                                    'star'=> $user->favoriteAnnouncements->contains($announcement->id),
+                                    'announcement' => $announcement,
+                                    'editable'=>false
+                                    ])
+                    </div>
                 @endforeach
             </div>
 
@@ -61,8 +61,9 @@
 
         </div>
     </div>
-    
+
     <script src="/js/set-favorite.js"></script>
+
     <script>
         $(document).ready(function(){
             var elems = document.getElementsByClassName('modal delete');

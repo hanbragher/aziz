@@ -11,13 +11,13 @@
         </a>
 
 
-
-        @if(!empty($star) and $star == true)
-            <a href="#!" class="secondary-content right"><i class="material-icons orange-text">star</i></a>
-        @else
-            <a href="#!" class="secondary-content right"><i class="material-icons orange-text">star_border</i></a>
+        @if($starable === true)
+            @auth
+                <a href="#!" data-announcementid='{{$announcement->id}}' class="set-favorite secondary-content right"><i class="material-icons {{($star)?'orange-text':''}}">star</i></a>
+            @else
+                <a href="#modal-reply" class="modal-trigger secondary-content right"><i class="material-icons">star</i></a>
+            @endauth
         @endif
-
         <p class="flow-text center truncate"><a href="{{route('announcements.show', $announcement->id)}}">{{$announcement->title}}</a></p>
         <p class="truncate">{{$announcement->text}}</p>
         <p class="truncate">Date: {{$announcement->created_at}}</p>
@@ -38,9 +38,7 @@
         @if(!empty($editable) and $editable == true)
             <a href="{{route('announcements.edit', $announcement->id)}}" >Edit</a>
             <a href="{{route('announcements.show', $announcement->id)}}" >show</a>
-
             <a data-announcementaction='{{route('announcements.destroy', $announcement->id)}}'  class="modal-open-delete btn-floating halfway-fab waves-effect waves-light red"  ><i class="material-icons">delete_forever</i></a>
-
         @else
             <a href="{{route('announcements.show', $announcement->id)}}">show more</a>
             <a href="{{route('announcements.show', $announcement->id)}}#modal-reply">reply</a>

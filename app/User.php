@@ -86,6 +86,10 @@ class User extends Authenticatable
         return false;
     }
 
+    public function favoriteAnnouncements(){
+        return $this->belongsToMany("Azizner\Announcement", "favorite_announcements");
+    }
+
 
 
 
