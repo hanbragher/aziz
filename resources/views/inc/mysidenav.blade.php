@@ -21,9 +21,7 @@
     <a href="{{route('notes.index')}}" class="collection-item @if($active == 'mynotes') active @endif ">My notes</a>
     <p class="collection-item"></p>
 
-    @if($user->announcements->first())
-        <a href="{{route('announcements.my')}}" class="collection-item @if($active == 'myannouncements') active @endif ">My announcements</a>
-    @endif
+    <a href="{{route('announcements.my')}}" class="collection-item @if($active == 'myannouncements') active @endif ">My announcements</a>
     <a href="{{route('announcements.create')}}" class="collection-item @if($active == 'newannouncement') active @endif ">New announcement</a>
     <a href="{{route('favorites.index')}}" class="collection-item @if($active == 'favoritesindex') active @endif ">Favorites</a>
 

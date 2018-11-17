@@ -35,9 +35,6 @@
             @include('inc.mysidenav', ['active'=>'messeges'])
         </div>
 
-
-
-
         <div class="col s12 m12 l8">
             <div class="row">
 
@@ -70,10 +67,10 @@
                         </ul>
                     @else
                         <p class="flow-text center">No Messages</p>
+                        @if($show=='to')
+                            <p class="center"><a href="{{route('messages.create')}}" class="btn-flat">create a new</a></p>
+                        @endif
                     @endif
-
-
-
 
             </div>
 

@@ -2,6 +2,8 @@
 
 namespace Azizner\Http\Controllers\Blogs;
 
+use Azizner\Blogger;
+use Azizner\Post;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 
@@ -46,7 +48,16 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        //
+
+
+        if(empty($blogger = Blogger::where('id', $id)->first()))
+        {
+            return redirect()->route('posts.index')->withErrors('No results');
+        }
+
+        $posts = $blogger->posts()->orderBy('created_at', 'desc')->paginate(3);
+
+        return view('blogs.show', ['posts'=>$posts]);
     }
 
     /**

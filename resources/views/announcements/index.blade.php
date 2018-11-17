@@ -17,31 +17,28 @@
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l10">
-            @guest
+
+            @if($announcements->first())
+                @guest
                 @php $star =  false;  @endphp
-                <div id='modal-reply' class="modal">
-                    <div class="modal-content">
-                        <h4 class="center">Please log in before</h4>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-                        <a href="{{route('login')}}" class="btn">Log in</a>
-                    </div>
-                </div>
-            @endguest
+                @include('inc.modal-please-login')
+                @endguest
 
-
-
-            @foreach($announcements as $announcement)
-                <div class="col s12 m12 l6 ">
-                    @auth
+                @foreach($announcements as $announcement)
+                    <div class="col s12 m12 l6 ">
+                        @auth
                         @php $star =  $user->favoriteAnnouncements->contains($announcement->id) @endphp
-                    @endauth
-                    @include('inc.announcement', [
-                           'starable' => true,
-                           'star'=>$star])
-                </div>
-            @endforeach
+                        @endauth
+                        @include('inc.announcement', [
+                               'starable' => true,
+                               'star'=>$star])
+                    </div>
+                @endforeach
+
+            @else
+                <p class="flow-text center">No announcements</p>
+            @endif
+
 
         </div>
 

@@ -8,10 +8,10 @@
             <div class="col s4 m4 l8">
                 <a href="/" class="brand-logo">Logo</a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{route('places.index', ['places'=>'all'])}}">Explore</a></li>
+                    <li><a href="{{route('places.index', ['places'=>'all'])}}" class="{{(!empty($active_menu) and $active_menu == 'places')?'teal':''}}">Explore</a></li>
                     <li><a href="#">Photos</a></li>
-                    <li><a href="{{route('posts.index')}}">Posts</a></li>
-                    <li><a href="{{route('announcements.index')}}">Announcements</a></li>
+                    <li><a href="{{route('posts.index')}}" class="{{(!empty($active_menu) and $active_menu == 'posts')?'teal':''}}">Posts</a></li>
+                    <li><a href="{{route('announcements.index')}}" class="{{(!empty($active_menu) and $active_menu == 'announcements')?'teal':''}}">Announcements</a></li>
                     @auth
                         <li><a class='btn' href='/mypage'><i class="material-icons">account_circle</i></a></li>
                     @else
@@ -43,7 +43,7 @@
             <div class="background" >
                 <img  src="/images/mobile_cover.jpg">
             </div>
-            <a href="#user"><img class="circle" src="{{ $user->avatar}}"></a>
+            <a href="#user"><img class="circle" src="{{ $user->thumb}}"></a>
             <a href="#name"><span class="white-text name">{{$user->first_name}} {{$user->last_name}}</span></a>
             <a href="#email"><span class="white-text email">{{$user->email}}</span></a>
             <a href="{{ route('logout') }}" >Log out</a>
@@ -73,14 +73,33 @@
         <div class="divider"></div>
     </li>
     <li>
-        <div class="collapsible-header black-text" >
-            <a class='black-text' href="{{route('blogs.index')}}">
-                <i class="material-icons ">wallpaper</i>
-                Blog
+        <div class="sidenav-item black-text {{(!empty($active_menu) and $active_menu == 'photos')?'grey lighten-3':''}}" >
+            <a class='black-text' href="{{route('posts.index')}}">
+                <i class="material-icons sidenav-icon">center_focus_weak</i>
+                Photos
             </a>
         </div>
     </li>
     <li><div class="divider"></div></li>
+    <li>
+        <div class="sidenav-item black-text {{(!empty($active_menu) and $active_menu == 'posts')?'grey lighten-3':''}}" >
+            <a class='black-text' href="{{route('posts.index')}}">
+                <i class="material-icons sidenav-icon">wallpaper</i>
+                Posts
+            </a>
+        </div>
+    </li>
+    <li><div class="divider"></div></li>
+    <li>
+        <div class="sidenav-item black-text {{(!empty($active_menu) and $active_menu == 'announcements')?'grey lighten-3':''}}" >
+            <a class='black-text' href="{{route('announcements.index')}}">
+                <i class="material-icons sidenav-icon">chat_bubble_outline</i>
+                Announcements
+            </a>
+        </div>
+    </li>
+    <li><div class="divider"></div></li>
+
 </ul>
 
 

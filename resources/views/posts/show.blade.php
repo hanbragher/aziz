@@ -19,7 +19,9 @@
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l10">
-            @include('inc.show', ['data'=> $post])
+            @include('inc.show', [
+                        'type' => 'blog',
+                        'data'=> $post])
         </div>
 
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>

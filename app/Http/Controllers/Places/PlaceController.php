@@ -18,7 +18,7 @@ class PlaceController extends Controller
         //dump($request->all());
         //exit;
 
-        return view('places.index', ['place'=>$request->get('place')]);
+        return view('places.index', ['place'=>$request->get('place'), 'active_menu'=>'places']);
 
     }
 
@@ -51,7 +51,7 @@ class PlaceController extends Controller
      */
     public function show($id)
     {
-        return view('places.show');
+        return view('places.show', ['active_menu'=>'places']);
     }
 
     /**

@@ -50,14 +50,10 @@
             <div class="row">
                 @foreach($posts as $post)
                     <div class="col s6 m4 l3">
-                        @include('widgets.card', [
+                        @include('inc.post', [
                          'editable' => true,
-                         'route'=> route('posts.show', $post->id),
-                         'mainImage'=> $post->thumb,
-                         'id' => $post->id,
-                         'title' => $post->title,
-                         'tags' => $post->tags,
-                         'text' => $post->text
+                         'blog_name'=> 'hide',
+                         'post'=> $post
                          ])
                     </div>
 

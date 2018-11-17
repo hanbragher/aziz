@@ -60,7 +60,7 @@ class AnnouncementController extends Controller
         }else{
             $announcements = Announcement::orderBy('created_at', 'desc')->paginate(3);
         }
-            return view('announcements.index', ['announcements'=>$announcements]);
+            return view('announcements.index', ['announcements'=>$announcements, 'active_menu'=>'announcements']);
     }
 
     public function myAnnouncements()
@@ -81,7 +81,7 @@ class AnnouncementController extends Controller
 
         $announcement = Announcement::findOrFail($id);
         //$post = Post::all()->currentPage($id);
-        return view('announcements.show', ['announcement'=>$announcement]);
+        return view('announcements.show', ['announcement'=>$announcement, 'active_menu'=>'announcements']);
     }
 
     /**

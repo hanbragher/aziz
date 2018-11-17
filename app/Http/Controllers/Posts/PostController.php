@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Collection;
 
 class PostController extends Controller
 {
@@ -54,13 +55,14 @@ class PostController extends Controller
             if(empty($tag = Tag::where('name', 'like', '%'.$request->get('tag').'%')->first()))
             {
                 return redirect()->route('posts.index')->withErrors('No results');
+            }else{
+                $posts = $tag->posts()->paginate(3);
             }
-            $posts = $tag->posts()->paginate(3);
         }else{
             $posts = Post::orderBy('created_at', 'desc')->paginate(3);
         }
 
-        return view('posts.index', ['posts'=>$posts]);
+        return view('posts.index', ['posts'=>$posts, 'active_menu'=>'posts']);
 
     }
 
@@ -73,7 +75,7 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.show', ['post'=>$post]);
+        return view('posts.show', ['post'=>$post, 'active_menu'=>'posts']);
     }
 
     public function profilePosts($id)

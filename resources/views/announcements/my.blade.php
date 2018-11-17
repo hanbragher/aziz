@@ -37,16 +37,21 @@
 
         <div class="col s12 m12 l8">
             <div class="row">
-                @foreach($announcements as $announcement)
-                <div class="col s12 m12 l6 ">
-                    @include('inc.announcement', [
-                                'starable' => true,
-                                'star'=> $user->favoriteAnnouncements->contains($announcement->id),
-                                'announcement' => $announcement,
-                                'editable'=>true
-                                ])
-                </div>
-                @endforeach
+                @if($announcements->first())
+                    @foreach($announcements as $announcement)
+                    <div class="col s12 m12 l6 ">
+                        @include('inc.announcement', [
+                                    'starable' => true,
+                                    'star'=> $user->favoriteAnnouncements->contains($announcement->id),
+                                    'announcement' => $announcement,
+                                    'editable'=>true
+                                    ])
+                    </div>
+                    @endforeach
+                @else
+                    <p class="flow-text center">No announcements</p>
+                    <p class="center"><a href="{{route('announcements.create')}}" class="btn-flat">create a new</a></p>
+                @endif
             </div>
 
             <div class="row center">

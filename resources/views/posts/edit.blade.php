@@ -37,10 +37,8 @@
         <div class="col s12 m12 l8">
             <div class="row">
 
-
-
                 <!-- Modal Structure -->
-                <div id="image_delete" class="modal delete">
+                <div class="modal delete">
                     <form action="{{route('posts.update', $post->id)}}" method="post" id="form1" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
@@ -58,7 +56,7 @@
                     </form>
                 </div>
 
-                <div id="image_delete" class="modal title">
+                <div class="modal title">
                     <form action="{{route('posts.update', $post->id)}}" method="post" id="form1" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf

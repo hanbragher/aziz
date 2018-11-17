@@ -25,7 +25,7 @@
                     <h4>Reply</h4>
                     <input name="announcement_id" value="{{$announcement->id}}" type="hidden">
                     <div class="input-field">
-                        <input id="title" name="title" value="RE: {{$announcement->title}}" placeholder="max 100 character" data-length="100">
+                        <input id="title" name="title" value="RE:(code:{{$announcement->id}}) {{$announcement->title}}" placeholder="max 100 character" data-length="100">
                     </div>
                     <div class="input-field">
                         <input name="text" value="" placeholder="type your message" required>
@@ -39,15 +39,7 @@
             </form>
         </div>
     @else
-        <div id='modal-reply' class="modal">
-                <div class="modal-content">
-                    <h4 class="center">Please log in before</h4>
-                </div>
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-                    <a href="{{route('login')}}" class="btn">Log in</a>
-                </div>
-        </div>
+        @include('inc.modal-please-login')
     @endauth
 
     <div class="row">
@@ -57,9 +49,11 @@
             @auth
                 <a href="#!" data-announcementid='{{$announcement->id}}' class="set-favorite secondary-content right"><i class="material-icons {{($user->favoriteAnnouncements->contains($announcement->id))?'orange-text':''}}">star</i></a>
             @else
-                <a href="#modal-reply" class="modal-trigger secondary-content right"><i class="material-icons">star</i></a>
+                <a href="#modal-please-login" class="modal-trigger secondary-content right"><i class="material-icons">star</i></a>
             @endauth
+
             @include('inc.show', ['data'=> $announcement])
+
         </div>
 
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>
