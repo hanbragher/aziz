@@ -17,4 +17,8 @@ class Tag extends Model
     public function announcements(){
         return $this->belongsToMany("Azizner\Announcement", 'announcement_tags');
     }
+
+    public function photos(){
+        return $this->belongsToMany("Azizner\Photo", 'photo_tags');
+    }
 }

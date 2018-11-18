@@ -163,7 +163,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         $user = Auth::user();
 
         if($user->cannot("edit", $post)){

@@ -19,7 +19,7 @@ class CreateAnnouncementsTable extends Migration
             $table->string('title')->nullable();
             $table->text('text')->nullable();
 
-            $table->integer("user_id")->unsigned()->default(null);
+            $table->integer("user_id")->nullable()->unsigned()->default(null);
             $table->foreign("user_id")->references("id")->on("users");
 
             $table->integer("main_image")->nullable()->unsigned()->default(null);

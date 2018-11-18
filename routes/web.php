@@ -20,6 +20,12 @@ Route::get("/posts/my/", [
 
 ]);
 
+Route::get("/photos/my/", [
+    "as" => "photos.my",
+    'uses' => 'Photos\PhotoController@myPhotos'
+
+]);
+
 Route::resource('/posts', 'Posts\PostController');
 
 Route::resource('/blogs', 'Blogs\BlogController');
@@ -35,6 +41,8 @@ Route::resource('/announcements', 'Announcements\AnnouncementController');
 Route::resource('/messages', 'Messages\MessageController');
 
 Route::resource('/favorites', 'Favorites\FavoriteController');
+
+Route::resource('/photos', 'Photos\PhotoController');
 
 
 Route::get('/message', function () {

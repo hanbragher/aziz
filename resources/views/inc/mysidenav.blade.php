@@ -19,6 +19,12 @@
     <a href="{{route('messages.create')}}" class="collection-item @if($active == 'newmessege') active @endif ">New message</a>
     <a href="{{route('messages.index')}}" class="collection-item @if($active == 'messeges') active @endif ">My messages @if($user->hasNewMessage()) <i class="material-icons right">fiber_new</i> @endif </a>
     <a href="{{route('notes.index')}}" class="collection-item @if($active == 'mynotes') active @endif ">My notes</a>
+
+    <p class="collection-item"></p>
+
+    <a href="{{route('photos.my')}}" class="collection-item @if($active == 'myphotos') active @endif ">My photos</a>
+    <a href="{{route('photos.create')}}" class="collection-item @if($active == 'newphoto') active @endif ">New photo</a>
+
     <p class="collection-item"></p>
 
     <a href="{{route('announcements.my')}}" class="collection-item @if($active == 'myannouncements') active @endif ">My announcements</a>

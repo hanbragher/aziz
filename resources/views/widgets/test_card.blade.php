@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card ">
     <div class="card-image waves-effect waves-block waves-light">
         {{--@php
         $img = public_path('/folder/454541');

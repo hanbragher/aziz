@@ -24,14 +24,17 @@
 
     <div class="card-reveal">
         <i class="material-icons right card-title">close</i>
+
+        <span class="card-title grey-text text-darken-4">{{$post->title}}</span>
+
         @if($post->tags->first())
+            <div class="divider"></div>
             <p>
-            @foreach($post->tags as $tag)
-                <a class="chip" href="{{route('posts.index', ['tag'=>$tag->name])}}">{{$tag->name}}</a>
-            @endforeach
+                @foreach($post->tags as $tag)
+                    <a class="chip" href="{{route('posts.index', ['tag'=>$tag->name])}}">{{$tag->name}}</a>
+                @endforeach
             </p>
         @endif
-        <span class="card-title grey-text text-darken-4">{{$post->title}}</span>
 
         <div class="divider"></div>
 
