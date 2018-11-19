@@ -47,7 +47,7 @@
 
         <div class="col s12 m12 l10">
             @auth
-                <a href="#!" data-announcementid='{{$announcement->id}}' class="set-favorite secondary-content right"><i class="material-icons {{($user->favoriteAnnouncements->contains($announcement->id))?'orange-text':''}}">star</i></a>
+                <a href="#!" data-type="announcement" data-id='{{$announcement->id}}' class="set-favorite secondary-content right"><i class="material-icons {{($user->favoriteAnnouncements->contains($announcement->id))?'orange-text':''}}">star</i></a>
             @else
                 <a href="#modal-please-login" class="modal-trigger secondary-content right"><i class="material-icons">star</i></a>
             @endauth

@@ -12,7 +12,7 @@
 
         @if($starable === true)
             @auth
-                <a href="#!" data-announcementid='{{$announcement->id}}' class="set-favorite secondary-content right"><i class="material-icons {{($star)?'orange-text':''}}">star</i></a>
+                <a href="#!" data-type="announcement" data-id='{{$announcement->id}}' class="set-favorite secondary-content right"><i class="material-icons {{($star)?'orange-text':''}}">star</i></a>
             @else
                 <a href="#modal-please-login" class="modal-trigger secondary-content right"><i class="material-icons">star</i></a>
             @endauth
@@ -36,9 +36,11 @@
         @if(!empty($editable) and $editable == true)
             <a href="{{route('announcements.edit', $announcement->id)}}" >Edit</a>
             <a href="{{route('announcements.show', $announcement->id)}}" >show</a>
-            <a data-announcementaction='{{route('announcements.destroy', $announcement->id)}}'  class="modal-open-delete btn-floating halfway-fab waves-effect waves-light red"  ><i class="material-icons">delete_forever</i></a>
+            @include('inc.share-button', ['type'=>'link', 'link'=>'#'])
+            <a data-actionroute='{{route('announcements.destroy', $announcement->id)}}'  class="modal-open-delete btn-floating halfway-fab waves-effect waves-light red"  ><i class="material-icons">delete_forever</i></a>
         @else
             <a href="{{route('announcements.show', $announcement->id)}}">show more</a>
+            @include('inc.share-button', ['type'=>'floating', 'link'=>'#'])
             @auth
                 <a href="{{route('announcements.show', $announcement->id)}}#modal-reply">reply</a>
             @else

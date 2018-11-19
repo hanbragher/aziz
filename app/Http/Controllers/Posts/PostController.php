@@ -271,7 +271,7 @@ class PostController extends Controller
     public function destroy($id)
     {
         $user = Auth::user();
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
 
         if($user->cannot("destroy", $post)){
             return redirect()->back()->withErrors('khkh');

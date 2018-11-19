@@ -9,7 +9,8 @@ $(document).ready(function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data :{
-                "id":$(this).data("announcementid"),
+                "id":$(this).data("id"),
+                "type":$(this).data("type")
             },
             success: function(data){
                 if(data.status === "success"){

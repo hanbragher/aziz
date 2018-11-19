@@ -221,14 +221,8 @@
             }
         });
 
-        $('#form').submit(function(e){
-            var data = JSON.stringify(M.Chips.getInstance($('.chips')).chipsData);
-            $(this).append('<input type="hidden" name="tags" value='+data+'>');
-            return true;
-        });
-
-
     </script>
+    <script src="/js/add-tags-on-submit-form.js"></script>
 
 
 

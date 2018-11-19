@@ -2,6 +2,16 @@ div.sidenav-item{
     padding-left: 1rem;
 }
 
+a.set-fav-photo{
+    position: absolute;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+i.padded-left{
+    padding-left: 5px;
+}
+
 i.sidenav-icon{
     margin-right: 1rem;
 }

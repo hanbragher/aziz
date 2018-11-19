@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>$user->cover])
-            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'My announcements'])
+            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'Favorite announcements'])
         </div>
     </div>
 
@@ -17,7 +17,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'favoritesindex'])
+            @include('inc.mysidenav', ['active'=>'favoritesannouncements'])
         </div>
 
         <div class="col s12 m12 l8">

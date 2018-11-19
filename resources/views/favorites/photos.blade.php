@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>$user->cover])
-            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'My photos'])
+            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'Favorite Photos'])
         </div>
     </div>
 
@@ -42,7 +42,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'myphotos'])
+            @include('inc.mysidenav', ['active'=>'favoritesphotos'])
         </div>
 
         <div class="col s12 m12 l8">
@@ -50,10 +50,10 @@
                 @if($photos->first())
                     @foreach($photos as $photo)
                         <div class="col col s6 m4 l3">
-                        @include('inc.photo_card', [
-                        'star'=> $user->favoritePhotos->contains($photo->id),
-                        'photo'=>$photo,
-                        'editable'=>true])
+                            @include('inc.photo_card', [
+                            'star'=> $user->favoritePhotos->contains($photo->id),
+                            'photo'=>$photo,
+                            'editable'=>false])
                         </div>
                     @endforeach
                 @else
@@ -63,7 +63,7 @@
             </div>
 
             <div class="row center">
-                    {{$photos->appends($_GET)->links()}}
+                {{$photos->appends($_GET)->links()}}
             </div>
 
         </div>
@@ -81,7 +81,3 @@
 
 
 @endsection
-
-
-
-

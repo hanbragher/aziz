@@ -21,20 +21,7 @@
 
     @include('inc.notifications')
 
-    <div class="modal delete">
-        <form action="/" method="post" id="delete_post_form" enctype="multipart/form-data">
-            @method('DELETE')
-            @csrf
-            <div class="modal-content">
-                <h4>Delete confirmation</h4>
-                <p>Do you want to delete this post?</p>
-            </div>
-            <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-                <button class="btn red">Delete</button>
-            </div>
-        </form>
-    </div>
+    @include('inc.modal-destroy-form')
 
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
@@ -72,17 +59,7 @@
         </div>
     </div>
 
-    <script>
-        $(document).ready(function(){
-            var elems = document.getElementsByClassName('modal delete');
-            var instance = M.Modal.init(elems[0]);
-            $("a.modal-open-delete").click(function () {
-                document.getElementById('delete_post_form').action = $(this).data("postaction");
-                instance.open()
-            })
-        });
-
-    </script>
+    <script src="/js/modal-destroy-form.js"></script>
 
 
 

@@ -94,6 +94,10 @@ class User extends Authenticatable
         return $this->belongsToMany("Azizner\Announcement", "favorite_announcements");
     }
 
+    public function favoritePhotos(){
+        return $this->belongsToMany("Azizner\Photo", "favorite_photos");
+    }
+
 
 
 

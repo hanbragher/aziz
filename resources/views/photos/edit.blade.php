@@ -34,7 +34,10 @@
 
                 <div class="col s12 m4 l4">
                     <div class="gallery  col s12 m12 l12">
-                        @include('inc.photo_card', ['photo'=>$photo])
+                        @include('inc.photo_card', [
+                        'star'=> $user->favoritePhotos->contains($photo->id),
+                        'photo'=>$photo,
+                        ])
                     </div>
 
                 </div>
@@ -42,11 +45,12 @@
                 <div class="col s12 m8 l8">
 
 
-                    <form action="{{route('photos.store')}}" method="post" id="form" enctype="multipart/form-data">
+                    <form action="{{route('photos.update', $photo->id)}}" method="post" id="form" enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf
                         <div class="row">
                             <div class="input-field">
-                                <input value='{{$photo->title}}' id="input_text" type="text" data-length="100" name="title" required>
+                                <input value='{{$photo->title}}' id="input_text" type="text" data-length="100" name="title" >
                                 <label>Title</label>
                             </div>
                         </div>
@@ -54,12 +58,12 @@
                         <div class="row">
                             <div class="file-field input-field">
                                 <div class="btn">
-                                    <span>Choose an photo</span>
+                                    <span>Change a photo</span>
                                     <input type="file" name="photo" accept="image/*">
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input class="file-path validate" placeholder="upload a photo" >
-                                    <label>max 2MB</label>
+                                    <input class="file-path validate" placeholder="upload a new photo" >
+                                    <label>max 4MB</label>
                                 </div>
                             </div>
 
@@ -68,11 +72,10 @@
                         <div class="row">
                             <div class="chips chips-autocomplete">
                             </div>
-
                         </div>
 
 
-                        <button class="btn" >Publish<i class="material-icons right">send</i></button>
+                        <button class="btn" >Update<i class="material-icons right">send</i></button>
 
                     </form>
 
@@ -112,13 +115,12 @@
             }
         });
 
-        $('#form').submit(function(e){
-            var data = JSON.stringify(M.Chips.getInstance($('.chips')).chipsData);
-            $(this).append('<input type="hidden" name="tags" value='+data+'>');
-            return true;
-        });
 
     </script>
+
+    <script src="/js/set-favorite.js"></script>
+    <script src="/js/add-tags-on-submit-form.js"></script>
+
 
 @endsection
 

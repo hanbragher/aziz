@@ -24,12 +24,13 @@
 
     <a href="{{route('photos.my')}}" class="collection-item @if($active == 'myphotos') active @endif ">My photos</a>
     <a href="{{route('photos.create')}}" class="collection-item @if($active == 'newphoto') active @endif ">New photo</a>
+    <a href="{{route('favorites.photos')}}" class="collection-item @if($active == 'favoritesphotos') active @endif ">Favorites</a>
 
     <p class="collection-item"></p>
 
     <a href="{{route('announcements.my')}}" class="collection-item @if($active == 'myannouncements') active @endif ">My announcements</a>
     <a href="{{route('announcements.create')}}" class="collection-item @if($active == 'newannouncement') active @endif ">New announcement</a>
-    <a href="{{route('favorites.index')}}" class="collection-item @if($active == 'favoritesindex') active @endif ">Favorites</a>
+    <a href="{{route('favorites.announcements')}}" class="collection-item @if($active == 'favoritesannouncements') active @endif ">Favorites</a>
 
     <p class="collection-item"></p>
     <a href="{{route('profiles.edit', $user->id)}}" class="collection-item @if($active == 'mysettings') active @endif ">Profile settings</a>

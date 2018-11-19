@@ -45,11 +45,12 @@
                     </ul>
                 </div>
 
+                    @php
+                        !empty($outbox)?$show='to':$show='from'
+                    @endphp
 
                     @if($messages->first())
-                        @php
-                            !empty($outbox)?$show='to':$show='from'
-                        @endphp
+
                         <ul class="collection">
                                 @foreach($messages as $message)
                                     @include('inc.message',

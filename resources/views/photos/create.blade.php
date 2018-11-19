@@ -34,7 +34,7 @@
                 <div class="row">
                     <div class="file-field input-field col s12 m12 l6">
                         <div class="btn">
-                            <span>Choose an photo</span>
+                            <span>Choose a photo</span>
                             <input type="file" name="photo" accept="image/*" required>
                         </div>
                         <div class="file-path-wrapper">
@@ -82,13 +82,8 @@
             }
         });
 
-        $('#form').submit(function(e){
-            var data = JSON.stringify(M.Chips.getInstance($('.chips')).chipsData);
-            $(this).append('<input type="hidden" name="tags" value='+data+'>');
-            return true;
-        });
-
     </script>
+    <script src="/js/add-tags-on-submit-form.js"></script>
 
 @endsection
 

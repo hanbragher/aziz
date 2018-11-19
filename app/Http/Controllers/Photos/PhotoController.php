@@ -6,6 +6,7 @@ use Azizner\Http\Controllers\ImageController;
 use Azizner\Image;
 use Azizner\Photo;
 use Azizner\Tag;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -25,15 +26,16 @@ class PhotoController extends Controller
         $this->middleware(['auth'])->only(['create', 'edit', 'store', 'update', 'destroy', 'myPhotos']);
     }
 
-    protected function validator(array $data)
+    protected function validator(array $data, $update = false)
     {
         $rules = [
             'title' => ['nullable', 'string', 'max:100'],
-            'photo' => [ 'required', 'image', 'mimes:jpeg,bmp,png', 'max:4096'],
+            'photo' => [ (($update)?'nullable':'required'), 'image', 'mimes:jpeg,bmp,png', 'max:4096'],
         ];
 
         return Validator::make($data, $rules);
     }
+
 
     public function myPhotos($id = null)
     {
@@ -55,9 +57,6 @@ class PhotoController extends Controller
      */
     public function create()
     {
-        $user = Auth::user();
-
-
         $tags = Tag::all()->pluck('name');
         return view('photos.create', ['tags'=>$tags]);
     }
@@ -110,7 +109,9 @@ class PhotoController extends Controller
      */
     public function show($id)
     {
-        //
+        return Abort(404);
+        /*$photo = Photo::findOrFail($id);
+        return '<img src="'.ImageController::showFromSecure($photo->image).'" alt="" title="">';*/
     }
 
     /**
@@ -141,7 +142,45 @@ class PhotoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = $this->validator($request->all(), true);
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+            //return redirect()->back()->withErrors('Something wrong, check fields')->withInput();
+        }
+
+        $photo = Photo::findOrFail($id);
+        $user = Auth::user();
+
+        if($user->cannot("update", $photo)){
+            return redirect()->back()->withErrors('No permission');
+        }
+
+        $photo->source()->update([
+            "title"=>$request->get('title'),
+        ]);
+
+        if(!empty($obj = json_decode($request->get('tags')))){
+            $tags = null;
+            foreach ($obj as $item)
+            {
+                $tag = Tag::firstOrCreate(['name'=>$item->tag]);
+                $tags[] = $tag->id;
+            }
+            $photo->tags()->sync($tags);
+        }else{
+            $photo->tags()->detach();
+        }
+
+        if($request->hasFile('photo')){
+            $old_photo = Image::find($photo->source->id);
+            $photo_id = ImageController::store('images/photos/'.$user->id, $request->file('photo'));
+            $photo->update(['image_id'=>$photo_id, 'updated_at'=>Carbon::now()]);
+            ImageController::destroy($old_photo);
+        }
+
+        return redirect()->route('photos.edit', $photo->id)->with('message' , 'The photo successfully updated!');
+
+
     }
 
     /**
@@ -152,6 +191,24 @@ class PhotoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        $photo = Photo::findOrFail($id);
+
+        if($user->cannot("destroy", $photo)){
+            return redirect()->back()->withErrors('khkh');
+        }
+
+        $old_photo = $photo->source;
+
+        $photo->tags()->detach();
+
+        $photo->delete();
+
+        if(!empty($old_photo)){
+                ImageController::destroy($old_photo);
+        }
+
+        return redirect()->back()->with('message' , 'The photo successfully deleted!');
+
     }
 }

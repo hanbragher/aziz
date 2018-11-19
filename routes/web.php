@@ -26,6 +26,19 @@ Route::get("/photos/my/", [
 
 ]);
 
+Route::get("/favorites/announcements/", [
+    "as" => "favorites.announcements",
+    'uses' => 'Favorites\FavoriteController@announcements'
+
+]);
+
+Route::get("/favorites/photos/", [
+    "as" => "favorites.photos",
+    'uses' => 'Favorites\FavoriteController@photos'
+
+]);
+
+
 Route::resource('/posts', 'Posts\PostController');
 
 Route::resource('/blogs', 'Blogs\BlogController');

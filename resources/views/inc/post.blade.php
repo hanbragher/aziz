@@ -5,9 +5,9 @@
     <div class="card-content">
         @if(!empty($editable) and $editable == true)
             <span><a href="{{route('posts.edit', $post->id)}}"><i class="material-icons">edit</i></a></span>
-            <a data-postaction='{{route('posts.destroy', $post->id)}}' class="modal-open-delete btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">delete_forever</i></a>
+            <a data-actionroute='{{route('posts.destroy', $post->id)}}' class="modal-open-delete btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">delete_forever</i></a>
         @else
-            <a href='#' class="btn-floating halfway-fab waves-effect waves-light red" ><i class="material-icons">share</i></a>
+            @include('inc.share-button', ['type'=>'floating', 'link'=>'#'])
         @endif
         {{--//TODO share link--}}
 

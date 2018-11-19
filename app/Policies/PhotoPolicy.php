@@ -28,4 +28,22 @@ class PhotoPolicy
         }
         return false;
     }
+
+    public function update(User $user, Photo $photo)
+    {
+        if($user->id === $photo->user_id)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public function destroy(User $user, Photo $photo)
+    {
+        if($user->id === $photo->user_id)
+        {
+            return true;
+        }
+        return false;
+    }
 }

@@ -41,8 +41,10 @@
     @auth
     <a class='modal-trigger btn right' href="#modal-reply">Reply<i class="material-icons right">rotate_right</i></a>
     @else
-        <a class='modal-trigger btn right' href="#modal-please-login">Reply<i class="material-icons right">rotate_right</i></a>
+    <a class='modal-trigger btn right' href="#modal-please-login">Reply<i class="material-icons right">rotate_right</i></a>
     @endauth
+    @include('inc.share-button', ['type'=>'button', 'link'=>'#'])
+
 </div>
 
 <script>
