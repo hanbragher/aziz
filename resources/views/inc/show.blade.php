@@ -47,7 +47,4 @@
 
 </div>
 
-<script>
-    $('.gallery a ').simpleLightbox();
-
-</script>
+<script src="/js/simple-lightbox-activator.js"></script>

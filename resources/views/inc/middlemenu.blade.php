@@ -1,6 +1,6 @@
 <nav class="teal lighten-1">
     <div class="nav-wrapper">
-        <div class="row">
+        <div class="row" id="mysidenav">
 
             <div class="col col s1 m1 l2 ">
             </div>

@@ -17,10 +17,8 @@
         <div class="col s12 m12 l10">
             @if($posts->first())
                 @foreach($posts as $post)
-                    <div class="col s6 m4 l3">
                         @include('inc.post', [
                         'post'=> $post])
-                    </div>
                 @endforeach
             @else
                 <p class="flow-text center">No posts</p>

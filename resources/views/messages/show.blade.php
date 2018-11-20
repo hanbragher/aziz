@@ -50,7 +50,7 @@
                 </li>
 
                 <li class="collection-item">
-                    <p class="truncate">Title: {{$message->title}}</p>
+                    <p class="truncate">Title: {{($message->title)?$message->title:'no title'}}</p>
                     <p>{{$message->text}}</p>
                         <p class="center">
                         @if($message->images->first())

@@ -17,9 +17,7 @@
         <div class="col s12 m12 l10">
 
             @foreach($posts as $post)
-                <div class="col s6 m4 l3">
                     @include('inc.post', ['post'=>$post])
-                </div>
             @endforeach
 
         </div>

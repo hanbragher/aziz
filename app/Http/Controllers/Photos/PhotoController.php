@@ -45,9 +45,20 @@ class PhotoController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if($request->has('tag')){
+            if(empty($tag = Tag::where('name', 'like', '%'.$request->get('tag').'%')->first()))
+            {
+                return redirect()->route('photos.index')->withErrors('No results');
+            }else{
+                $photos = $tag->photos()->paginate(3);
+            }
+        }else{
+            $photos = Photo::orderBy('created_at', 'desc')->paginate(3);
+        }
+
+        return view('photos.index', ['photos'=>$photos, 'active_menu'=>'photos']);
     }
 
     /**

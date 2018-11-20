@@ -33,7 +33,7 @@ class MessageController extends Controller
     {
         $rules = [
             'to'=>['required_without:announcement_id', 'string', 'email', 'max:255'],
-            'title' => ['required', 'string', 'max:100'],
+            'title' => ['nullable', 'string', 'max:100'],
             'text' => ['nullable','string'],
             'photos' => [ 'max:12' ],
             'photos.*' => [ 'image', 'mimes:jpeg,bmp,png', 'max:2048'],
@@ -91,7 +91,6 @@ class MessageController extends Controller
             if(!$announcement = Announcement::where('id', $request->get('announcement_id'))->first()){
                 return redirect(URL::previous().'#!')->withErrors('The announcement not available');
             }
-
             if(!$to = $announcement->user){
                 return redirect(URL::previous().'#!')->withErrors('The user not available');
             }

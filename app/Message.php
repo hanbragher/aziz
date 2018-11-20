@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $table  = 'messages';
+    public $appends = ['title'];
     protected $fillable = ['title', 'text', 'from_user', 'to_user', 'is_read', 'skip_inbox', 'skip_outbox'];
 
     public function from(){
@@ -27,4 +28,6 @@ class Message extends Model
         }
         return false;
     }
+
+
 }

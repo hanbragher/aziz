@@ -9,7 +9,7 @@
                 <a href="/" class="brand-logo">Logo</a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{route('places.index', ['places'=>'all'])}}" class="{{(!empty($active_menu) and $active_menu == 'places')?'teal':''}}">Explore</a></li>
-                    <li><a href="#">Photos</a></li>
+                    <li><a href="{{route('photos.index')}}" class="{{(!empty($active_menu) and $active_menu == 'photos')?'teal':''}}">Photos</a></li>
                     <li><a href="{{route('posts.index')}}" class="{{(!empty($active_menu) and $active_menu == 'posts')?'teal':''}}">Posts</a></li>
                     <li><a href="{{route('announcements.index')}}" class="{{(!empty($active_menu) and $active_menu == 'announcements')?'teal':''}}">Announcements</a></li>
                     @auth
@@ -74,7 +74,7 @@
     </li>
     <li>
         <div class="sidenav-item black-text {{(!empty($active_menu) and $active_menu == 'photos')?'grey lighten-3':''}}" >
-            <a class='black-text' href="{{route('posts.index')}}">
+            <a class='black-text' href="{{route('photos.index')}}">
                 <i class="material-icons sidenav-icon">center_focus_weak</i>
                 Photos
             </a>

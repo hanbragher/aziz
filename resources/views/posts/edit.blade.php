@@ -165,11 +165,9 @@
         </div>
     </div>
 
+    <script src="/js/simple-lightbox-activator.js"></script>
 
     <script>
-
-        $('.gallery a ').simpleLightbox();
-
 
         $(document).ready(function(){
             var elems = document.getElementsByClassName('modal delete');;

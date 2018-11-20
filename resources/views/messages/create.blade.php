@@ -33,7 +33,7 @@
 
                 <div class="row">
                     <div class="input-field col s12 m6 l6">
-                        <input value='{{old("title")}}' id="input_text" type="text" data-length="100" name="title" required>
+                        <input value='{{old("title")}}' id="input_text" type="text" data-length="100" name="title">
                         <label>Title</label>
                     </div>
                     <div class="file-field input-field col s12 m6 l6">

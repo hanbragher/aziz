@@ -57,13 +57,7 @@
     <script>
         $(document).ready(function(){
             $('.modal').modal();
-            var hashValue = location.hash;
-            hashValue = hashValue.replace(/^#/, '');
-            if (hashValue == 'modal-reply'){
-                $('.modal').modal('open');
-            }
         });
-
     </script>
 
 

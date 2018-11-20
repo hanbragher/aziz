@@ -60,7 +60,7 @@
                                     'avatar'=>$message->$show->thumb,
                                     'show'=>$show,
                                     'name'=>$message->$show->first_name.' '.$message->$show->last_name,
-                                    'title'=>$message->title,
+                                    'title'=>($message->title)?$message->title:'no title',
                                     'time'=>$message->created_at,
                                     'is_read'=>$message->is_read
                                     ])

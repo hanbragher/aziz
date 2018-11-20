@@ -32,17 +32,15 @@
 
             <div class="row">
 
-                <div class="col s12 m4 l4">
-                    <div class="gallery  col s12 m12 l12">
+                <div class="gallery">
                         @include('inc.photo_card', [
                         'star'=> $user->favoritePhotos->contains($photo->id),
                         'photo'=>$photo,
                         ])
-                    </div>
 
                 </div>
 
-                <div class="col s12 m8 l8">
+                <div class="col s12 m8 l8 ">
 
 
                     <form action="{{route('photos.update', $photo->id)}}" method="post" id="form" enctype="multipart/form-data">
@@ -88,9 +86,11 @@
         </div>
 
     </div>
+
+    <script src="/js/simple-lightbox-activator.js"></script>
+
     <script>
 
-        $('.gallery a.big ').simpleLightbox();
 
         $(document).ready(function() {
             $('input#input_text, textarea#textarea2').characterCounter();

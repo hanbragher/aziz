@@ -36,14 +36,11 @@
         <div class="col s12 m12 l8">
             <div class="row">
                 @foreach($posts as $post)
-                    <div class="col s6 m4 l3">
                         @include('inc.post', [
                          'editable' => true,
                          'blog_name'=> 'hide',
                          'post'=> $post
                          ])
-                    </div>
-
                 @endforeach
 
             </div>
