@@ -14,45 +14,49 @@ $(document).ready(function() {
         var itemid = $("input#item-id").val();
         var itemcomment = $("input#item-comment").val();
         var itemtype = $("input#item-type").val();
-        $.ajax({
-            method: 'POST',
-            url: '/comments',
-            dataType: "json",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data :{
-                id: itemid,
-                comment: itemcomment,
-                type: itemtype
-            },
 
-            success: function(data){
-                if(data.status === "success"){
-                    M.toast({html: '<span>'+data.message+'</span>',
-                        displayLength:8000,
-                    });
-                }
+        if(!itemcomment || itemcomment.length > 100){
+            $( "#comment-field" ).effect( "shake" );
+        }else{
+            $.ajax({
+                method: 'POST',
+                url: '/comments',
+                dataType: "json",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data :{
+                    id: itemid,
+                    comment: itemcomment,
+                    type: itemtype
+                },
 
-                if(data.status === "error"){
+                success: function(data){
+                    if(data.status === "success"){
+                        M.toast({html: '<span>'+data.message+'</span>',
+                            displayLength:8000,
+                        });
+                    }
+
+                    if(data.status === "error"){
+                        M.toast({html: '<span>'+data.message+'</span>',
+                            displayLength:10000,
+                            classes:'red',
+                        });
+                    }
+                    $("input#item-comment").val(null);
+                    instance.close()
+                },
+
+                error: function(xhr, desc, err){
                     M.toast({html: '<span>'+data.message+'</span>',
                         displayLength:10000,
                         classes:'red',
                     });
+                    console.log(err);
+                    instance.close()
                 }
-                $("input#item-comment").val(null);
-                instance.close()
-            },
-
-            error: function(xhr, desc, err){
-                M.toast({html: '<span>'+data.message+'</span>',
-                    displayLength:10000,
-                    classes:'red',
-                });
-                console.log(err);
-                instance.close()
-            }
-        });
+            });
+        }
     })
-
 });

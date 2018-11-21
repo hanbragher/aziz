@@ -27,7 +27,7 @@ class CommentController extends Controller
         $rules = [
             'id' => ['required', 'numeric'],
             'type' => ['required', 'string', 'in:photo'],
-            'comment' => ['required', 'string'],
+            'comment' => ['required', 'string', 'max:100'],
         ];
 
         return Validator::make($data, $rules);

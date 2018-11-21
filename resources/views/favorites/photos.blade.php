@@ -32,6 +32,8 @@
 
             @include('inc.favorite-selector-bar', ['active'=>$active])
 
+            @include('inc.modal-add-comment')
+
             <div class="gallery row">
                 @if($photos->first())
                     @foreach($photos as $photo)
@@ -59,5 +61,6 @@
 
     <script src="/js/simple-lightbox-activator.js"></script>
     <script src="/js/set-favorite.js"></script>
+    <script src="/js/modal-add-comment.js"></script>
 
 @endsection
