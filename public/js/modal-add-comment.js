@@ -29,13 +29,19 @@ $(document).ready(function() {
 
             success: function(data){
                 if(data.status === "success"){
-
+                    M.toast({html: '<span>'+data.message+'</span>',
+                        displayLength:8000,
+                    });
                 }
                 $("input#item-comment").val(null);
                 instance.close()
             },
 
             error: function(xhr, desc, err){
+                M.toast({html: '<span>'+data.message+'</span>',
+                    displayLength:10000,
+                    classes:'red',
+                });
                 console.log(err);
                 instance.close()
             }

@@ -2,8 +2,11 @@
 
 namespace Azizner\Http\Controllers\Comments;
 
+use Azizner\Photo;
+use Azizner\PhotoComment;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -63,15 +66,17 @@ class CommentController extends Controller
 
         $user = Auth::user();
 
-        //todo anel
-
         if($request->get('type') === 'photo') {
             if(!empty($photo = Photo::where('id',$request->get('id'))->first()))
             {
-
+                $photo->comments()->save(new PhotoComment([
+                    'user_id'=>$user->id,
+                    'comment'=>$request->get('comment')
+                ]));
                 $response["status"] = "success";
-
+                $response["message"] = "Comment sent";
             }else{
+                $response["message"] = "Error";
                 $response["status"] = "error";
             }
 

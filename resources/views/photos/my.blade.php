@@ -37,27 +37,6 @@
                         @include('inc.photo_card', [
                         'star'=> $user->favoritePhotos->contains($photo->id),
                         'photo'=>$photo,
-                        'editable'=>true])@include('inc.photo_card', [
-                        'star'=> $user->favoritePhotos->contains($photo->id),
-                        'photo'=>$photo,
-                        'editable'=>true])@include('inc.photo_card', [
-                        'star'=> $user->favoritePhotos->contains($photo->id),
-                        'photo'=>$photo,
-                        'editable'=>true])@include('inc.photo_card', [
-                        'star'=> $user->favoritePhotos->contains($photo->id),
-                        'photo'=>$photo,
-                        'editable'=>true])@include('inc.photo_card', [
-                        'star'=> $user->favoritePhotos->contains($photo->id),
-                        'photo'=>$photo,
-                        'editable'=>true])@include('inc.photo_card', [
-                        'star'=> $user->favoritePhotos->contains($photo->id),
-                        'photo'=>$photo,
-                        'editable'=>true])@include('inc.photo_card', [
-                        'star'=> $user->favoritePhotos->contains($photo->id),
-                        'photo'=>$photo,
-                        'editable'=>true])@include('inc.photo_card', [
-                        'star'=> $user->favoritePhotos->contains($photo->id),
-                        'photo'=>$photo,
                         'editable'=>true])
                     @endforeach
                 @else

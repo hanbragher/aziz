@@ -3,7 +3,7 @@
     <a href="{{route('messages.show', $id)}}"><img src="{{$avatar}}" alt="" class="circle"></a>
     <a href="{{route('messages.show', $id)}}" class="black-text"><span class="title">{{$show}}: {{$name}}</span></a>
     <p class="truncate">Title: {{$title}}</p>
-    <p>Time: {{$time}}
+    <p>Date: {{$time}}
         @if($hasAttachments)
             <i class="material-icons tiny">attach_file</i>
         @endif

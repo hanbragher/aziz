@@ -26,6 +26,10 @@ class Photo extends Model
         return $this->hasMany("Azizner\Favorite_Photos", "photo_id", 'id');
     }
 
+    public function comments(){
+        return $this->hasMany("Azizner\PhotoComment", "photo_id", 'id');
+    }
+
     public function getImageAttribute()
     {
         if($this->source){
