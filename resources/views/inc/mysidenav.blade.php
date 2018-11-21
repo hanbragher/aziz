@@ -2,7 +2,7 @@
     <a href="/mypage" class="collection-item @if($active == 'mypage') active @endif "><i class="material-icons">perm_identity</i> My page</a>
     <p class="collection-item"></p>
 
-    <a href="{{route('favorites.index')}}" class="collection-item @if($active == 'favorite') active @endif "><i class="material-icons">star_border</i> Favorite</a>
+    <a href="{{route('favorites.index', ['photos'])}}" class="collection-item @if($active == 'favorite') active @endif "><i class="material-icons">star_border</i> Favorite</a>
 
     <p class="collection-item"></p>
 
@@ -22,7 +22,7 @@
     <p class="collection-item"></p>
 
     <a href="{{route('messages.create')}}" class="collection-item @if($active == 'newmessege') active @endif "><i class="material-icons">create</i> New message</a>
-    <a href="{{route('messages.index')}}" class="collection-item @if($active == 'messeges') active @endif "><i class="material-icons">mail_outline</i> My messages @if($user->hasNewMessage()) <i class="material-icons right">fiber_new</i> @endif </a>
+    <a href="{{route('messages.index', ['inbox'])}}" class="collection-item @if($active == 'messeges') active @endif "><i class="material-icons">mail_outline</i> My messages @if($user->hasNewMessage()) <i class="material-icons right">fiber_new</i> @endif </a>
     <a href="{{route('notes.index')}}" class="collection-item @if($active == 'mynotes') active @endif "><i class="material-icons">chat_bubble_outline</i> My notes</a>
 
     <p class="collection-item"></p>

@@ -60,6 +60,7 @@ class CommentController extends Controller
         $validator = $this->validator($request->all());
         if($validator->fails()){
             $response["status"] = 'error';
+            $response["message"] = "Please try again, make sure the comment field is not empty.";
             echo json_encode($response);
             exit;
         }
@@ -76,20 +77,19 @@ class CommentController extends Controller
                 $response["status"] = "success";
                 $response["message"] = "Comment sent";
             }else{
-                $response["message"] = "Error";
                 $response["status"] = "error";
+                $response["message"] = "Error";
             }
 
             echo json_encode($response);
             exit;
         }
 
-
-        $table['id'] =  $request->get('id');
-        $table['comment'] =  $request->get('comment');
-        $table['type'] =  $request->get('type');
-        echo json_encode($table);
+        $response["status"] = 'error';
+        $response["message"] = "Error";
+        echo json_encode($response);
         exit;
+
     }
 
     /**

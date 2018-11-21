@@ -33,6 +33,13 @@ $(document).ready(function() {
                         displayLength:8000,
                     });
                 }
+
+                if(data.status === "error"){
+                    M.toast({html: '<span>'+data.message+'</span>',
+                        displayLength:10000,
+                        classes:'red',
+                    });
+                }
                 $("input#item-comment").val(null);
                 instance.close()
             },
