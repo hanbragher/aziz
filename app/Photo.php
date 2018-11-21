@@ -22,6 +22,10 @@ class Photo extends Model
         return $this->belongsToMany("Azizner\Tag", "photo_tags");
     }
 
+    public function stars(){
+        return $this->hasMany("Azizner\Favorite_Photos", "photo_id", 'id');
+    }
+
     public function getImageAttribute()
     {
         if($this->source){

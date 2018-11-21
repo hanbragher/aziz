@@ -2,6 +2,9 @@ div.sidenav-item{
     padding-left: 1rem;
 }
 
+span.photo-header{
+    padding: 5px 10px;
+}
 
 
 img.announcement-card-image{

@@ -17,10 +17,13 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'favoritesannouncements'])
+            @include('inc.mysidenav', ['active'=>'favorite'])
         </div>
 
         <div class="col s12 m12 l8">
+
+            @include('inc.favorite-selector-bar', ['active'=>$active])
+
             <div class="row">
                 @if($announcements->first())
                     @foreach($announcements as $announcement)

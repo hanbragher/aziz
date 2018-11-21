@@ -1,16 +1,13 @@
 <?php
 
-namespace Azizner\Http\Controllers\Favorites;
+namespace Azizner\Http\Controllers\Comments;
 
-use Azizner\Announcement;
-use Azizner\Photo;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
-class FavoriteController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,41 +23,16 @@ class FavoriteController extends Controller
     {
         $rules = [
             'id' => ['required', 'numeric'],
-            'type' => ['required', 'string', 'in:announcement,photo'],
+            'type' => ['required', 'string', 'in:photo'],
+            'comment' => ['required', 'string'],
         ];
 
         return Validator::make($data, $rules);
     }
 
-
-
-    public function announcements()
+    public function index()
     {
-        $user = Auth::user();
-        $announcements = $user->favoriteAnnouncements()->paginate(2);
-        return view('favorites.announcements', ['announcements'=>$announcements, 'active'=>'announcements']);
-    }
-
-    public function photos()
-    {
-        $user = Auth::user();
-        $photos = $user->favoritePhotos()->paginate(2);
-        return view('favorites.photos', ['photos'=>$photos, 'active'=>'photos']);
-    }
-
-    public function index(Request $request)
-    {
-
-        if($request->has('photos') or empty($request->all())){
-            return $this->photos();
-        }
-
-        if($request->has('announcements')){
-            return $this->announcements();
-        }
-
-        return Abort(404);
-
+        //
     }
 
     /**
@@ -91,34 +63,12 @@ class FavoriteController extends Controller
 
         $user = Auth::user();
 
-        if($request->get('type') === 'announcement'){
-            if(!empty($announcement = Announcement::where('id',$request->get('id'))->first()))
-            {
-                if($user->favoriteAnnouncements->contains($announcement->id))
-                {
-                    $user->favoriteAnnouncements()->detach($announcement->id);
-                }else{
-                    $user->favoriteAnnouncements()->attach($announcement->id);
-                }
-                $response["status"] = "success";
-
-            }else{
-                $response["status"] = "error";
-            }
-
-            echo json_encode($response);
-            exit;
-        }
+        //todo anel
 
         if($request->get('type') === 'photo') {
             if(!empty($photo = Photo::where('id',$request->get('id'))->first()))
             {
-                if($user->favoritePhotos->contains($photo->id))
-                {
-                    $user->favoritePhotos()->detach($photo->id);
-                }else{
-                    $user->favoritePhotos()->attach($photo->id);
-                }
+
                 $response["status"] = "success";
 
             }else{
@@ -130,13 +80,11 @@ class FavoriteController extends Controller
         }
 
 
-        $response["status"] = 'error';
-        echo json_encode($response);
+        $table['id'] =  $request->get('id');
+        $table['comment'] =  $request->get('comment');
+        $table['type'] =  $request->get('type');
+        echo json_encode($table);
         exit;
-
-
-
-
     }
 
     /**

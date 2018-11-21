@@ -25,10 +25,13 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'favoritesphotos'])
+            @include('inc.mysidenav', ['active'=>'favorite'])
         </div>
 
         <div class="col s12 m12 l8">
+
+            @include('inc.favorite-selector-bar', ['active'=>$active])
+
             <div class="gallery row">
                 @if($photos->first())
                     @foreach($photos as $photo)

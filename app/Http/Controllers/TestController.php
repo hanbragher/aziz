@@ -2,6 +2,7 @@
 
 namespace Azizner\Http\Controllers;
 
+use Azizner\Photo;
 use Azizner\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,6 +18,8 @@ class TestController extends Controller
 {
     public function test(Request $request){
         $user = User::find(1);
+        $photo = Photo::find(8);
+        dump($photo->stars->count());
         /*dump($user->blog);
         dump($user->adverts);
         dump($user->favoriteAnnouncements);*/
@@ -24,7 +27,7 @@ class TestController extends Controller
         /*$user->favoriteAnnouncements()->attach(1);*/
         dump(route('favorites.store'));
 
-        dump($user->favoriteAnnouncements->contains(3));
+        dump($user->favoritePhotos->contains(3));
         dump($announcement = Announcement::where('id',50)->first());
 
 

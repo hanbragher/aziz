@@ -1,11 +1,15 @@
 <div class="col col s12 m4 l3">
     <div class="card">
         <div class="card-image waves-effect waves-block waves-light">
-                @auth
-                    <a href="#!" data-type="photo" data-id='{{$photo->id}}' class="set-favorite secondary-content set-fav-photo"><i class="material-icons {{($star)?'orange-text':''}}">star</i></a>
-                @else
-                    <a href="#modal-please-login"  class="modal-trigger secondary-content set-fav-photo"><i class="material-icons">star</i></a>
-                @endauth
+            @if(empty($editable))
+                <span class="truncate photo-header">Author: <a href="{{route('profiles.show', $photo->user->id )}}" class="black-text" target="_blank">{{$photo->user->first_name}} {{$photo->user->last_name}} <i class="material-icons tiny">open_in_new</i></a></span>
+            @endif
+
+            @auth
+                <a href="#!" data-type="photo" data-id='{{$photo->id}}' class="set-favorite secondary-content set-fav-photo"><i class="material-icons {{($star)?'orange-text':''}}">star</i></a>
+            @else
+                <a href="#modal-please-login"  class="modal-trigger secondary-content set-fav-photo"><i class="material-icons">star</i></a>
+            @endauth
             <a href="{{$photo->image}}" class="big">
                 <img src="{{$photo->thumb}}" alt="" title="{{$photo->title}}">
             </a>
@@ -20,9 +24,20 @@
             @else
                 <a href="#" class="btn-floating halfway-fab waves-effect waves-light " ><i class="material-icons">share</i></a>
                 <i class="material-icons right card-title activator chip">expand_less</i>
-                <p class="truncate">Author: <a href="{{route('profiles.show', $photo->user->id )}}" class="black-text" target="_blank">{{$photo->user->first_name}} {{$photo->user->last_name}} <i class="material-icons tiny">open_in_new</i></a></p>
             @endif
+                <p><i class="material-icons tiny orange-text">stars</i> {{($photo->stars->first())?$photo->stars->count():'-'}}</p>
                 <p class="truncate">Date: {{$photo->created_at}}</p>
+
+                @auth
+                @if(empty($editable))
+                    <a href='#!' data-id="{{$photo->id}}" data-type="photo" class="add-modal-comment teal-text"><i class="material-icons tiny teal-text">create</i> Send comment</a>
+                @endif
+
+
+                @else
+                    <a href='#modal-please-login'  class="modal-trigger"><i class="material-icons tiny teal-text">create</i> Send comment</a>
+                @endauth
+
         </div>
 
         <div class="card-reveal">

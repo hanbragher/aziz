@@ -19,6 +19,7 @@
 
     @include('inc.notifications')
 
+    @include('inc.modal-add-comment')
 
     <div class="row">
         <div class="col s12 m4 l1 hide-on-med-and-down"></div>
@@ -58,12 +59,14 @@
     <script src="/js/set-favorite.js"></script>
     <script src="/js/simple-lightbox-activator.js"></script>
 
-
     <script>
         $(document).ready(function(){
             $('.modal').modal();
         });
     </script>
 
+    @auth
+    <script src="/js/modal-add-comment.js"></script>
+    @endauth
 
 @endsection

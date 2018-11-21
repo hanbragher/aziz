@@ -26,17 +26,17 @@ Route::get("/photos/my/", [
 
 ]);
 
-Route::get("/favorites/announcements/", [
+/*Route::get("/favorites/announcements/", [
     "as" => "favorites.announcements",
     'uses' => 'Favorites\FavoriteController@announcements'
 
-]);
+]);*/
 
-Route::get("/favorites/photos/", [
+/*Route::get("/favorites/photos/", [
     "as" => "favorites.photos",
     'uses' => 'Favorites\FavoriteController@photos'
 
-]);
+]);*/
 
 
 Route::resource('/posts', 'Posts\PostController');
@@ -52,6 +52,8 @@ Route::resource('/places', 'Places\PlaceController');
 Route::resource('/announcements', 'Announcements\AnnouncementController');
 
 Route::resource('/messages', 'Messages\MessageController');
+
+Route::resource('/comments', 'Comments\CommentController');
 
 Route::resource('/favorites', 'Favorites\FavoriteController');
 

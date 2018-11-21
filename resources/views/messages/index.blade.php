@@ -40,8 +40,8 @@
 
                 <div class="col s12">
                     <ul class="tabs">
-                        <li class="tab col s6"><a target="_self" class="{{!empty($outbox)?'':'active'}}" href="{{route('messages.index', ['inbox'])}}">inbox</a></li>
-                        <li class="tab col s6"><a target="_self" class="{{!empty($outbox)?'active':''}}" href="{{route('messages.index', ['outbox'])}}">outbox</a></li>
+                        <li class="tab col s6"><a target="_self" class="{{($active == 'inbox' )?'active':''}}" href="{{route('messages.index', ['inbox'])}}">inbox</a></li>
+                        <li class="tab col s6"><a target="_self" class="{{($active == 'outbox')?'active':''}}" href="{{route('messages.index', ['outbox'])}}">outbox</a></li>
                     </ul>
                 </div>
 

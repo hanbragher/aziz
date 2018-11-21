@@ -50,15 +50,24 @@ class MessageController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $outbox = $request->has('outbox');
+        $messages = null;
 
-        if($outbox){
-           $messages = $user->outgoingMSG()->orderBy('created_at', 'desc')->paginate(5);
-        }else{
-           $messages = $user->incomingMSG()->orderBy('created_at', 'desc')->paginate(5);
+        if($request->has('inbox') or empty($request->all())){
+            $messages = $user->incomingMSG()->orderBy('created_at', 'desc');
+            $active = 'inbox';
         }
 
-        return view('messages.index', ['outbox'=>$outbox, 'messages'=>$messages]);
+        if($request->has('outbox')){
+            $messages = $user->outgoingMSG()->orderBy('created_at', 'desc');
+            $active = 'outbox';
+        }
+
+        if(!empty($messages)){
+            return view('messages.index', ['active'=>$active, 'messages'=>$messages->paginate(2)]);
+        }
+
+        return Abort(404);
+
     }
 
     /**

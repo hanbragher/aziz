@@ -2,7 +2,7 @@
     <a href="/mypage" class="collection-item @if($active == 'mypage') active @endif "><i class="material-icons">perm_identity</i> My page</a>
     <p class="collection-item"></p>
 
-    <a href="{{route('favorites.photos')}}" class="collection-item @if($active == 'favoritesphotos') active @endif "><i class="material-icons">star_border</i> Favorites</a>
+    <a href="{{route('favorites.index')}}" class="collection-item @if($active == 'favorite') active @endif "><i class="material-icons">star_border</i> Favorite</a>
 
     <p class="collection-item"></p>
 
@@ -34,7 +34,6 @@
 
     <a href="{{route('announcements.my')}}" class="collection-item @if($active == 'myannouncements') active @endif "><i class="material-icons">library_books</i> My announcements</a>
     <a href="{{route('announcements.create')}}" class="collection-item @if($active == 'newannouncement') active @endif "><i class="material-icons">library_add</i> New announcement</a>
-    <a href="{{route('favorites.announcements')}}" class="collection-item @if($active == 'favoritesannouncements') active @endif ">Favorites</a>
 
     <p class="collection-item"></p>
     <a href="{{route('profiles.edit', $user->id)}}" class="collection-item @if($active == 'mysettings') active @endif "><i class="material-icons">build</i> Profile settings</a>
