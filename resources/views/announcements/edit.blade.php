@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    @include('inc.notifications')
+    @include('inc.toast-notifications')
 
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
@@ -182,7 +182,6 @@
             })
         });
 
-        $(document).ready(function(){
             var elems = document.getElementsByClassName('modal title');;
             var instance = M.Modal.init(elems[0]);
             $("a.modal-open-title").click(function () {
@@ -191,14 +190,11 @@
                 $("input#announcement_id").val($(this).data("announcementid"));
                 $("input#image_title").val($(this).data("imagetitle"));
                 instance.open()
-            })
-        });
+            });
 
 
 
-        $(document).ready(function() {
             $('input#input_text, input#image_title, textarea#textarea2').characterCounter();
-        });
 
 
 

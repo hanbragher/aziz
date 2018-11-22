@@ -10,7 +10,7 @@
 
     </div>
 
-    @include('inc.notifications')
+    @include('inc.toast-notifications')
 
 
     <div class="row">

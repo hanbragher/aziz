@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    @include('inc.notifications')
+    @include('inc.toast-notifications')
 
     <div class="modal delete">
         <form action="/" method="post" id="delete_message_form" enctype="multipart/form-data">
@@ -46,7 +46,7 @@
                 </div>
 
                     @php
-                        !empty($outbox)?$show='to':$show='from'
+                       if($active == 'inbox'){$show='from';}else{$show='to';};
                     @endphp
 
                     @if($messages->first())
@@ -68,7 +68,7 @@
                         </ul>
                     @else
                         <p class="flow-text center">No Messages</p>
-                        @if($show=='to')
+                        @if($active == 'inbox')
                             <p class="center"><a href="{{route('messages.create')}}" class="btn-flat">create a new</a></p>
                         @endif
                     @endif

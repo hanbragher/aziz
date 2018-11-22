@@ -30,6 +30,14 @@ class Photo extends Model
         return $this->hasMany("Azizner\PhotoComment", "photo_id", 'id');
     }
 
+    public function hasNewComment()
+    {
+        if($this->comments()->where('is_read', false)->first()){
+            return true;
+        }
+        return false;
+    }
+
     public function getImageAttribute()
     {
         if($this->source){

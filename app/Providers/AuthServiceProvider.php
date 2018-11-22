@@ -3,7 +3,10 @@
 namespace Azizner\Providers;
 
 use Azizner\Message;
+use Azizner\Notification;
 use Azizner\Photo;
+use Azizner\PhotoComment;
+use Azizner\Policies\CommentPolicy;
 use Azizner\Policies\MessagePolicy;
 use Azizner\Policies\PhotoPolicy;
 use Azizner\Policies\PostPolicy;
@@ -26,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         Announcement::class =>AnnouncementPolicy::class,
         Message::class=>MessagePolicy::class,
         Photo::class=>PhotoPolicy::class,
+        PhotoComment::class=>CommentPolicy::class,
     ];
 
     /**

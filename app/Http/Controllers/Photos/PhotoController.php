@@ -52,7 +52,7 @@ class PhotoController extends Controller
             {
                 return redirect()->route('photos.index')->withErrors('No results');
             }else{
-                $photos = $tag->photos()->paginate(3);
+                $photos = $tag->photos()->orderBy('created_at', 'desc')->paginate(3);
             }
         }else{
             $photos = Photo::orderBy('created_at', 'desc')->paginate(3);

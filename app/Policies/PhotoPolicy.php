@@ -46,4 +46,13 @@ class PhotoPolicy
         }
         return false;
     }
+
+    public function showComments(User $user, Photo $photo)
+    {
+        if($user->id === $photo->user_id)
+        {
+            return true;
+        }
+        return false;
+    }
 }

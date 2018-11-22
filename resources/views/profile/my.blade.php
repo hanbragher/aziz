@@ -7,8 +7,11 @@
             @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'My Page'])
         </div>
     </div>
-    <div class="col s12 m4 l1 hide-on-med-and-down">
 
+    @include('inc.toast-notifications')
+
+
+    <div class="col s12 m4 l1 hide-on-med-and-down">
     </div>
 
     <div class="row">
@@ -19,6 +22,8 @@
         </div>
 
         <div class="col s12 m12 l8">
+
+            @include('inc.overview-selector-bar', ['active'=>$active])
 
             <div class="col s12 m6 l6">
                 <div class="card horizontal">

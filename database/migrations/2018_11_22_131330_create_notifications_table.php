@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePhotoCommentsTable extends Migration
+class CreateNotificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreatePhotoCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('photo_comments', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("user_id")->nullable()->unsigned()->default(null);
             $table->foreign("user_id")->references("id")->on("users");
-            $table->integer("photo_id")->nullable()->unsigned()->default(null);
-            $table->foreign("photo_id")->references("id")->on("photos");
-            $table->string('comment', 255)->nullable();
+
+            $table->integer("from_id")->nullable()->unsigned()->default(null);
+            $table->foreign("from_id")->references("id")->on("users");
+
+            $table->string('text')->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamps();
         });
@@ -32,6 +34,6 @@ class CreatePhotoCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('photo_comments');
+        Schema::dropIfExists('notifications');
     }
 }

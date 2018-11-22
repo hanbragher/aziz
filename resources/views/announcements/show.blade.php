@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    @include('inc.notifications')
+    @include('inc.toast-notifications')
 
     @auth
         <div id='modal-reply' class="modal">

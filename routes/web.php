@@ -57,6 +57,8 @@ Route::resource('/comments', 'Comments\CommentController');
 
 Route::resource('/favorites', 'Favorites\FavoriteController');
 
+Route::resource('/notifications', 'Notifications\NotificationController');
+
 Route::resource('/photos', 'Photos\PhotoController');
 
 

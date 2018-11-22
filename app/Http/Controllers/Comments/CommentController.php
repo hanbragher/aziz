@@ -2,6 +2,7 @@
 
 namespace Azizner\Http\Controllers\Comments;
 
+use Azizner\Notification;
 use Azizner\Photo;
 use Azizner\PhotoComment;
 use Illuminate\Http\Request;
@@ -35,7 +36,8 @@ class CommentController extends Controller
 
     public function index()
     {
-        //
+
+
     }
 
     /**
@@ -70,10 +72,20 @@ class CommentController extends Controller
         if($request->get('type') === 'photo') {
             if(!empty($photo = Photo::where('id',$request->get('id'))->first()))
             {
+                $comment = $request->get('comment');
                 $photo->comments()->save(new PhotoComment([
                     'user_id'=>$user->id,
-                    'comment'=>$request->get('comment')
+                    'comment'=>$comment
                 ]));
+
+
+                $text = 'You have a new <a href="'.route('comments.show', $photo->id).'" class="black-text">comment: </a>'.$comment;
+
+                $photo->user->notifications()->save(new Notification([
+                    'from_id'=>$user->id,
+                    'text'=>$text
+                ]));
+
                 $response["status"] = "success";
                 $response["message"] = "Comment sent";
             }else{
@@ -100,7 +112,25 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        //
+        $photo = Photo::findOrFail($id);
+        $user = Auth::user();
+
+        if($user->cannot("showComments", $photo)){
+            return redirect()->back()->withErrors('No permission');
+        }
+
+        $photo->comments()->update(['is_read'=> true]);
+
+
+
+        if(empty($photo->comments()->first())){
+            return redirect()->route('photos.my')->withErrors('No comments');
+        }
+
+        $comments = $photo->comments()->orderBy('created_at', 'desc')->get();
+
+        return view('comments.show', ['comments'=>$comments]);
+
     }
 
     /**
@@ -134,6 +164,18 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = PhotoComment::findOrFail($id);
+
+        $user= Auth::user();
+
+        if($user->cannot("destroy", $comment)){
+            return redirect()->back()->withErrors('No permission');
+        }
+
+        $comment->delete();
+
+        return redirect()->back()->with('message' , 'The comment successfully deleted!');
+
+
     }
 }

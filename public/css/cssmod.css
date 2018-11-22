@@ -14,6 +14,19 @@ img.announcement-card-image{
     margin: 5px;
 }
 
+div.notification{
+    padding: 10px !important;
+}
+
+div.comment{
+    padding: 10px !important;
+}
+
+p.sidenav-divader{
+    padding: 6px !important;
+    background-color: ghostwhite !important;
+}
+
 a.set-fav-photo{
     position: absolute;
     padding-top: 10px;

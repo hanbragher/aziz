@@ -30,11 +30,9 @@
 
     </div>
 
-
-
     <div class="card-action">
         @if(!empty($editable) and $editable == true)
-            <a href="{{route('announcements.edit', $announcement->id)}}" >Edit</a>
+            <a href="{{route('announcements.edit', $announcement->id)}}" ><i class="material-icons tiny">edit</i> Edit</a>
             <a href="{{route('announcements.show', $announcement->id)}}" >show</a>
             @include('inc.share-button', ['type'=>'link', 'link'=>'#'])
             <a data-actionroute='{{route('announcements.destroy', $announcement->id)}}'  class="modal-open-delete btn-floating halfway-fab waves-effect waves-light red"  ><i class="material-icons">delete_forever</i></a>
@@ -42,7 +40,11 @@
             <a href="{{route('announcements.show', $announcement->id)}}">show more</a>
             @include('inc.share-button', ['type'=>'floating', 'link'=>'#'])
             @auth
-                <a href="{{route('announcements.show', $announcement->id)}}#modal-reply">reply</a>
+                @if($user->id == $announcement->user->id)
+                    <a href="{{route('announcements.edit', $announcement->id)}}"><i class="material-icons tiny">edit</i> edit</a>
+                @else
+                    <a href="{{route('announcements.show', $announcement->id)}}#modal-reply">reply</a>
+                @endif
             @else
                 <a href="#modal-please-login" class="modal-trigger">reply</a>
             @endauth

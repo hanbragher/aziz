@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    @include('inc.notifications')
+    @include('inc.toast-notifications')
 
     @include('inc.modal-destroy-form')
 

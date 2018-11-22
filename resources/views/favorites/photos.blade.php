@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    @include('inc.notifications')
+    @include('inc.toast-notifications')
 
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
@@ -44,7 +44,6 @@
                     @endforeach
                 @else
                     <p class="flow-text center">No photos</p>
-                    <p class="center"><a href="{{route('photos.create')}}" class="btn-flat">create a new</a></p>
                 @endif
             </div>
 

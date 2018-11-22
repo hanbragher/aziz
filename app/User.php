@@ -78,6 +78,10 @@ class User extends Authenticatable
         return $this->hasMany("Azizner\Announcement", "user_id", "id");
     }
 
+    public function notifications(){
+        return $this->hasMany("Azizner\Notification", "user_id", "id");
+    }
+
     public function photos(){
         return $this->hasMany("Azizner\Photo", "user_id", "id");
     }
@@ -89,6 +93,16 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    public function hasNewNotification(){
+
+        if($this->notifications()->where('is_read', false)->first()){
+            return true;
+        }
+        return false;
+    }
+
+
 
     public function favoriteAnnouncements(){
         return $this->belongsToMany("Azizner\Announcement", "favorite_announcements");

@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    @include('inc.notifications')
+    @include('inc.toast-notifications')
 
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
@@ -37,7 +37,7 @@
                         </div>
                     @endforeach
                 @else
-                    <p class="flow-text center">No Favorites</p>
+                    <p class="flow-text center">No Announcements</p>
                 @endif
             </div>
 

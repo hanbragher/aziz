@@ -76,7 +76,7 @@ class ProfileController extends Controller
 
     public function myPage()
     {
-        return view('profile.my');
+        return view('profile.my', ['active'=>'overview']);
     }
 
     /**
