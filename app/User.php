@@ -86,6 +86,10 @@ class User extends Authenticatable
         return $this->hasMany("Azizner\Photo", "user_id", "id");
     }
 
+    public function places(){
+        return $this->hasMany("Azizner\Place", "user_id", "id");
+    }
+
     public function hasNewMessage(){
 
         if($this->incomingMSG()->where('is_read', false)->first()){

@@ -24,7 +24,7 @@ class NotificationController extends Controller
         $notifications = $user->notifications()->orderBy('created_at', 'desc')->get();
         $user->notifications()->update(['is_read'=>true]);
 
-        return view('profile.notifications', ['active'=>'notifications', 'notifications'=>$notifications]);
+        return view('profile.notifications', ['active'=>'notifications', 'active_menu'=>'notifications', 'notifications'=>$notifications]);
     }
 
     /**

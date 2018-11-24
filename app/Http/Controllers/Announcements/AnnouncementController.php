@@ -52,7 +52,7 @@ class AnnouncementController extends Controller
     public function index(Request $request)
     {
         if($request->has('tag')) {
-            if(empty($tag = Tag::where('name', 'like', '%'.$request->get('tag').'%')->first()))
+            if(empty($tag = Tag::where('name', $request->get('tag'))->first()))
             {
                 return redirect()->route('announcements.index')->withErrors('No results');
             }
@@ -257,12 +257,15 @@ class AnnouncementController extends Controller
      */
     public function destroy($id)
     {
+
         $user = Auth::user();
         $announcement = Announcement::findOrFail($id);
 
         if($user->cannot("destroy", $announcement)){
             return redirect()->back()->withErrors('no permission');
         }
+
+        $announcement->favorites()->delete();
 
         $old_images = $announcement->images;
         $announcement->images()->detach();

@@ -14,6 +14,12 @@ img.announcement-card-image{
     margin: 5px;
 }
 
+img.notification-thumb{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
 div.notification{
     padding: 10px !important;
 }

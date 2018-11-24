@@ -14,6 +14,10 @@ class Announcement extends Model
         return $this->belongsTo("Azizner\User", "user_id", "id");
     }
 
+    public function favorites(){
+        return $this->hasMany("Azizner\Favorite_Announcements", "announcement_id", "id");
+    }
+
     public function tags(){
         return $this->belongsToMany("Azizner\Tag", "announcement_tags");
     }

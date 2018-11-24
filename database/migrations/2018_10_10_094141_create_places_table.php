@@ -15,16 +15,20 @@ class CreatePlacesTable extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('name');
-            $table->string('text')->nullable();
+
+            $table->string('inf')->nullable();
 
             $table->string('map')->nullable();
 
-            $table->integer("image_id")->nullable()->unsigned()->default(null);
-            $table->foreign("image_id")->references("id")->on("images");
+            $table->integer("main_image")->nullable()->unsigned()->default(null);
+            $table->foreign("main_image")->references("id")->on("images");
 
-            $table->integer("city_id")->nullable()->unsigned()->default(null);
-            $table->foreign("city_id")->references("id")->on("cities");
+            $table->integer("user_id")->nullable()->unsigned()->default(null);
+            $table->foreign("user_id")->references("id")->on("users");
+
+            $table->boolean('is_moderate')->default(false);
 
             $table->timestamps();
         });

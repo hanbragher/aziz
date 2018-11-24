@@ -3,6 +3,7 @@
 namespace Azizner\Http\Controllers\Favorites;
 
 use Azizner\Announcement;
+use Azizner\Notification;
 use Azizner\Photo;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
@@ -98,6 +99,14 @@ class FavoriteController extends Controller
                 {
                     $user->favoriteAnnouncements()->detach($announcement->id);
                 }else{
+
+                    $announcement->user->notifications()->save(new Notification([
+                        'from_id'=>$user->id,
+                        'type'=>'announcement',
+                        'type_id'=>$announcement->id,
+                        'text'=>null
+                    ]));
+
                     $user->favoriteAnnouncements()->attach($announcement->id);
                 }
                 $response["status"] = "success";
@@ -117,6 +126,14 @@ class FavoriteController extends Controller
                 {
                     $user->favoritePhotos()->detach($photo->id);
                 }else{
+
+                    $photo->user->notifications()->save(new Notification([
+                        'from_id'=>$user->id,
+                        'type'=>'photo_star',
+                        'type_id'=>$photo->id,
+                        'text'=>null
+                    ]));
+
                     $user->favoritePhotos()->attach($photo->id);
                 }
                 $response["status"] = "success";

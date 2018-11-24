@@ -1,5 +1,13 @@
 @extends('layouts.layout')
 
+@section('links')
+    <link href="/css/simplelightbox.min.css" rel="stylesheet">
+@endsection
+@section('links_after')
+    <script src="/js/simple-lightbox.min.js"></script>
+@endsection
+
+
 @section('content')
     <div class="row">
         <div class="col s12">
@@ -23,20 +31,49 @@
         </div>
 
         <div class="col s12 m12 l8">
-            @if($comments->first())
-                @foreach($comments as $comment)
-                    @include('inc.photo-comment', ['comment'=>$comment])
-                @endforeach
-            @else
-                <p class="flow-text center">No comments</p>
-            @endif
+
+
+
+
+
+                <div class="row">
+                    <div class="gallery">
+                        @include('inc.photo_card', [
+                        'star'=> $user->favoritePhotos->contains($photo->id),
+                        'photo'=>$photo,
+                        'read_comments'=>'inactive',
+                        ])
+                    </div>
+
+                    @if($comments->first())
+
+                    <div class="col s12 m8 l8 ">
+                        @foreach($comments as $comment)
+                            @include('inc.photo-comment', ['comment'=>$comment])
+                        @endforeach
+                    </div>
+                    @else
+                        <p class="flow-text center">No comments</p>
+                    @endif
+
+                </div>
+                <div class="row">
+                    <a class='btn' href="{{route('photos.my')}}"><i class="material-icons left">arrow_back</i>My photos</a>
+                </div>
+
+
+
+
+
         </div>
 
         <div class="col s12 m6 l1">
 
         </div>
     </div>
+    <script src="/js/simple-lightbox-activator.js"></script>
 
+    <script src="/js/set-favorite.js"></script>
     <script src="/js/modal-destroy-form.js"></script>
 
 @endsection

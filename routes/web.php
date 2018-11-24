@@ -26,6 +26,11 @@ Route::get("/photos/my/", [
 
 ]);
 
+Route::get('/places/my', [
+    "as" => "places.my",
+    'uses' => 'Places\PlaceController@myPlaces'
+]);
+
 /*Route::get("/favorites/announcements/", [
     "as" => "favorites.announcements",
     'uses' => 'Favorites\FavoriteController@announcements'
@@ -75,6 +80,7 @@ Route::get('/mypage', [
     "as" => "profiles.my",
     'uses' => 'Profiles\ProfileController@myPage'
 ]);
+
 
 Route::get('/myannouncements', [
     "as" => "announcements.my",

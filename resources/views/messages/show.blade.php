@@ -116,6 +116,10 @@
 
             </ul>
 
+            <div class="row">
+                <a class='btn' href="{{URL::previous()}}"><i class="material-icons left">arrow_back</i>Back</a>
+            </div>
+
 
 
 

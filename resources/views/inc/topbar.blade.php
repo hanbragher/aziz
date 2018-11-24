@@ -2,12 +2,20 @@
 <nav>
     <div class="nav-wrapper teal lighten-1">
         <div class="row">
-            <div class="col s4 m4 l2">
+            <div class="col s4 m4 l1">
                 <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                @auth
+                <a href="{{route('notifications.index')}}" class="sidenav-trigger {{($user->hasNewNotification())?'orange lighten-2':''}} {{(!empty($active_menu) and $active_menu == 'notifications')?'teal':''}}"><i class="material-icons">priority_high</i></a>
+                @endauth
+
             </div>
-            <div class="col s4 m4 l8">
-                <a href="/" class="brand-logo">Logo</a>
+            <div class="col s4 m4 l10">
+                <a href="/" class="brand-logo ">Logo</a>
                 <ul class="right hide-on-med-and-down">
+                    @auth
+                        <li><a href="{{route('notifications.index')}}" class=" {{($user->hasNewNotification())?'orange lighten-2':''}} {{(!empty($active_menu) and $active_menu == 'notifications')?'teal':''}}"><i class="material-icons">priority_high</i></a></li>
+                    @endauth
+
                     <li><a href="{{route('places.index', ['places'=>'all'])}}" class="{{(!empty($active_menu) and $active_menu == 'places')?'teal':''}}">Explore</a></li>
                     <li><a href="{{route('photos.index')}}" class="{{(!empty($active_menu) and $active_menu == 'photos')?'teal':''}}">Photos</a></li>
                     <li><a href="{{route('posts.index')}}" class="{{(!empty($active_menu) and $active_menu == 'posts')?'teal':''}}">Posts</a></li>
@@ -26,7 +34,7 @@
 
                 </ul>
             </div>
-            <div class="col s4 m4 l2">
+            <div class="col s4 m4 l1">
                 <a href="#" data-target="slide-out" class="sidenav-trigger right"><i class="material-icons">account_circle</i></a>
             </div>
         </div>

@@ -2,7 +2,7 @@
     @foreach($errors->all() as $error)
         <script>
             M.toast({html: '<span>{!! $error !!}</span>',
-                displayLength:10000,
+                displayLength:8000,
                 classes:'red',
             })
         </script>
@@ -11,7 +11,7 @@
 @if (session()->has('message'))
     <script>
         M.toast({html: '<span>{{session()->get('message')}}</span>',
-            displayLength:8000,
+            displayLength:6000,
         })
     </script>
 @endif

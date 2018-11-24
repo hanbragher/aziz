@@ -21,6 +21,9 @@ class CreateNotificationsTable extends Migration
             $table->integer("from_id")->nullable()->unsigned()->default(null);
             $table->foreign("from_id")->references("id")->on("users");
 
+            $table->string('type')->nullable();
+            $table->integer("type_id")->nullable()->unsigned()->default(null);
+
             $table->string('text')->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamps();

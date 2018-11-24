@@ -14,6 +14,10 @@ class Photo extends Model
         return $this->belongsTo("Azizner\User", "user_id", "id");
     }
 
+    public function favorites(){
+        return $this->hasMany("Azizner\Favorite_Photos", "photo_id", "id");
+    }
+
     public function source(){
         return $this->belongsTo("Azizner\Image", "image_id", "id");
     }

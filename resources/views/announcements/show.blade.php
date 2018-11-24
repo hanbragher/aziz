@@ -25,7 +25,7 @@
                     <h4>Reply</h4>
                     <input name="announcement_id" value="{{$announcement->id}}" type="hidden">
                     <div class="input-field">
-                        <input id="title" name="title" value="RE:(code:{{$announcement->id}}) {{$announcement->title}}" placeholder="max 100 character" data-length="100">
+                        <input id="title" name="title" value="RE:(announcement code:{{$announcement->id}}) {{$announcement->title}}" placeholder="max 100 character" data-length="100">
                     </div>
                     <div class="input-field">
                         <input name="text" value="" placeholder="type your message" required>

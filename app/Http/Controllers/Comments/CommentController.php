@@ -79,11 +79,11 @@ class CommentController extends Controller
                 ]));
 
 
-                $text = 'You have a new <a href="'.route('comments.show', $photo->id).'" class="black-text">comment: </a>'.$comment;
-
                 $photo->user->notifications()->save(new Notification([
                     'from_id'=>$user->id,
-                    'text'=>$text
+                    'type'=>'photo_comment',
+                    'type_id'=>$photo->id,
+                    'text'=>$comment
                 ]));
 
                 $response["status"] = "success";
@@ -118,18 +118,11 @@ class CommentController extends Controller
         if($user->cannot("showComments", $photo)){
             return redirect()->back()->withErrors('No permission');
         }
+        $comments = $photo->comments()->orderBy('created_at', 'desc')->get();
 
         $photo->comments()->update(['is_read'=> true]);
 
-
-
-        if(empty($photo->comments()->first())){
-            return redirect()->route('photos.my')->withErrors('No comments');
-        }
-
-        $comments = $photo->comments()->orderBy('created_at', 'desc')->get();
-
-        return view('comments.show', ['comments'=>$comments]);
+        return view('comments.show', ['comments'=>$comments, 'photo'=>$photo]);
 
     }
 

@@ -4,6 +4,12 @@
 
     <a href="{{route('favorites.index', ['photos'])}}" class="collection-item @if($active == 'favorite') active @endif "><i class="material-icons">star_border</i> Favorite</a>
 
+
+    <p class="collection-item sidenav-divader"></p>
+
+    <a href="{{route('places.my')}}" class="collection-item @if($active == 'myplaces') active @endif "><i class="material-icons">assistant_photo</i> My places</a>
+    <a href="{{route('places.create')}}" class="collection-item @if($active == 'newplace') active @endif "><i class="material-icons">add_location</i> New place</a>
+
     <p class="collection-item sidenav-divader"></p>
 
 
@@ -21,6 +27,7 @@
     @if($user->is_moderator)
         <a href="{{route('posts.create')}}" class="collection-item @if($active == 'newpost') active @endif ">New post</a>
     @endif--}}
+
     <p class="collection-item sidenav-divader"></p>
 
     <a href="{{route('messages.index', ['inbox'])}}" class="collection-item @if($active == 'messeges') active @endif "><i class="material-icons">mail_outline</i> My messages @if($user->hasNewMessage()) <i class="material-icons right">fiber_new</i> @endif </a>

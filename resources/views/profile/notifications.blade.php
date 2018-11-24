@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>$user->cover])
-            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'My Page'])
+            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'Notifications'])
         </div>
     </div>
 
@@ -28,15 +28,19 @@
                 @include('inc.overview-selector-bar', ['active'=>$active])
             </div>
 
-            <div class="row">
-                <div class="col s12">
-                    <button data-actionroute='{{route('notifications.destroy', $user->id)}}' class="modal-clear-list btn-small right" >Clear list<i class="material-icons right">speaker_notes_off</i></button>
+            @if($notifications->first())
+                <div class="row">
+                    <div class="col s12">
+                        <button data-actionroute='{{route('notifications.destroy', $user->id)}}' class="modal-clear-list btn-small right" >Clear list<i class="material-icons right">speaker_notes_off</i></button>
+                    </div>
                 </div>
-            </div>
 
-            @foreach($notifications as $notification)
-                @include('inc.notification', ['notification'=>$notification])
-            @endforeach
+                @foreach($notifications as $notification)
+                    @include('inc.notification', ['notification'=>$notification])
+                @endforeach
+            @else
+                <p class="flow-text center">No notifications</p>
+            @endif
 
         </div>
 

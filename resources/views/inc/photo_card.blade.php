@@ -33,7 +33,11 @@
             @auth
                 @if($photo->user->id == $user->id)
                     @if($photo->comments()->first())
-                        <a href='{{route('comments.show', $photo->id)}}' class=" teal-text">Read comments @if($photo->hasNewComment()) <i class="material-icons tiny red-text">fiber_new</i> @endif</a>
+                        @if(empty($read_comments))
+                            <a href='{{route('comments.show', $photo->id)}}' class=" teal-text">Read comments @if($photo->hasNewComment()) <i class="material-icons tiny red-text">fiber_new</i> @endif</a>
+                        @elseif($read_comments == 'inactive')
+                            <a class=" grey-text">Read comments</a>
+                        @endif
                     @else
                         <a  class="add-modal-comment grey-text">No comments</a>
                     @endif

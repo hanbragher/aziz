@@ -6,6 +6,7 @@ use Azizner\Announcement;
 use Azizner\Http\Controllers\ImageController;
 use Azizner\Image;
 use Azizner\Message;
+use Azizner\Notification;
 use Azizner\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -113,6 +114,14 @@ class MessageController extends Controller
             "title"=>$request->get('title'),
             "text"=>$request->get('text'),
             'to_user'=>$to->id
+        ]));
+
+
+        $to->notifications()->save(new Notification([
+            'from_id'=>$user->id,
+            'type'=>'message',
+            'type_id'=>$message->id,
+            'text'=>null
         ]));
 
         if($request->hasFile('photos')){

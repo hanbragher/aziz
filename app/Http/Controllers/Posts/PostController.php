@@ -52,17 +52,17 @@ class PostController extends Controller
     {
 
         if($request->has('tag')){
-            if(empty($tag = Tag::where('name', 'like', '%'.$request->get('tag').'%')->first()))
+            if(empty($tag = Tag::where('name', $request->get('tag'))->first()))
             {
                 return redirect()->route('posts.index')->withErrors('No results');
             }else{
-                $posts = $tag->posts()->paginate(3);
+                $posts = $tag->posts();
             }
         }else{
-            $posts = Post::orderBy('created_at', 'desc')->paginate(3);
+            $posts = Post::orderBy('created_at', 'desc');
         }
 
-        return view('posts.index', ['posts'=>$posts, 'active_menu'=>'posts']);
+        return view('posts.index', ['posts'=>$posts->paginate(3), 'active_menu'=>'posts']);
 
     }
 

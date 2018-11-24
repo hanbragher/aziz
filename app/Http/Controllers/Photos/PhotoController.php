@@ -48,7 +48,7 @@ class PhotoController extends Controller
     public function index(Request $request)
     {
         if($request->has('tag')){
-            if(empty($tag = Tag::where('name', 'like', '%'.$request->get('tag').'%')->first()))
+            if(empty($tag = Tag::where('name', $request->get('tag'))->first()))
             {
                 return redirect()->route('photos.index')->withErrors('No results');
             }else{
@@ -208,6 +208,8 @@ class PhotoController extends Controller
         if($user->cannot("destroy", $photo)){
             return redirect()->back()->withErrors('khkh');
         }
+
+        $photo->favorites()->delete();
 
         $old_photo = $photo->source;
 
