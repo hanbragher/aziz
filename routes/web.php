@@ -26,22 +26,16 @@ Route::get("/photos/my/", [
 
 ]);
 
+Route::get("/photos/comments/{id}", [
+    "as" => "photos.comments",
+    'uses' => 'Photos\PhotoController@comments'
+
+]);
+
 Route::get('/places/my', [
     "as" => "places.my",
     'uses' => 'Places\PlaceController@myPlaces'
 ]);
-
-/*Route::get("/favorites/announcements/", [
-    "as" => "favorites.announcements",
-    'uses' => 'Favorites\FavoriteController@announcements'
-
-]);*/
-
-/*Route::get("/favorites/photos/", [
-    "as" => "favorites.photos",
-    'uses' => 'Favorites\FavoriteController@photos'
-
-]);*/
 
 
 Route::resource('/posts', 'Posts\PostController');

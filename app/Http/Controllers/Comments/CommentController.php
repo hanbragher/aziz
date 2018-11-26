@@ -8,6 +8,7 @@ use Azizner\PhotoComment;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -112,17 +113,6 @@ class CommentController extends Controller
      */
     public function show($id)
     {
-        $photo = Photo::findOrFail($id);
-        $user = Auth::user();
-
-        if($user->cannot("showComments", $photo)){
-            return redirect()->back()->withErrors('No permission');
-        }
-        $comments = $photo->comments()->orderBy('created_at', 'desc')->get();
-
-        $photo->comments()->update(['is_read'=> true]);
-
-        return view('comments.show', ['comments'=>$comments, 'photo'=>$photo]);
 
     }
 
@@ -168,7 +158,6 @@ class CommentController extends Controller
         $comment->delete();
 
         return redirect()->back()->with('message' , 'The comment successfully deleted!');
-
 
     }
 }

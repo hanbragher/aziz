@@ -20,7 +20,7 @@ class CreatePlacesTable extends Migration
 
             $table->string('inf')->nullable();
 
-            $table->string('map')->nullable();
+            $table->text('map')->nullable();
 
             $table->integer("main_image")->nullable()->unsigned()->default(null);
             $table->foreign("main_image")->references("id")->on("images");
@@ -28,7 +28,7 @@ class CreatePlacesTable extends Migration
             $table->integer("user_id")->nullable()->unsigned()->default(null);
             $table->foreign("user_id")->references("id")->on("users");
 
-            $table->boolean('is_moderate')->default(false);
+            $table->boolean('is_moderated')->default(false);
 
             $table->timestamps();
         });

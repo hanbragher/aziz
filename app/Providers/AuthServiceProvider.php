@@ -6,9 +6,11 @@ use Azizner\Message;
 use Azizner\Notification;
 use Azizner\Photo;
 use Azizner\PhotoComment;
+use Azizner\Place;
 use Azizner\Policies\CommentPolicy;
 use Azizner\Policies\MessagePolicy;
 use Azizner\Policies\PhotoPolicy;
+use Azizner\Policies\PlacePolicy;
 use Azizner\Policies\PostPolicy;
 use Azizner\Post;
 use Azizner\Policies\AnnouncementPolicy;
@@ -30,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
         Message::class=>MessagePolicy::class,
         Photo::class=>PhotoPolicy::class,
         PhotoComment::class=>CommentPolicy::class,
+        Place::class=>PlacePolicy::class,
     ];
 
     /**

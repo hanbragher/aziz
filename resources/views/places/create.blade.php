@@ -26,7 +26,7 @@
                 @csrf
                 <div class="row">
                     <div class="input-field col s12 m6 l6">
-                        <input value='{{old("name")}}' id="input_text" type="text" data-length="100" name="name" required>
+                        <input value='{{old("name")}}' id="place_name" type="text" data-length="100" name="name" required>
                         <label>Place Name</label>
                     </div>
                 </div>
@@ -58,14 +58,14 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <textarea id="textarea1" class="materialize-textarea" name="map" required>{{old("map")}}</textarea>
-                        <label for="textarea1">Map frame</label>
+                        <label for="textarea1">Map frame (from google or yandex)</label>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="textarea1" class="materialize-textarea" name="inf" required>{{old("inf")}}</textarea>
-                        <label for="textarea1">Information</label>
+                        <textarea id="textarea2" class="materialize-textarea" name="inf" required>{{old("inf")}}</textarea>
+                        <label for="textarea2">Information</label>
                     </div>
                 </div>
 
@@ -86,7 +86,7 @@
     </div>
     <script>
         $(document).ready(function() {
-            $('input#input_text, textarea#textarea2').characterCounter();
+            $('input#place_name').characterCounter();
         });
 
         $('.chips-autocomplete').chips({
@@ -102,9 +102,6 @@
                 minLength: 1
             }
         });
-
-
-
     </script>
 
     <script src="/js/add-tags-on-submit-form.js"></script>

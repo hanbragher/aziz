@@ -38,14 +38,14 @@ class Notification extends Model
     public function href(){
         if($this->type == 'photo_comment'){
             if(!empty($photo = Photo::where('id',$this->type_id)->first())){
-                $link = 'You have a <b><a href="'.route('comments.show', $photo->id).'" class="grey-text">new comment for photo<i class="material-icons tiny">open_in_new</i>: </a></b>'.$this->text;
+                $link = 'You have a <b><a href="'.route('photos.comments', $photo->id).'" class="grey-text">new comment for photo<i class="material-icons tiny">open_in_new</i>: </a></b>'.$this->text;
                 return $link;
             }else{
                 return 'You have a new comment for photo:'.$this->text;
             }
         }elseif($this->type == 'photo_star'){
             if(!empty($photo = Photo::where('id',$this->type_id)->first())){
-                $link = '<b><a href="'.route('comments.show', $photo->id).'" class="grey-text">Your photo<i class="material-icons tiny">open_in_new</i></a></b> have one more star';
+                $link = '<b><a href="'.route('photos.comments', $photo->id).'" class="grey-text">Your photo<i class="material-icons tiny">open_in_new</i></a></b> have one more star';
                 return $link;
             }else{
                 return 'Your photo have one more star';

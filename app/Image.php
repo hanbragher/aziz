@@ -15,6 +15,10 @@ class Image extends Model
         return $this->belongsToMany("Azizner\Post", "post_image");
    }
 
+   public function places(){
+        return $this->belongsToMany("Azizner\Place", "place_image");
+   }
+
    public function announcements(){
         return $this->belongsToMany("Azizner\Announcement", "announcement_image");
    }

@@ -34,8 +34,6 @@
 
 
 
-
-
                 <div class="row">
                     <div class="gallery">
                         @include('inc.photo_card', [

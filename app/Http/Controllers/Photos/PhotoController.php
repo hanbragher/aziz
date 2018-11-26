@@ -37,11 +37,27 @@ class PhotoController extends Controller
     }
 
 
-    public function myPhotos($id = null)
+    public function myPhotos()
     {
         $user = Auth::user();
         $photos = $user->photos()->paginate(2);
         return view('photos.my', ['photos'=>$photos]);
+    }
+
+    public function comments($id)
+    {
+        $photo = Photo::findOrFail($id);
+        $user = Auth::user();
+
+        if($user->cannot("showComments", $photo)){
+            return redirect()->back()->withErrors('No permission');
+        }
+        $comments = $photo->comments()->orderBy('created_at', 'desc')->get();
+
+        $photo->comments()->update(['is_read'=> true]);
+
+        return view('photos.comments', ['comments'=>$comments, 'photo'=>$photo]);
+
     }
 
 

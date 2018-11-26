@@ -96,6 +96,11 @@ class PostController extends Controller
         if(!$user->is_blogger){
             return redirect()->back()->withErrors('No permission, you should be blogger for a create new post');
         }
+
+        if(!$user->blog->name){
+            return redirect()->route('profiles.edit', $user->id)->withErrors('Please add blog name and blog description before creating a post');
+
+        }
         $tags = Tag::all()->pluck('name');
         return view('posts.create', ['tags'=>$tags]);
     }
@@ -190,18 +195,18 @@ class PostController extends Controller
         }
 
         $user = Auth::user();
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
 
         if($user->cannot("update", $post)){
             return redirect()->back()->withErrors('Permission denied');
         }
 
         if($request->has('image_id') and $request->has('post_id')) {
-            if(empty($old_image = Image::find($request->get('image_id')))){
+            if(empty($old_image = Image::where('id', $request->get('image_id'))->first())){
                 return redirect()->back()->withErrors('Permission denied');
             };
 
-            if (empty($old_image->posts->find($id)->first())) {
+            if (empty($old_image->posts->where('id', $id)->first())) {
                 return redirect()->back()->withErrors('Permission denied');
             };
 
