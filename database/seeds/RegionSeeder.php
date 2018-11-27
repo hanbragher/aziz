@@ -10,14 +10,31 @@ class RegionSeeder extends Seeder
      *
      * @return void
      */
+
+    private $regionNames = [
+        "Lori",
+        "Aragatsotn",
+        "Ararat",
+        "Armavir",
+        "Gegharkunik",
+        "Kotayk",
+        "Shirak",
+        "Syunik",
+        "Tavush",
+        "Vayots Dzor",
+        "Yerevan"
+    ];
+
     public function run()
     {
-        Region::create(
-            [
-                'name' => 'Lori',
-                'country_id' => 1,
-
-            ]
-        );
+        foreach ($this->regionNames as $regionName)
+            Region::create(
+                [
+                    'name' => $regionName,
+                    'country_id' => 1,
+                ]
+            );
     }
+
+
 }

@@ -2,10 +2,14 @@
 
 namespace Azizner\Http\Controllers\Places;
 
+use Azizner\Category;
+use Azizner\City;
+use Azizner\Country;
 use Azizner\Group;
 use Azizner\Http\Controllers\ImageController;
 use Azizner\Image;
 use Azizner\Place;
+use Azizner\Region;
 use Azizner\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -75,8 +79,15 @@ class PlaceController extends Controller
         if(!$user->is_moderator){
             return redirect()->back()->withErrors('No permission, you should be moderator for a create new place');
         }
+
+
+        $countries = Country::all()->pluck('name');
+        $regions = Region::orderBy('name')->pluck('name');
+        $cities = City::all()->pluck('name');
+        $categories = Category::orderBy('name')->pluck('name');
+
         $tags = Tag::all()->pluck('name');
-        return view('places.create', ['tags'=>$tags]);
+        return view('places.create', ['tags'=>$tags, 'countries'=>$countries, 'regions'=>$regions, 'cities'=>$cities, 'categories'=>$categories ]);
     }
 
     /**
@@ -99,6 +110,8 @@ class PlaceController extends Controller
 
     public function store(Request $request)
     {
+        dump($request->all());
+        exit;
 
         $validator = $this->validator($request->all());
         if($validator->fails()){

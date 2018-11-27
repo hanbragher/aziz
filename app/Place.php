@@ -10,6 +10,25 @@ class Place extends Model
     public $appends = ['image', 'thumb'];
     protected $fillable = ['name', 'inf', 'map', 'main_image', 'user_id', 'is_moderated'];
 
+    public function category(){
+        return $this->hasOne("Azizner\Category", "id", "category_id");
+    }
+
+    public function country(){
+        return $this->hasOne("Azizner\Country", "id", "country_id");
+    }
+
+    public function region(){
+        return $this->hasOne("Azizner\Region", "id", "region_id");
+    }
+
+    public function city(){
+        return $this->hasOne("Azizner\City", "id", "city_id");
+    }
+
+
+
+
     public function tags(){
         return $this->belongsToMany("Azizner\Tag", "place_tag");
     }

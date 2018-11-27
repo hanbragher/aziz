@@ -26,7 +26,7 @@
                 @csrf
                 <div class="row">
                     <div class="input-field col s12 m6 l6">
-                        <input value='{{old("title")}}' id="input_text" type="text" data-length="100" name="title" required>
+                        <input value='{{old("title")}}' id="title" type="text" data-length="100" name="title" required>
                         <label>Title</label>
                     </div>
                 </div>
@@ -65,6 +65,8 @@
                 <div class="chips chips-autocomplete">
                 </div>
 
+
+
                 <button class="btn" >Publish<i class="material-icons right">send</i></button>
 
             </form>
@@ -79,7 +81,7 @@
     </div>
     <script>
         $(document).ready(function() {
-            $('input#input_text, textarea#textarea2').characterCounter();
+            $('input#title').characterCounter();
         });
 
         $('.chips-autocomplete').chips({
@@ -95,7 +97,6 @@
                 minLength: 1
             }
         });
-
 
 
     </script>

@@ -28,6 +28,18 @@ class CreatePlacesTable extends Migration
             $table->integer("user_id")->nullable()->unsigned()->default(null);
             $table->foreign("user_id")->references("id")->on("users");
 
+            $table->integer("category_id")->nullable()->unsigned()->default(null);
+            $table->foreign("category_id")->references("id")->on("categories");
+
+            $table->integer("country_id")->nullable()->unsigned()->default(null);
+            $table->foreign("country_id")->references("id")->on("countries");
+
+            $table->integer("region_id")->nullable()->unsigned()->default(null);
+            $table->foreign("region_id")->references("id")->on("regions");
+
+            $table->integer("city_id")->nullable()->unsigned()->default(null);
+            $table->foreign("city_id")->references("id")->on("cities");
+
             $table->boolean('is_moderated')->default(false);
 
             $table->timestamps();
