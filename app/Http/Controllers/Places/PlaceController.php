@@ -31,6 +31,7 @@ class PlaceController extends Controller
 
     protected function validator(array $data)
     {
+
         $rules = [
             'name' => ['required_without:image_id', 'string', 'max:100'],
             'main_image' => [ 'image', 'mimes:jpeg,bmp,png', 'max:2048'],
@@ -38,6 +39,10 @@ class PlaceController extends Controller
             'gallery.*' => [ 'image', 'mimes:jpeg,bmp,png', 'max:2048'],
             'inf' => ['required_without:image_id', 'string'],
             'map' => ['nullable', 'string'],
+            'category' => ['nullable', 'regex:/^[a-zA-Z ]+$/'],
+            'country' => ['required_without:image_id', 'regex:/^[a-zA-Z ]+$/'],
+            'region' => ['required_without:image_id', 'regex:/^[a-zA-Z ]+$/'],
+            'city' => ['required_without:image_id', 'regex:/^[a-zA-Z ]+$/'],
             'image_id' => ['numeric'],
             'place_id' => ['numeric'],
             'destroy' => ['string', 'in:destroy'],
@@ -53,6 +58,7 @@ class PlaceController extends Controller
     {
         //dump($request->all());
         //exit;
+
 
         return view('places.index', ['place'=>$request->get('place'), 'active_menu'=>'places']);
 
@@ -80,10 +86,9 @@ class PlaceController extends Controller
             return redirect()->back()->withErrors('No permission, you should be moderator for a create new place');
         }
 
-
         $countries = Country::all()->pluck('name');
         $regions = Region::orderBy('name')->pluck('name');
-        $cities = City::all()->pluck('name');
+        $cities = City::orderBy('name')->pluck('name');
         $categories = Category::orderBy('name')->pluck('name');
 
         $tags = Tag::all()->pluck('name');
@@ -98,38 +103,67 @@ class PlaceController extends Controller
      */
 
     public function map($get_map){
-        if(!str_contains($get_map,'www.google.com/maps/embed') and !str_contains($get_map,'yandex.ru/map')){
-            return redirect()->back()->withErrors('Please check map frame.')->withInput();
+        if(!empty($get_map)){
+            if(!str_contains($get_map,'www.google.com/maps/embed') and !str_contains($get_map,'yandex.ru/map')){
+                return 'error';
+            }
+
+            $array = ['width="400"', 'width="560"', 'width="600"', 'width="800"'];
+            return str_replace($array,'width="100%"', $get_map);
         }
 
-        $array = ['width="400"', 'width="560"', 'width="600"', 'width="800"'];
-        return str_replace($array,'width="100%"', $get_map);
-
+        return null;
     }
 
 
     public function store(Request $request)
     {
-        dump($request->all());
-        exit;
 
         $validator = $this->validator($request->all());
         if($validator->fails()){
             //return redirect()->back()->withErrors($validator)->withInput();
-            return redirect()->back()->withErrors('Something wrong, check fields')->withInput();
+            return redirect()->back()->withErrors('Please check fields')->withInput();
         }
+
         $user = Auth::user();
 
         if(!$user->is_moderator){
             return redirect()->back()->withErrors('No permission, you should be moderator for a create new place');
         }
 
+        if(!empty($request->get('category'))){
+            if(!$category = Category::where('name',  $request->get('category'))->first()){
+                return redirect()->back()->withErrors('Check category field');
+            }
+            $category_id = $category->id;
+        }else{
+            $category_id = null;
+        }
+
+        if(!$country = Country::where('name', $request->get('country'))->first()){
+            return redirect()->back()->withErrors('Check country field');
+        }
+
+        if(!$region = Region::where(['name'=>$request->get('region'), 'country_id'=>$country->id])->first()){
+            return redirect()->back()->withErrors('Check state/region field');
+        }
+
         $map = $this->map($request->get('map'));
+
+        if($map == 'error'){
+            return redirect()->back()->withErrors('Please check map frame.')->withInput();
+        }
+
+        $city = City::firstOrCreate(['name'=>$request->get('city'), 'region_id'=>$region->id]);
 
         $place = $user->places()->save( new Place([
             "name"=>$request->get('name'),
             "inf"=>$request->get('inf'),
             "map"=>$map,
+            "category_id"=>$category_id,
+            "country_id"=>$country->id,
+            "region_id"=>$region->id,
+            "city_id"=>$city->id,
         ]));
 
         if(!empty($obj = json_decode($request->get('tags')))){
@@ -154,6 +188,7 @@ class PlaceController extends Controller
             }
             $place->images()->attach($image_ids);
         }
+
 
         return redirect()->route('places.edit', $place->id)->with('message' , 'The place successfully published!');
 
@@ -185,8 +220,13 @@ class PlaceController extends Controller
             return redirect()->back()->withErrors('No permission.');
         }
 
+        $categories = Category::orderBy('name')->pluck('name');
+        $countries = Country::all()->pluck('name');
+        $regions = Region::orderBy('name')->pluck('name');
+        $cities = City::orderBy('name')->pluck('name');
+
         $tags = Tag::all()->pluck('name');
-        return view('places.edit', ['place'=>$place, 'tags'=>$tags]);
+        return view('places.edit', ['place'=>$place, 'tags'=>$tags, 'categories'=>$categories, 'countries'=>$countries, 'regions'=>$regions, 'cities'=>$cities]);
     }
 
     /**
@@ -198,17 +238,10 @@ class PlaceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        /*dump($request->all());
-        dump($request->has('map'));
-
-
-        exit;*/
-
-
         $validator = $this->validator($request->all());
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput();
-            //return redirect()->back()->withErrors('Something wrong, check fields')->withInput();
+            //return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors('Please check fields')->withInput();
         }
 
         $user = Auth::user();
@@ -245,23 +278,59 @@ class PlaceController extends Controller
             return redirect()->back()->withErrors('Permission denied');
         }
 
+        if(!empty($request->get('category'))){
+            if(!$category = Category::where('name',  $request->get('category'))->first()){
+                return redirect()->back()->withErrors('Check category field');
+            }
+            $category_id = $category->id;
+        }else{
+            $category_id = null;
+        }
+
+        if(!$country = Country::where('name', $request->get('country'))->first()){
+            return redirect()->back()->withErrors('Check country field');
+        }
+
+        if(!$region = Region::where(['name'=>$request->get('region'), 'country_id'=>$country->id])->first()){
+            return redirect()->back()->withErrors('Check state/region field');
+        }
+
+
+
+
+        $city = City::firstOrCreate(['name'=>$request->get('city'), 'region_id'=>$region->id]);
+
 
 
         if(!empty($request->get('map'))){
             $map = $this->map($request->get('map'));
+            if($map == 'error'){
+                return redirect()->back()->withErrors('Please check map frame.')->withInput();
+            }
             $place->update([
                 "name"=>$request->get('name'),
                 "inf"=>$request->get('inf'),
                 "map"=>$map,
+                "category_id"=>$category_id,
+                "country_id"=>$country->id,
+                "region_id"=>$region->id,
+                "city_id"=>$city->id,
                 'updated_at'=>Carbon::now()
             ]);
         }else{
             $place->update([
                 "name"=>$request->get('name'),
                 "inf"=>$request->get('inf'),
+                "category_id"=>$category_id,
+                "country_id"=>$country->id,
+                "region_id"=>$region->id,
+                "city_id"=>$city->id,
                 'updated_at'=>Carbon::now()
             ]);
         }
+
+
+
 
 
         if(!empty($obj = json_decode($request->get('tags')))){

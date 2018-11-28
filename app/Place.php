@@ -8,7 +8,7 @@ class Place extends Model
 {
     protected $table  = 'places';
     public $appends = ['image', 'thumb'];
-    protected $fillable = ['name', 'inf', 'map', 'main_image', 'user_id', 'is_moderated'];
+    protected $fillable = ['name', 'inf', 'map', 'main_image', 'user_id', 'category_id', 'country_id', 'region_id', 'city_id', 'is_moderated'];
 
     public function category(){
         return $this->hasOne("Azizner\Category", "id", "category_id");

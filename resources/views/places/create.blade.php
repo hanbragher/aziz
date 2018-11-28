@@ -36,7 +36,7 @@
                         <select name="category">
                             <option value="" selected>Without category</option>
                             @foreach($categories as $category)
-                                <option  value="{{$category}}">{{$category}}</option>
+                                <option  value="{{$category}}" {{($category == old("category"))?'selected':''}}>{{$category}}</option>
                             @endforeach
                         </select>
                         <label>Select the Category</label>
@@ -58,7 +58,7 @@
                         <select name="region">
                             <option value="" disabled selected>Choose from list</option>
                             @foreach($regions as $region)
-                                <option value="{{$region}}">{{$region}}</option>
+                                <option value="{{$region}}" {{($region == old("region"))?'selected':''}}>{{$region}}</option>
                             @endforeach
                         </select>
                         <label>State/Region</label>
@@ -68,7 +68,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">gps_fixed</i>
-                                <input type="text" id="city" name='city' class="autocomplete" placeholder="Type and select">
+                                <input type="text" id="city" name='city' class="autocomplete" placeholder="Type and select" value="{{old('city')}}">
                                 <label for="state">City</label>
                             </div>
                         </div>

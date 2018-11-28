@@ -80,12 +80,58 @@
                     @method('PUT')
                     @csrf
                     <div class="row">
-                        <div class="input-field col s4">
+                        <div class="input-field col s12 m6 l6">
                             <input value='{{$place->name}}' id="place_name" type="text" data-length="100" name="name" required>
                             <label for="input_text">Place Name</label>
                         </div>
-
+                        <div class="input-field col s12 m6 l6">
+                            <i class="material-icons prefix">clear_all</i>
+                            <select name="category">
+                                <option value="" selected>Without category</option>
+                                @php if(!empty($place->category)){$place_category_name = $place->category->name;}else{$place_category_name = null;}@endphp
+                                @foreach($categories as $category)
+                                        <option  value="{{$category}}" {{($category == $place_category_name)?'selected':''}}>{{$category}}</option>
+                                @endforeach
+                            </select>
+                            <label>Select the Category</label>
+                        </div>
                     </div>
+
+
+                    <div class="row">
+                        <div class="input-field col s12 m12 l4">
+                            <i class="material-icons prefix">language</i>
+                            <select name="country">
+                                <option value="Armenia" selected>Armenia</option>
+                            </select>
+                            <label>Country</label>
+                        </div>
+
+                        <div class="input-field col s12 m12 l4">
+                            <i class="material-icons prefix">explore</i>
+                            <select name="region">
+                                <option value="" disabled selected>Choose from list</option>
+                                @php if(!empty($place->region)){$place_region_name = $place->region->name;}else{$place_region_name = null;}@endphp
+                                @foreach($regions as $region)
+                                    <option value="{{$region}}" {{($region == $place_region_name)?'selected':''}}>{{$region}}</option>
+                                @endforeach
+                            </select>
+                            <label>State/Region</label>
+                        </div>
+
+                        <div class="col s12 m12 l4">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">gps_fixed</i>
+                                    @php if(!empty($place->city)){$place_city_name = $place->city->name;}else{$place_city_name = null;}@endphp
+                                    <input type="text" id="city" name='city' class="autocomplete" placeholder="Type and select" value="{{$place_city_name}}">
+                                    <label for="state">City</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <div class="row">
                         <div class="file-field input-field col s5">
@@ -202,9 +248,30 @@
             });
         });
 
+            $(document).ready(function(){
+                $('select').formSelect();
+            });
+
+            $('#form').on('keyup keypress', function(e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
 
 
             $('input#place_name').characterCounter();
+
+
+            $('input#city').autocomplete({
+                data: {
+                    @foreach($cities as $city)
+                    '{{$city}}': null,
+                    @endforeach
+                }
+            });
+
 
 
 
