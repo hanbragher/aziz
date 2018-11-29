@@ -41,7 +41,7 @@
                 @endforeach
 
             @else
-                <p class="flow-text center">No announcements</p>
+                <p class="flow-text center">No photos</p>
             @endif
 
 

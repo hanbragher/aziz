@@ -81,7 +81,7 @@
                     @csrf
                     <div class="row">
                         <div class="input-field col s4">
-                            <input value='{{$post->title}}' id="input_text" type="text" data-length="100" name="title" required>
+                            <input value='{{$post->title}}' id="title" type="text" data-length="100" name="title" required>
                             <label for="input_text">Title</label>
                         </div>
 
@@ -195,7 +195,7 @@
 
 
         $(document).ready(function() {
-            $('input#input_text, input#image_title, textarea#textarea2').characterCounter();
+            $('input#title, input#image_title').characterCounter();
         });
 
 
@@ -204,9 +204,15 @@
             placeholder: 'Enter a tag',
             secondaryPlaceholder: '+Tag',
             data: [
-                @foreach($post->tags as $tag)
-                {tag: '{{$tag->name}}',},
-                @endforeach
+                @if(!empty(old('tags')))
+                    @foreach(json_decode(old('tags')) as $tag)
+                        {tag: '{{$tag->tag}}',},
+                    @endforeach
+                @else
+                    @foreach($post->tags as $tag)
+                        {tag: '{{$tag->name}}',},
+                    @endforeach
+                @endif
             ],
             autocompleteOptions: {
                 data: {

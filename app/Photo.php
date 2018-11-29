@@ -27,7 +27,10 @@ class Photo extends Model
     }
 
     public function stars(){
-        return $this->hasMany("Azizner\Favorite_Photos", "photo_id", 'id');
+        if($this->favorites->first()){
+            return $this->favorites->count();
+        }
+        return '-';
     }
 
     public function comments(){

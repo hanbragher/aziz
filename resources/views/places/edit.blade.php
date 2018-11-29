@@ -260,8 +260,7 @@
                 }
             });
 
-
-            $('input#place_name').characterCounter();
+            $('input#place_name, input#image_title').characterCounter();
 
 
             $('input#city').autocomplete({
@@ -279,9 +278,15 @@
                 placeholder: 'Enter a tag',
                 secondaryPlaceholder: '+Tag',
                 data: [
+                    @if(!empty(old('tags')))
+                        @foreach(json_decode(old('tags')) as $tag)
+                            {tag: '{{$tag->tag}}',},
+                        @endforeach
+                    @else
                         @foreach($place->tags as $tag)
-                    {tag: '{{$tag->name}}',},
-                    @endforeach
+                            {tag: '{{$tag->name}}',},
+                        @endforeach
+                    @endif
                 ],
                 autocompleteOptions: {
                     data: {

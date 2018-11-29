@@ -96,10 +96,7 @@ Route::get('/profile/{id}/notes', [
     'uses' => 'Profiles\ProfileController@profileNotes'
 ]);
 
-Route::get('/profile/{id}/adverts', [
-    "as" => "profile.adverts",
-    'uses' => 'Profiles\ProfileController@profileAdverts'
-]);
+
 
 
 

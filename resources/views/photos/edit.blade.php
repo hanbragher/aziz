@@ -100,9 +100,15 @@
             placeholder: 'Enter a tag',
             secondaryPlaceholder: '+Tag',
             data: [
-                    @foreach($photo->tags as $tag)
-                    {tag: '{{$tag->name}}',},
+                @if(!empty(old('tags')))
+                    @foreach(json_decode(old('tags')) as $tag)
+                        {tag: '{{$tag->tag}}',},
                     @endforeach
+                @else
+                    @foreach($photo->tags as $tag)
+                        {tag: '{{$tag->name}}',},
+                    @endforeach
+                @endif
             ],
             autocompleteOptions: {
                 data: {

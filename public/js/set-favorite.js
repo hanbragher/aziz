@@ -13,6 +13,7 @@ $(document).ready(function(){
                 "type":$(this).data("type")
             },
             success: function(data){
+                console.log(data);
                 if(data.status === "success"){
                     btn.find("i").toggleClass("orange-text");
                 }

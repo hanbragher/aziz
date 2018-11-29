@@ -6,6 +6,10 @@ span.photo-header{
     padding: 5px 10px;
 }
 
+span.place-header{
+    padding: 5px 10px;
+}
+
 
 img.announcement-card-image{
     height: 190px;
@@ -34,6 +38,12 @@ p.sidenav-divader{
 }
 
 a.set-fav-photo{
+    position: absolute;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+a.set-fav-place{
     position: absolute;
     padding-top: 10px;
     padding-left: 10px;

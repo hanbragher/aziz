@@ -13,7 +13,7 @@
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>'/images/places_cover.jpg'])
 
-            @include('inc.middlemenu', ['avatar'=> 'hide', 'header'=>!empty($place) ? $place : 'all'])
+            @include('inc.middlemenu', ['avatar'=> 'hide', 'header'=>!empty($place_menu) ? $place_menu : 'all'])
         </div>
     </div>
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
@@ -23,7 +23,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.places_sidenav', ['active'=> !empty($_GET['places']) ? $_GET['places'] : 'all'])
+            @include('inc.places_sidenav', ['active'=> !empty($place_menu) ? $place_menu : 'all'])
         </div>
 
         <div class="col s12 m12 l8">
@@ -31,25 +31,79 @@
             <div class="row">
                 <div class="col s12">
                     <ul class="tabs">
-                        <li class="tab col s3"><a href="#tab1">Inf</a></li>
-                        <li class="tab col s3"><a class="active" href="#tab2">Pictures</a></li>
-                        <li class="tab col s3"><a href="#tab3">Map</a></li>
-                        <li class="tab col s3"><a href="#tab4">Notes</a></li>
+                        <li class="tab col s3"><a href="#inf">Inf</a></li>
+                        <li class="tab col s3"><a href="#pictures" class="active">Pictures</a></li>
+                        <li class="tab col s3"><a href="#map">Map</a></li>
+                        <li class="tab col s3"><a href="#notes">Notes</a></li>
                     </ul>
                 </div>
-                <div id="tab1" class="col s12">Test 1</div>
-                <div id="tab2" class="col s12">
-                    @for ($i=1; $i<=9; $i++)
+
+                <div id="inf" class="col s12">{!! $place->inf !!}</div>
+
+                <div id="pictures" class="col s12">
+
+                    @foreach($place->images as $image_source)
                         <div class="gallery col s6 m4 l3">
-                            @include('widgets.test_gallery', ['i'=>$i])
+                            @include('inc.place_gallery',
+                                [
+                                    'image'=>$image_source->file,
+                                    'thumb'=>$image_source->thumb,
+                                    'title'=>$image_source->title
+                                ])
                         </div>
-                    @endfor
+                    @endforeach
+
                 </div>
-                <div id="tab3" class="col s12">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11464.644258196766!2d44.88619372202204!3d40.79609652152879!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4041aba4d266d437%3A0x293121c72328670b!2z0JzQvtC90LDRgdGC0YvRgNGMINCQ0LPQsNGA0YbQuNC9!5e1!3m2!1sru!2s!4v1539005943475" width="100%" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+                <div id="map" class="col s12">
+                    {!!$place->map!!}
                 </div>
-                <div id="tab4" class="col s12">
-                    comments
+
+                <div id="notes" class="col s12">
+                    <div class="row">
+
+                            <ul class="collapsible">
+                                <li class='{{$errors->all()?"active":''}}' id="!">
+                                    <div class="collapsible-header" id="reply_header"><i class="material-icons teal-text">arrow_drop_down</i>Write a note</div>
+                                    <div class="collapsible-body" id="reply_body">
+                                        <form action="{{route('notes.store')}}" method="post" id="form" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <textarea class="materialize-textarea" name="text">{{old("text")}}</textarea>
+                                                    <label for="textarea1">Textarea</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="file-field input-field col s12 m12 l12">
+                                                    <div class="btn">
+                                                        <span>Attach photos</span>
+                                                        <input type="file" name="photos[]" multiple accept="image/*">
+                                                    </div>
+                                                    <div class="file-path-wrapper">
+                                                        <input class="file-path validate" placeholder="Attach up to 12 images" >
+                                                        <label>max 2MB each</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn" >Publish<i class="material-icons right">send</i></button>
+                                        </form>
+
+                                    </div>
+                                </li>
+
+                            </ul>
+
+
+
+
+                    </div>
+
+                    <div class="row">
+                        @include('inc.note')
+                    </div>
+
+
                 </div>
             </div>
         </div>

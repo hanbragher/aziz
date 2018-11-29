@@ -27,7 +27,7 @@
                 <i class="material-icons right card-title activator chip">expand_less</i>
             @endif
 
-                <p><i class="material-icons tiny orange-text">stars</i> {{($photo->stars->first())?$photo->stars->count():'-'}}</p>
+                <p><i class="material-icons tiny orange-text">stars</i> {{$photo->stars()}}</p>
                 <p class="truncate">Date: {{$photo->created_at}}</p>
 
             @auth

@@ -56,28 +56,51 @@ class PlaceController extends Controller
 
     public function index(Request $request)
     {
-        //dump($request->all());
-        //exit;
+
+        $place = $request->get('place');
+
+        if(empty($place) or $place == 'all'){
+            $places = Place::where('is_moderated', true)->orderBy('created_at', 'desc');
+        }elseif($category = Category::where('name', $place)->first()){
+            $places = Place::where(['is_moderated'=> true, 'category_id'=>$category->id])->orderBy('created_at', 'desc');
+        }
 
 
-        return view('places.index', ['place'=>$request->get('place'), 'active_menu'=>'places']);
+        if(!empty($places)){
+            return view('places.index', ['places'=>$places->paginate(2), 'place_menu'=>$place, 'active_menu'=>'places']);
+        }
+
+        return Abort(404);
+
 
     }
 
     public function myPlaces(Request $request)
     {
-        //dump($request->all());
-        //exit;
+        $user = Auth::user();
+        $places = $user->places()->paginate(2);
 
-        return view('places.my', [ 'active_menu'=>'myplaces']);
+        return view('places.my', [ 'active_menu'=>'myplaces', 'places'=>$places]);
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function show($id)
+    {
+        if(!$place = Place::where('id', $id)->first()){
+            return Abort(404);
+        }
+
+        if(!$place->is_moderated){
+            return Abort(404);
+        }
+
+
+        $place_menu = $place->category->name;
+        return view('places.show', ['place'=>$place, 'place_menu'=>$place_menu, 'active_menu'=>'places']);
+    }
+
+
     public function create()
     {
         $user = Auth::user();
@@ -194,16 +217,7 @@ class PlaceController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return view('places.show', ['active_menu'=>'places']);
-    }
+
 
     /**
      * Show the form for editing the specified resource.

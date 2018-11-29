@@ -30,6 +30,10 @@ class Notification extends Model
             if(!empty($announcement = Announcement::where('id',$this->type_id)->first())){
                 return $announcement->thumb;
             }
+        }elseif($this->type == 'place_star'){
+            if(!empty($place = Place::where('id',$this->type_id)->first())){
+                return $place->thumb;
+            }
         };
 
         return false;
@@ -63,6 +67,13 @@ class Notification extends Model
                 return $link;
             }else{
                 return 'Your announcement have one more star.';
+            }
+        }elseif($this->type == 'place_star'){
+            if(!empty($place = Place::where('id',$this->type_id)->first())){
+                $link = '<b><a href="'.route('places.show', $place->id).'" class="grey-text">Your place<i class="material-icons tiny">open_in_new</i></a></b> have one more star';
+                return $link;
+            }else{
+                return 'Your place have one more star.';
             }
         };
 

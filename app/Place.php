@@ -10,6 +10,10 @@ class Place extends Model
     public $appends = ['image', 'thumb'];
     protected $fillable = ['name', 'inf', 'map', 'main_image', 'user_id', 'category_id', 'country_id', 'region_id', 'city_id', 'is_moderated'];
 
+    public function user(){
+        return $this->belongsTo("Azizner\User", "user_id", "id");
+    }
+
     public function category(){
         return $this->hasOne("Azizner\Category", "id", "category_id");
     }
@@ -26,8 +30,20 @@ class Place extends Model
         return $this->hasOne("Azizner\City", "id", "city_id");
     }
 
+    public function notes(){
+        return $this->hasMany("Azizner\Note", "place_id", 'id');
+    }
 
+    public function favorites(){
+        return $this->hasMany("Azizner\Favorite_Places", "place_id", 'id');
+    }
 
+    public function stars(){
+        if($this->favorites->first()){
+            return $this->favorites->count();
+        }
+        return '-';
+    }
 
     public function tags(){
         return $this->belongsToMany("Azizner\Tag", "place_tag");

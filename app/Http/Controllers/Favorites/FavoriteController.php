@@ -5,6 +5,7 @@ namespace Azizner\Http\Controllers\Favorites;
 use Azizner\Announcement;
 use Azizner\Notification;
 use Azizner\Photo;
+use Azizner\Place;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class FavoriteController extends Controller
     {
         $rules = [
             'id' => ['required', 'numeric'],
-            'type' => ['required', 'string', 'in:announcement,photo'],
+            'type' => ['required', 'string', 'in:announcement,photo,place'],
         ];
 
         return Validator::make($data, $rules);
@@ -49,6 +50,16 @@ class FavoriteController extends Controller
         return view('favorites.photos', ['photos'=>$photos, 'active'=>'photos']);
     }
 
+    public function places()
+    {
+        $user = Auth::user();
+        $places = $user->favoritePlaces()->paginate(2);
+        return view('favorites.places', ['places'=>$places, 'active'=>'places']);
+    }
+
+
+
+
     public function index(Request $request)
     {
 
@@ -58,6 +69,10 @@ class FavoriteController extends Controller
 
         if($request->has('announcements')){
             return $this->announcements();
+        }
+
+        if($request->has('places')){
+            return $this->places();
         }
 
         return Abort(404);
@@ -146,6 +161,33 @@ class FavoriteController extends Controller
             exit;
         }
 
+        if($request->get('type') === 'place') {
+
+            if(!empty($place = Place::where('id', $request->get('id'))->first()))
+            {
+                if($user->favoritePlaces->contains($place->id))
+                {
+                    $user->favoritePlaces()->detach($place->id);
+                }else{
+
+                    $place->user->notifications()->save(new Notification([
+                        'from_id'=>$user->id,
+                        'type'=>'place_star',
+                        'type_id'=>$place->id,
+                        'text'=>null
+                    ]));
+
+                    $user->favoritePlaces()->attach($place->id);
+                }
+                $response["status"] = "success";
+
+            }else{
+                $response["status"] = "error";
+            }
+
+            echo json_encode($response);
+            exit;
+        }
 
         $response["status"] = 'error';
         echo json_encode($response);

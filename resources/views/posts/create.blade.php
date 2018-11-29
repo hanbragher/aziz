@@ -87,6 +87,13 @@
         $('.chips-autocomplete').chips({
             placeholder: 'Enter a tag',
             secondaryPlaceholder: '+Tag',
+            data: [
+                    @if(!empty(old('tags')))
+                    @foreach(json_decode(old('tags')) as $tag)
+                {tag: '{{$tag->tag}}',},
+                @endforeach
+                @endif
+            ],
             autocompleteOptions: {
                 data: {
                     @foreach($tags as $tag)
