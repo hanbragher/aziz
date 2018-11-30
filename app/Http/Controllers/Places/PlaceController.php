@@ -85,8 +85,10 @@ class PlaceController extends Controller
     }
 
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        /*dump($request->all()); exit;*/
+
         if(!$place = Place::where('id', $id)->first()){
             return Abort(404);
         }
@@ -95,6 +97,14 @@ class PlaceController extends Controller
             return Abort(404);
         }
 
+        if(Auth::check()){
+            $user = Auth::user();
+            if($place->user->id == $user->id and $place->hasNewNote()){
+                $place->notes()->update([
+                    'is_read'=>true,
+                ]);
+            }
+        }
 
         $place_menu = $place->category->name;
         return view('places.show', ['place'=>$place, 'place_menu'=>$place_menu, 'active_menu'=>'places']);

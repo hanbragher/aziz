@@ -42,7 +42,6 @@
             </div>
 
             <div class="row center">
-
                 {{$announcements->appends($_GET)->links()}}
             </div>
 

@@ -2,6 +2,10 @@ div.sidenav-item{
     padding-left: 1rem;
 }
 
+div.card-second-part{
+    padding: 10px !important;
+}
+
 span.photo-header{
     padding: 5px 10px;
 }

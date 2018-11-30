@@ -115,12 +115,15 @@ class FavoriteController extends Controller
                     $user->favoriteAnnouncements()->detach($announcement->id);
                 }else{
 
-                    $announcement->user->notifications()->save(new Notification([
-                        'from_id'=>$user->id,
-                        'type'=>'announcement',
-                        'type_id'=>$announcement->id,
-                        'text'=>null
-                    ]));
+                    if($announcement->user->id != $user->id){
+                        $announcement->user->notifications()->save(new Notification([
+                            'from_id'=>$user->id,
+                            'type'=>'announcement',
+                            'type_id'=>$announcement->id,
+                            'text'=>null
+                        ]));
+                    };
+
 
                     $user->favoriteAnnouncements()->attach($announcement->id);
                 }
@@ -142,12 +145,14 @@ class FavoriteController extends Controller
                     $user->favoritePhotos()->detach($photo->id);
                 }else{
 
-                    $photo->user->notifications()->save(new Notification([
-                        'from_id'=>$user->id,
-                        'type'=>'photo_star',
-                        'type_id'=>$photo->id,
-                        'text'=>null
-                    ]));
+                    if($photo->user->id != $user->id) {
+                        $photo->user->notifications()->save(new Notification([
+                            'from_id' => $user->id,
+                            'type' => 'photo_star',
+                            'type_id' => $photo->id,
+                            'text' => null
+                        ]));
+                    }
 
                     $user->favoritePhotos()->attach($photo->id);
                 }
@@ -170,12 +175,14 @@ class FavoriteController extends Controller
                     $user->favoritePlaces()->detach($place->id);
                 }else{
 
-                    $place->user->notifications()->save(new Notification([
-                        'from_id'=>$user->id,
-                        'type'=>'place_star',
-                        'type_id'=>$place->id,
-                        'text'=>null
-                    ]));
+                    if($place->user->id != $user->id) {
+                        $place->user->notifications()->save(new Notification([
+                            'from_id' => $user->id,
+                            'type' => 'place_star',
+                            'type_id' => $place->id,
+                            'text' => null
+                        ]));
+                    }
 
                     $user->favoritePlaces()->attach($place->id);
                 }

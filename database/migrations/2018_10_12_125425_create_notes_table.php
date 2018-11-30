@@ -19,6 +19,7 @@ class CreateNotesTable extends Migration
             $table->foreign("user_id")->references("id")->on("users");
             $table->integer("place_id")->unsigned()->default(null);
             $table->foreign("place_id")->references("id")->on("places");
+            $table->boolean('is_read')->default(false);
             $table->string('text')->nullable();
             $table->timestamps();
         });

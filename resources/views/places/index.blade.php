@@ -24,9 +24,18 @@
 
             <div class="row">
                 @if($places->first())
+
+                    @guest
+                    @php $star =  false;  @endphp
+                    @include('inc.modal-please-login')
+                    @endguest
+
                     @foreach($places as $place)
+                        @auth
+                        @php $star =  $user->favoritePhotos->contains($place->id) @endphp
+                        @endauth
                         @include('inc.place_card', [
-                        'star'=> $user->favoritePhotos->contains($place->id),
+                        'star'=> $star,
                         'place'=>$place
                         ])
                     @endforeach
@@ -47,6 +56,11 @@
     </div>
 
     <script src="/js/set-favorite.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.modal').modal();
+        });
+    </script>
 
 
 @endsection

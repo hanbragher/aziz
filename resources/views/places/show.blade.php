@@ -63,9 +63,9 @@
                     <div class="row">
 
                             <ul class="collapsible">
-                                <li class='{{$errors->all()?"active":''}}' id="!">
-                                    <div class="collapsible-header" id="reply_header"><i class="material-icons teal-text">arrow_drop_down</i>Write a note</div>
-                                    <div class="collapsible-body" id="reply_body">
+                                <li class="{{$errors->all()?"active":''}}" id="note">
+                                    <div class="collapsible-header" id="note_header"><i class="material-icons teal-text">arrow_drop_down</i>Write a note</div>
+                                    <div class="collapsible-body" id="note_body">
                                         <form action="{{route('notes.store')}}" method="post" id="form" enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
@@ -114,6 +114,24 @@
     </div>
 
     <script src="/js/simple-lightbox-activator.js"></script>
+
+    @auth
+        @if($user->id != $place->user->id)
+            <script>
+                $(document).ready(function(){
+                    var hashValue = location.hash;
+                    hashValue = hashValue.replace(/^#/, '');
+                    console.log(hashValue);
+                    if (hashValue == 'notes'){
+                        document.getElementById('note_body').style.cssText = 'display: block;';
+                        document.getElementById('note').classList.add('active');
+                    }
+                });
+            </script>
+        @endif
+    @endauth
+
+
 
 
 @endsection

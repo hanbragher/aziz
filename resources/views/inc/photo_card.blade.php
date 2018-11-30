@@ -15,7 +15,7 @@
             </a>
         </div>
 
-        <div class="card-content">
+        <div class="card-content card-second-part">
 
             @if(!empty($editable) and $editable == true)
                 <a data-actionroute='{{route('photos.destroy', $photo->id)}}' class="modal-open-delete btn-floating halfway-fab waves-effect waves-light " ><i class="material-icons red">delete_forever</i></a>

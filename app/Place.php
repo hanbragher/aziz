@@ -34,6 +34,14 @@ class Place extends Model
         return $this->hasMany("Azizner\Note", "place_id", 'id');
     }
 
+    public function hasNewNote()
+    {
+        if($this->notes()->where('is_read', false)->first()){
+            return true;
+        }
+        return false;
+    }
+
     public function favorites(){
         return $this->hasMany("Azizner\Favorite_Places", "place_id", 'id');
     }

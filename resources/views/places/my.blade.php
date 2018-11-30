@@ -45,6 +45,8 @@
                     @endforeach
                 @else
                     <p class="flow-text center">No places</p>
+                    <p class="center"><a href="{{route('places.create')}}" class="btn-flat">create a new</a></p>
+
                 @endif
 
             </div>
