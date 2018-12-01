@@ -227,6 +227,8 @@ class PhotoController extends Controller
 
         $photo->favorites()->delete();
 
+        $photo->comments()->delete();
+
         $old_photo = $photo->source;
 
         $photo->tags()->detach();

@@ -37,6 +37,11 @@ Route::get('/places/my', [
     'uses' => 'Places\PlaceController@myPlaces'
 ]);
 
+Route::get('/places/{id}/readNotes', [
+    "as" => "places.readNotes",
+    'uses' => 'Places\PlaceController@readNotes'
+]);
+
 
 Route::resource('/posts', 'Posts\PostController');
 

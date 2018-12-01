@@ -32,7 +32,7 @@
 
                     @foreach($places as $place)
                         @auth
-                        @php $star =  $user->favoritePhotos->contains($place->id) @endphp
+                        @php $star =  $user->favoritePlaces->contains($place->id) @endphp
                         @endauth
                         @include('inc.place_card', [
                         'star'=> $star,

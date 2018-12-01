@@ -2,8 +2,10 @@
 
 namespace Azizner\Http\Controllers\Notes;
 
+use Azizner\Note;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -63,12 +65,20 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         dump($request->all());
+        exit;
 
         $validator = $this->validator($request->all());
         if($validator->fails()){
             //return redirect()->back()->withErrors($validator)->withInput();
             return redirect()->back()->withErrors('Something wrong, check fields')->withInput();
         }
+
+        $user = Auth::user();
+
+        $note = $user->notes()->save(new Note([
+
+//todo
+        ]));
 
         exit;
     }

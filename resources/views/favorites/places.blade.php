@@ -34,14 +34,14 @@
 
             @include('inc.modal-add-comment')
 
-            <div class="gallery row">
+            <div class="row">
                 @if($places->first())
-                    {{--@foreach($photos as $photo)
-                        @include('inc.photo_card', [
-                        'star'=> $user->favoritePhotos->contains($photo->id),
-                        'photo'=>$photo,
-                        'editable'=>false])
-                    @endforeach--}}
+                    @foreach($places as $place)
+                        @include('inc.place_card', [
+                        'star'=> $user->favoritePlaces->contains($place->id),
+                        'place'=>$place
+                        ])
+                    @endforeach
                 @else
                     <p class="flow-text center">No places</p>
                 @endif

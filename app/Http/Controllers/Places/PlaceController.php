@@ -5,7 +5,6 @@ namespace Azizner\Http\Controllers\Places;
 use Azizner\Category;
 use Azizner\City;
 use Azizner\Country;
-use Azizner\Group;
 use Azizner\Http\Controllers\ImageController;
 use Azizner\Image;
 use Azizner\Place;
@@ -16,6 +15,8 @@ use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+
 
 
 class PlaceController extends Controller
@@ -26,7 +27,7 @@ class PlaceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct() {
-        $this->middleware(['auth'])->only(['create', 'edit', 'store', 'update', 'destroy', 'myPlaces']);
+        $this->middleware(['auth'])->only(['create', 'edit', 'store', 'update', 'destroy', 'myPlaces', 'showMy']);
     }
 
     protected function validator(array $data)
@@ -85,9 +86,8 @@ class PlaceController extends Controller
     }
 
 
-    public function show(Request $request, $id)
+    public function show($id)
     {
-        /*dump($request->all()); exit;*/
 
         if(!$place = Place::where('id', $id)->first()){
             return Abort(404);
@@ -97,17 +97,32 @@ class PlaceController extends Controller
             return Abort(404);
         }
 
-        if(Auth::check()){
-            $user = Auth::user();
-            if($place->user->id == $user->id and $place->hasNewNote()){
-                $place->notes()->update([
-                    'is_read'=>true,
-                ]);
-            }
-        }
-
         $place_menu = $place->category->name;
         return view('places.show', ['place'=>$place, 'place_menu'=>$place_menu, 'active_menu'=>'places']);
+    }
+
+
+    public function readNotes($id)
+    {
+
+        if(!$place = Place::where('id', $id)->first()){
+            return Abort(404);
+        }
+
+        $user = Auth::user();
+
+        if($user->cannot("update", $place)){
+            return redirect()->back()->withErrors('No permission.');
+        }
+
+        if($place->hasNewNote()){
+            $place->notes()->update([
+                'is_read'=>true,
+            ]);
+        }
+
+        return redirect()->route('places.show', [$id, '#notes']);
+
     }
 
 
@@ -401,6 +416,48 @@ class PlaceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+        $place = Place::findOrFail($id);
+
+        if($user->cannot("destroy", $place)){
+            return redirect()->back()->withErrors('khkh');
+        }
+
+        $place->favorites()->delete();
+
+
+
+        $place->notes()->delete();
+
+        //todo notesi nkarnery
+
+
+
+        $old_images = $place->images;
+        $place->images()->detach();
+
+        $place->tags()->detach();
+
+        if(!empty($old_images)){
+            foreach ($old_images as $image){
+                ImageController::destroy($image);
+            }
+        }
+
+        if($main_image_id = $place->main_image){
+            $main_image = Image::find($main_image_id);
+        }else{
+            $main_image = null;
+        }
+
+        if(is_dir(public_path('images/places/'.$user->id.'/'.$place->id))){
+            File::deleteDirectory(public_path('images/places/'.$user->id.'/'.$place->id));
+        }
+
+        $place->delete();
+
+        ImageController::destroy($main_image);
+
+        return redirect()->back()->with('message' , 'The place successfully deleted!');
     }
 }

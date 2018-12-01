@@ -12,7 +12,7 @@
             @else
                 <a href="#modal-please-login"  class="modal-trigger secondary-content set-fav-place"><i class="material-icons">star</i></a>
             @endauth
-                    <a href="{{route('places.show', $place->id)}}"><img src="{{$place->thumb}}" alt=""></a>
+                <a href="{{route('places.show', $place->id)}}"><img src="{{$place->thumb}}" alt=""></a>
         </div>
 
         <div class="card-content card-second-part">
@@ -29,13 +29,17 @@
                 <i class="material-icons right card-title activator chip">expand_less</i>
             @endif
 
-            <p><i class="material-icons tiny orange-text">stars</i> {{$place->stars()}}</p>
+            @if($place->is_moderated)
+                    <p><i class="material-icons tiny orange-text">stars</i> {{$place->stars()}}</p>
+                @else
+                    <p><i class="material-icons tiny red-text">donut_small</i> Not moderated</p>
+            @endif
             <p class="truncate">Date: {{$place->created_at}}</p>
 
             @auth
                 @if($place->user->id == $user->id)
                     @if($place->notes()->first())
-                        <a href='{{route('places.show', $place->id)}}#notes' class=" teal-text">Read notes @if($place->hasNewNote()) <i class="material-icons tiny red-text">fiber_new</i> @endif</a>
+                        <a href='{{route('places.readNotes', $place->id)}}' class=" teal-text">Read notes @if($place->hasNewNote()) <i class="material-icons tiny red-text">fiber_new</i> @endif</a>
                     @else
                         <a  class="add-modal-comment grey-text">No notes</a>
                     @endif

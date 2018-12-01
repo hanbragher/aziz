@@ -37,4 +37,13 @@ class PlacePolicy
         }
         return false;
     }
+
+    public function destroy(User $user, Place $place)
+    {
+        if($user->id === $place->user_id)
+        {
+            return true;
+        }
+        return false;
+    }
 }
