@@ -18,9 +18,11 @@
         </div>
 
         <div class="col s12 m12 l8">
-                @for($i=1; $i<10; $i++)
-                    @include('inc.note', ['editable'=>true])
-                @endfor
+            @foreach($user->notes as $note)
+                    @include('inc.note', [
+                    'note'=>$note,
+                    'editable'=>true])
+            @endforeach
         </div>
 
         <div class="col s12 m6 l1">

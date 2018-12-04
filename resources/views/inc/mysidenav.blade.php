@@ -19,7 +19,7 @@
     @if($user->is_blogger)
         <a href="{{route('posts.create')}}" class="collection-item @if($active == 'newpost') active @endif "><i class="material-icons">add_to_queue</i> New post</a>
     @endif
-    <a href="{{route('notes.index')}}" class="collection-item @if($active == 'mynotes') active @endif "><i class="material-icons">chat_bubble_outline</i> My notes</a>
+    <a href="{{route('notes.my')}}" class="collection-item @if($active == 'mynotes') active @endif "><i class="material-icons">chat_bubble_outline</i> My notes</a>
 
     {{--@if(!empty($user->places) and $user->places->first())
         <a href="{{route('posts.my')}}" class="collection-item @if($active == 'myposts') active @endif ">My posts</a>

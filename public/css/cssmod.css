@@ -6,6 +6,10 @@ div.card-second-part{
     padding: 10px !important;
 }
 
+div.card-notes{
+    padding: 10px !important;
+}
+
 span.photo-header{
     padding: 5px 10px;
 }

@@ -22,4 +22,8 @@ class Image extends Model
    public function announcements(){
         return $this->belongsToMany("Azizner\Announcement", "announcement_image");
    }
+
+   public function notes(){
+        return $this->belongsToMany("Azizner\Note", "note_images");
+   }
 }

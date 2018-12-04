@@ -20,6 +20,7 @@ class CategorySeeder extends Seeder
         "education",
         "rest",
         "state institution",
+        "without category",
     ];
 
     public function run()

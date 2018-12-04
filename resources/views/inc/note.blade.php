@@ -1,13 +1,25 @@
 <div class="card">
-    <div class="card-content">
-        <p>I am a very simple card. I am good at containing small bits of information.
-            I am convenient because I require little markup to use effectively.</p>
+    <div class="card-content card-notes">
+        <span class="truncate">
+            @if($editable == false)
+                Author: <a href="{{route('profiles.show', $note->user->id )}}" class="black-text" target="_blank">{{$note->user->first_name}} {{$note->user->last_name}} <i class="material-icons tiny">open_in_new</i></a>
+            @endif
+                Date: {{$note->created_at}}
+        </span>
+        <hr>
+        <p>{{$note->text}}</p>
+        @if($note->images->first())
+            @foreach($note->images as $image)
+                <a href="{{$image->file}}" class="notes-big">
+                    <img src="{{$image->thumb}}" alt="" >
+                </a>
+            @endforeach
+        @endif
     </div>
-    @if(!empty($editable) and $editable == true)
+    @if($editable == true)
         <div class="card-action">
-
             <form action="#">
-                <a href="{{route('notes.edit', 1)}}" >Edit</a>
+                <a href="{{route('notes.edit', $note->id)}}" >Edit</a>
                 <a onclick="return confirm('remove comment?')">Remove</a>
             </form>
         </div>

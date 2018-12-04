@@ -20,6 +20,12 @@ Route::get("/posts/my/", [
 
 ]);
 
+Route::get("/notes/my/", [
+    "as" => "notes.my",
+    'uses' => 'Notes\NoteController@myNotes'
+
+]);
+
 Route::get("/photos/my/", [
     "as" => "photos.my",
     'uses' => 'Photos\PhotoController@myPhotos'

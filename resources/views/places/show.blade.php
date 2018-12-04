@@ -16,6 +16,9 @@
             @include('inc.middlemenu', ['avatar'=> 'hide', 'header'=>!empty($place_menu) ? $place_menu : 'all'])
         </div>
     </div>
+
+    @include('inc.toast-notifications')
+
     <div class="col s12 m4 l1 hide-on-med-and-down"></div>
     </div>
 
@@ -66,7 +69,7 @@
                                 <li class="{{$errors->all()?"active":''}}" id="note">
                                     <div class="collapsible-header" id="note_header"><i class="material-icons teal-text">arrow_drop_down</i>Write a note</div>
                                     <div class="collapsible-body" id="note_body">
-                                        <form action="{{route('notes.store')}}" method="post" id="form" enctype="multipart/form-data">
+                                        <form action="{{route('notes.store', ['id'=>$place->id])}}" method="post" id="form" enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
                                                 <div class="input-field col s12">
@@ -78,7 +81,7 @@
                                                 <div class="file-field input-field col s12 m12 l12">
                                                     <div class="btn">
                                                         <span>Attach photos</span>
-                                                        <input type="file" name="photos[]" multiple accept="image/*">
+                                                        <input type="file" name="images[]" multiple accept="image/*">
                                                     </div>
                                                     <div class="file-path-wrapper">
                                                         <input class="file-path validate" placeholder="Attach up to 12 images" >
@@ -99,8 +102,13 @@
 
                     </div>
 
-                    <div class="row">
-                        @include('inc.note')
+                    <div class="row gallery">
+                        @foreach($notes as $note)
+                            @include('inc.note', [
+                            'note'=>$note,
+                            'editable'=>false,
+                            ])
+                        @endforeach
                     </div>
 
 
@@ -131,6 +139,11 @@
         @endif
     @endauth
 
+    <script>
+        $('.gallery a.notes-big ').simpleLightbox({
+            captionDelay: 1000,
+        });
+    </script>
 
 
 

@@ -97,8 +97,9 @@ class PlaceController extends Controller
             return Abort(404);
         }
 
+        $notes = $place->notes()->orderBy('created_at', 'desc')->get();
         $place_menu = $place->category->name;
-        return view('places.show', ['place'=>$place, 'place_menu'=>$place_menu, 'active_menu'=>'places']);
+        return view('places.show', ['place'=>$place, 'notes'=>$notes, 'place_menu'=>$place_menu, 'active_menu'=>'places']);
     }
 
 
@@ -185,8 +186,9 @@ class PlaceController extends Controller
             }
             $category_id = $category->id;
         }else{
-            $category_id = null;
+            $category_id = Category::where('name',  "without category")->first()->id;
         }
+
 
         if(!$country = Country::where('name', $request->get('country'))->first()){
             return redirect()->back()->withErrors('Check country field');
@@ -323,7 +325,7 @@ class PlaceController extends Controller
             }
             $category_id = $category->id;
         }else{
-            $category_id = null;
+            $category_id = Category::where('name',  "without category")->first()->id;
         }
 
         if(!$country = Country::where('name', $request->get('country'))->first()){
@@ -427,7 +429,7 @@ class PlaceController extends Controller
 
 
 
-        $place->notes()->delete();
+        //$place->notes()->delete();
 
         //todo notesi nkarnery
 
