@@ -61,14 +61,14 @@ class PlaceController extends Controller
         $place = $request->get('place');
 
         if(empty($place) or $place == 'all'){
+            $category = Category::where('name', 'all')->first();
             $places = Place::where('is_moderated', true)->orderBy('created_at', 'desc');
         }elseif($category = Category::where('name', $place)->first()){
             $places = Place::where(['is_moderated'=> true, 'category_id'=>$category->id])->orderBy('created_at', 'desc');
         }
 
-
         if(!empty($places)){
-            return view('places.index', ['places'=>$places->paginate(2), 'place_menu'=>$place, 'active_menu'=>'places']);
+            return view('places.index', ['places'=>$places->paginate(2), 'category'=>$category, 'place_menu'=>$place, 'active_menu'=>'places']);
         }
 
         return Abort(404);
@@ -427,12 +427,25 @@ class PlaceController extends Controller
 
         $place->favorites()->delete();
 
+        if($place->notes->first()){
+            foreach ($place->notes as $note){
+                    if($note->images->first()){
+                        $old_note_images = $note->images;
+                        $note->images()->detach();
+                        if(!empty($old_note_images)){
+                            foreach ($old_note_images as $image){
+                                ImageController::destroy($image);
+                            }
+                        }
+                    }
+                $note->delete();
+            }
 
+            if(is_dir(public_path('images/notes/'.$place->id))){
+                File::deleteDirectory(public_path('images/notes/'.$place->id));
+            }
 
-        //$place->notes()->delete();
-
-        //todo notesi nkarnery
-
+        }
 
 
         $old_images = $place->images;

@@ -17,24 +17,16 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2">
-            @include('inc.usersidenav', ['active'=>'user_posts'])
+            @include('inc.usersidenav', ['active'=>'user_notes'])
         </div>
 
         <div class="col s12 m12 l8">
             <div class="row">
-                @if($show_user->blog->posts->first())
-                    @foreach($show_user->blog->posts as $post)
-                        <div class="col s6 m4 l3">
-                            @include('widgets.card', [
-                             'editable' => false,
-                             'route'=> route('posts.show', $post->id),
-                             'mainImage'=> $post->thumb,
-                             'id' => $post->id,
-                             'title' => $post->title,
-                             'tags' => $post->tags,
-                             'text' => $post->text
-                             ])
-                        </div>
+                @if($show_user->notes->first())
+                    @foreach($show_user->notes as $note)
+                            @include('inc.note', [
+                            'note'=>$note,
+                            'editable'=>false])
                     @endforeach
                 @else
                     <p class="flow-text center">Do not have posts</p>

@@ -60,18 +60,28 @@ class ProfileController extends Controller
         return view('profile.show', ['show_user'=>$show_user]);
     }
 
-
+    public function profilePosts($id)
+    {
+        $show_user = User::findOrFail($id);
+        return view('profile.posts', ['show_user'=>$show_user]);
+    }
 
     public function profileNotes($id)
     {
         $show_user = User::findOrFail($id);
-        return view('profile.show', ['show_user'=>$show_user]);
+        return view('profile.notes', ['show_user'=>$show_user]);
     }
 
-    public function profileAdverts($id)
+    public function profileAnnouncements($id)
     {
         $show_user = User::findOrFail($id);
-        return view('profile.show', ['show_user'=>$show_user]);
+        return view('profile.announcements', ['show_user'=>$show_user]);
+    }
+
+    public function profilePhotos($id)
+    {
+        $show_user = User::findOrFail($id);
+        return view('profile.photos', ['show_user'=>$show_user]);
     }
 
     public function myPage()

@@ -3,6 +3,8 @@
         <span class="truncate">
             @if($editable == false)
                 Author: <a href="{{route('profiles.show', $note->user->id )}}" class="black-text" target="_blank">{{$note->user->first_name}} {{$note->user->last_name}} <i class="material-icons tiny">open_in_new</i></a>
+            @else
+                <a href="{{route('places.show', $note->place->id )}}" class="black-text" target="_blank">{{$note->place->name}} <i class="material-icons tiny">open_in_new</i></a>
             @endif
                 Date: {{$note->created_at}}
         </span>
@@ -20,7 +22,7 @@
         <div class="card-action">
             <form action="#">
                 <a href="{{route('notes.edit', $note->id)}}" >Edit</a>
-                <a onclick="return confirm('remove comment?')">Remove</a>
+                <a href='#' data-actionroute='{{route('notes.destroy', $note->id)}}' class="modal-open-delete">Remove</a>
             </form>
         </div>
     @endif

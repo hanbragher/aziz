@@ -85,11 +85,6 @@ class PostController extends Controller
         return view('posts.show', ['post'=>$post, 'active_menu'=>'posts']);
     }
 
-    public function profilePosts($id)
-    {
-        $show_user = User::findOrFail($id);
-        return view('posts.profile_posts', ['show_user'=>$show_user]);
-    }
 
     /**
      * Show the form for creating a new resource.

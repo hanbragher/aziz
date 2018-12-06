@@ -2,8 +2,8 @@
     <a href="/mypage" class="collection-item @if($active == 'mypage') active @endif "><i class="material-icons">perm_identity</i> My page @if($user->hasNewNotification()) <i class="material-icons right">fiber_new</i> @endif</a>
     <p class="collection-item sidenav-divader"></p>
 
-    <a href="{{route('favorites.index', ['photos'])}}" class="collection-item @if($active == 'favorite') active @endif "><i class="material-icons">star_border</i> Favorite</a>
-
+    <a href="{{route('favorites.index', ['photos'])}}" class="collection-item @if($active == 'favorite') active @endif "><i class="material-icons">star_border</i> Favorites</a>
+    <a href="{{route('notes.my')}}" class="collection-item @if($active == 'mynotes') active @endif "><i class="material-icons">chat_bubble_outline</i> My notes</a>
 
     <p class="collection-item sidenav-divader"></p>
 
@@ -19,7 +19,6 @@
     @if($user->is_blogger)
         <a href="{{route('posts.create')}}" class="collection-item @if($active == 'newpost') active @endif "><i class="material-icons">add_to_queue</i> New post</a>
     @endif
-    <a href="{{route('notes.my')}}" class="collection-item @if($active == 'mynotes') active @endif "><i class="material-icons">chat_bubble_outline</i> My notes</a>
 
     {{--@if(!empty($user->places) and $user->places->first())
         <a href="{{route('posts.my')}}" class="collection-item @if($active == 'myposts') active @endif ">My posts</a>

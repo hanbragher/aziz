@@ -15,5 +15,5 @@
 
     <a href="{{route('profile.posts', $show_user->id)}}" class="collection-item @if($active == 'user_posts') active @endif ">Posts</a>
     <a href="{{route('profile.notes', $show_user->id)}}" class="collection-item @if($active == 'user_notes') active @endif ">Notes</a>
-    <a href="{{route('profile.adverts', $show_user->id)}}" class="collection-item @if($active == 'user_adverts') active @endif ">Adverts</a>
+    <a href="{{route('profile.announcements', $show_user->id)}}" class="collection-item @if($active == 'user_announcements') active @endif ">Announcements</a>
 </div>

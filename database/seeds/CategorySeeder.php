@@ -11,6 +11,7 @@ class CategorySeeder extends Seeder
      * @return void
      */
     private $categoryNames = [
+        "all",
         "monastery",
         "church",
         "museum",

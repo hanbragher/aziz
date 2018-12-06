@@ -45,7 +45,11 @@ class NoteController extends Controller
 
     public function myNotes()
     {
-        return view('notes.my');
+        $user = Auth::user();
+
+        $notes = $user->notes()->orderBy('created_at', 'desc')->paginate(5);
+
+        return view('notes.my', ['notes'=>$notes]);
     }
 
     /**
@@ -69,6 +73,7 @@ class NoteController extends Controller
 
     public function store(Request $request)
     {
+
         $validator = $this->validator($request->all());
         if($validator->fails()){
             //return redirect()->back()->withErrors($validator)->withInput();
@@ -78,6 +83,7 @@ class NoteController extends Controller
         if(!$place = Place::where('id', $request->get('id'))->first()){
             return redirect()->back()->withErrors('No permissions, refresh page and try again')->withInput();
         }
+
 
         $user = Auth::user();
 
@@ -94,7 +100,7 @@ class NoteController extends Controller
             $note->images()->attach($image_ids);
         }
 
-        return redirect()->back()->with('message' , 'The note successfully published!');
+        return redirect()->route('places.show', ['id'=>$place->id, '#notes'])->with('message' , 'The note successfully published!');
     }
 
     /**
@@ -151,7 +157,7 @@ class NoteController extends Controller
         }
 
         if(!$place = $note->place){
-            return redirect()->back()->withErrors('Place has been deleted')->withInput();
+            return redirect()->back()->withErrors('Error, Place has been deleted')->withInput();
         }
 
 
@@ -174,8 +180,6 @@ class NoteController extends Controller
         }
 
 
-
-
         if($request->has('image_id') and $request->has('destroy')){
 
             if(empty($old_image = Image::where('id', $request->get('image_id'))->first())){
@@ -187,18 +191,12 @@ class NoteController extends Controller
                 ImageController::destroy($old_image);
                 $note->update(['updated_at'=>Carbon::now()]);
                 return redirect()->back()->with('message' , 'Picture has been deleted!');
-
             }
 
             return redirect()->back()->withErrors('Permission denied');
         }
 
         return redirect()->back()->with('message' , 'Note has been updated!');
-
-
-
-
-
     }
 
     /**
@@ -209,6 +207,29 @@ class NoteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Auth::user();
+
+        if(!$note = Note::where('id', $id)->first()){
+            return redirect()->back()->withErrors('No permissions, refresh page and try again')->withInput();
+        }
+
+        if($user->cannot("destroy", $note)){
+            return redirect()->back()->withErrors('No permissions');
+        }
+
+        if($note->images->first()){
+            $old_images = $note->images;
+            $note->images()->detach();
+            if(!empty($old_images)){
+                foreach ($old_images as $image){
+                    ImageController::destroy($image);
+                }
+            }
+        }
+
+        $note->delete();
+
+        return redirect()->back()->with('message' , 'Note has been deleted!');
+
     }
 }

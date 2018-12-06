@@ -99,7 +99,7 @@ Route::post('/myannouncements/{id}/reply', [
 
 Route::get('/profile/{id}/posts', [
     "as" => "profile.posts",
-    'uses' => 'Posts\PostController@profilePosts'
+    'uses' => 'Profiles\ProfileController@profilePosts'
 ]);
 
 Route::get('/profile/{id}/notes', [
@@ -108,9 +108,15 @@ Route::get('/profile/{id}/notes', [
 ]);
 
 
+Route::get('/profile/{id}/announcements', [
+    "as" => "profile.announcements",
+    'uses' => 'Profiles\ProfileController@profileAnnouncements'
+]);
 
-
-
+Route::get('/profile/{id}/photos', [
+    "as" => "profile.photos",
+    'uses' => 'Profiles\ProfileController@profilePhotos'
+]);
 
 
 
@@ -124,23 +130,6 @@ Route::get('/page', function () {
 
 
 
-Route::get('/item', function () {
-    return view('item');
-});
-
-Route::get('/blog', function () {
-    return view('blog.index');
-});
-
-Route::get('/editblog', function () {
-    return view('blog.edit');
-});
-
-
-
-
-
-
 Route::get( '/logout', [
     'as' => 'logout',
     'uses' => 'HomeController@logout',
@@ -149,3 +138,10 @@ Route::get( '/logout', [
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});*/
+
+
+

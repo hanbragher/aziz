@@ -16,7 +16,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2">
-            @include('inc.usersidenav', ['active'=>'user_page'])
+            @include('inc.usersidenav', ['active'=>'owner_page'])
         </div>
 
         <div class="col s12 m12 l8">

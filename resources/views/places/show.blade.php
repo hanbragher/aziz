@@ -13,7 +13,7 @@
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>'/images/places_cover.jpg'])
 
-            @include('inc.middlemenu', ['avatar'=> 'hide', 'header'=>!empty($place_menu) ? $place_menu : 'all'])
+            @include('inc.middlemenu', ['avatar'=> 'hide', 'header'=>$place->name])
         </div>
     </div>
 
@@ -41,7 +41,15 @@
                     </ul>
                 </div>
 
-                <div id="inf" class="col s12">{!! $place->inf !!}</div>
+                <div id="inf" class="col s12">
+
+                    <p><img class="materialboxed" src="{{$place->image}}" height="150"
+                            align="left"
+                            vspace="5" hspace="5">
+                        {!!$place->inf!!}
+                    </p>
+
+                </div>
 
                 <div id="pictures" class="col s12">
 
@@ -64,53 +72,50 @@
 
                 <div id="notes" class="col s12">
                     <div class="row">
-
-                            <ul class="collapsible">
-                                <li class="{{$errors->all()?"active":''}}" id="note">
-                                    <div class="collapsible-header" id="note_header"><i class="material-icons teal-text">arrow_drop_down</i>Write a note</div>
-                                    <div class="collapsible-body" id="note_body">
-                                        <form action="{{route('notes.store', ['id'=>$place->id])}}" method="post" id="form" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="input-field col s12">
-                                                    <textarea class="materialize-textarea" name="text">{{old("text")}}</textarea>
-                                                    <label for="textarea1">Textarea</label>
+                        <ul class="collapsible">
+                            <li class="{{$errors->all()?"active":''}}" id="note">
+                                <div class="collapsible-header" id="note_header"><i class="material-icons teal-text">arrow_drop_down</i>Write a note</div>
+                                <div class="collapsible-body" id="note_body">
+                                    <form action="{{route('notes.store', ['id'=>$place->id])}}" method="post" id="form" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <textarea class="materialize-textarea" name="text">{{old("text")}}</textarea>
+                                                <label for="textarea1">Textarea</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="file-field input-field col s12 m12 l12">
+                                                <div class="btn">
+                                                    <span>Attach photos</span>
+                                                    <input type="file" name="images[]" multiple accept="image/*">
+                                                </div>
+                                                <div class="file-path-wrapper">
+                                                    <input class="file-path validate" placeholder="Attach up to 12 images" >
+                                                    <label>max 2MB each</label>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="file-field input-field col s12 m12 l12">
-                                                    <div class="btn">
-                                                        <span>Attach photos</span>
-                                                        <input type="file" name="images[]" multiple accept="image/*">
-                                                    </div>
-                                                    <div class="file-path-wrapper">
-                                                        <input class="file-path validate" placeholder="Attach up to 12 images" >
-                                                        <label>max 2MB each</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button class="btn" >Publish<i class="material-icons right">send</i></button>
-                                        </form>
+                                        </div>
+                                        <button class="btn" >Publish<i class="material-icons right">send</i></button>
+                                    </form>
 
-                                    </div>
-                                </li>
-
-                            </ul>
-
-
-
-
+                                </div>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="row gallery">
+                        {{$editable = false}}
                         @foreach($notes as $note)
+                            @auth
+                                @php $editable = ($user->id == $note->user->id)?true:false; @endphp
+                            @endauth
                             @include('inc.note', [
                             'note'=>$note,
-                            'editable'=>false,
+                            'editable'=>$editable,
                             ])
                         @endforeach
                     </div>
-
 
                 </div>
             </div>
