@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_blogger')->default(false);
-            $table->boolean('is_moderator')->default(false);
 
             $table->integer("avatar_id")->nullable()->unsigned()->default(null);
             $table->foreign("avatar_id")->references("id")->on("images");

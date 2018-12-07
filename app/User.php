@@ -120,5 +120,12 @@ class User extends Authenticatable
         return $this->belongsToMany("Azizner\Place", "favorite_places");
     }
 
+    public function isCreator(){
+        if(Creator::where('user_id', $this->id)->first()){
+            return true;
+        }
+        return false;
+    }
+
 
 }

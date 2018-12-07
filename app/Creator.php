@@ -4,9 +4,9 @@ namespace Azizner;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends Model
+class Creator extends Model
 {
-    protected $table  = 'admins';
+    protected $table  = 'creators';
     protected $fillable = ['user_id'];
     public $timestamps = false;
 

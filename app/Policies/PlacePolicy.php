@@ -20,9 +20,10 @@ class PlacePolicy
         //
     }
 
+
     public function edit(User $user, Place $place)
     {
-        if($user->id === $place->user_id)
+        if($user->id === $place->user_id and $user->isCreator())
         {
             return true;
         }
@@ -31,7 +32,7 @@ class PlacePolicy
 
     public function update(User $user, Place $place)
     {
-        if($user->id === $place->user_id)
+        if($user->id === $place->user_id and $user->isCreator())
         {
             return true;
         }
@@ -40,7 +41,7 @@ class PlacePolicy
 
     public function destroy(User $user, Place $place)
     {
-        if($user->id === $place->user_id)
+        if($user->id === $place->user_id and $user->isCreator())
         {
             return true;
         }

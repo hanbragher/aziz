@@ -1,9 +1,5 @@
 @extends('layouts.layout')
 
-@section('links')
-
-@endsection
-
 @section('content')
     <div class="fixed-action-btn ">
         <a class="btn-floating btn-large red" href="{{route('posts.create')}}">
@@ -39,7 +35,7 @@
                     @foreach($places as $place)
                         @include('inc.place_card', [
                         'star'=> $user->favoritePlaces->contains($place->id),
-                        'photo'=>$place,
+                        'place'=>$place,
                         'editable'=>true,
                         ])
                     @endforeach
@@ -64,6 +60,8 @@
 
     <script src="/js/modal-destroy-form.js"></script>
     <script src="/js/set-favorite.js"></script>
+
+
 
 
 

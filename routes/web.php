@@ -118,6 +118,10 @@ Route::get('/profile/{id}/photos', [
     'uses' => 'Profiles\ProfileController@profilePhotos'
 ]);
 
+Route::get('/profile/password/change', [
+    "as" => "profile.password_change",
+    'uses' => 'Profiles\ProfileController@changePassword'
+]);
 
 
 Route::get('/', function () {
@@ -139,9 +143,35 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-/*Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});*/
+
+Route::prefix('admin')->middleware('auth', 'admin_auth')->group( function () {
+
+    Route::get('/',[
+        'as'=>'admin.index',
+        'uses'=>'Admin\IndexController@index'
+    ]);
+
+
+    Route::resource('/users', 'Admin\Users\UserController');
+
+    Route::resource('/adminplaces', 'Admin\Places\PlaceController');
+
+    Route::resource('/categories', 'Admin\Categories\CategoryController');
+
+    Route::post('/moderate/places/{id}/',[
+        'as'=>'moderate.places',
+        'uses'=>'Admin\Places\PlaceController@moderate',
+    ]);
+
+
+
+
+
+
+
+
+
+});
 
 
 

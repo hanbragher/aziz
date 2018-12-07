@@ -89,6 +89,7 @@
                     </label>
                 </div>
                 <button class="btn">Save<i class="material-icons right">save</i></button>
+                <a href='{{route('profile.password_change')}}' class="btn grey">Change password<i class="material-icons right teal-text">lock</i></a>
             </form>
 
             <a class="waves-effect waves-light modal-trigger" href="#modal1">

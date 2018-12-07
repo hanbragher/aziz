@@ -51,6 +51,21 @@ class ImageController extends Controller
         ])->id;
     }
 
+    static function categoryImageUpdate($file, $category){
+
+        $category->image;
+        $folder = 'images/categories';
+        $extension = $file->extension();
+        $image = md5($file).Carbon::now()->timestamp.'.'.$extension;
+        $image_path = $file->move($folder, $image)->getPathname();
+
+        if(is_file(public_path($category->image))){unlink(public_path($category->image));};
+
+        $category->update(['image'=>'/'.$image_path]);
+
+        return true;
+    }
+
 
     static function destroy($old_image_object){
         if(!empty($old_image_object)){

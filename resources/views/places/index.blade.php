@@ -5,7 +5,7 @@
 
     <div class="row">
         <div class="col s12">
-            @include('widgets.parallax', ['cover'=>'/images/places_cover.jpg'])
+            @include('widgets.parallax', ['cover'=> !empty($cover) ? $cover : '/images/places_cover.jpg'])
 
             @include('inc.middlemenu', ['avatar' => 'hide', 'header'=>!empty($place_menu) ? $place_menu : 'all'])
         </div>

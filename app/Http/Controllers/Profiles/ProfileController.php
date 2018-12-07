@@ -9,6 +9,9 @@ use Azizner\User;
 use Illuminate\Http\Request;
 use Azizner\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
 
 class ProfileController extends Controller
 {
@@ -19,6 +22,16 @@ class ProfileController extends Controller
      */
     public function __construct() {
         $this->middleware(['auth']);
+    }
+
+    protected function validator(array $data)
+    {
+        $rules = [
+            'password' => ['nullable'],
+            'password_confirmation' => [ 'required_with:password', 'same:password'],
+        ];
+
+        return Validator::make($data, $rules);
     }
 
 
@@ -102,6 +115,13 @@ class ProfileController extends Controller
         return view('profile.edit');
     }
 
+    public function changePassword()
+    {
+        $user = Auth::user();
+
+        return view('profile.change_password');
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -111,11 +131,29 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = $this->validator($request->all());
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+            //return redirect()->back()->withErrors('Something wrong, check fields')->withInput();
+        };
+
         $user = Auth::user();
 
         if($user->id != $id){
             return redirect()->back()->withErrors('No permission');
         }
+
+
+        if($request->has('old_password') and $request->has('password')){
+            if(Hash::check($request->get('old_password'), $user->getAuthPassword())){
+                $user->update([
+                   'password'=> Hash::make($request->get('password')),
+                ]);
+                return redirect()->route('profiles.edit', $user->id)->with('message' , 'The new password saved.');
+            };
+            return redirect()->back()->withErrors('Current password is incorrect.');
+        }
+
 
         $user->update([
             'first_name'=>$request->get('first_name'),

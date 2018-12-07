@@ -2,6 +2,7 @@
 
 namespace Azizner\Http\Controllers\Places;
 
+use Azizner\Admin;
 use Azizner\Category;
 use Azizner\City;
 use Azizner\Country;
@@ -62,13 +63,17 @@ class PlaceController extends Controller
 
         if(empty($place) or $place == 'all'){
             $category = Category::where('name', 'all')->first();
+            $cover = $category->image;
             $places = Place::where('is_moderated', true)->orderBy('created_at', 'desc');
         }elseif($category = Category::where('name', $place)->first()){
+            $cover = $category->image;
             $places = Place::where(['is_moderated'=> true, 'category_id'=>$category->id])->orderBy('created_at', 'desc');
         }
 
+
+
         if(!empty($places)){
-            return view('places.index', ['places'=>$places->paginate(2), 'category'=>$category, 'place_menu'=>$place, 'active_menu'=>'places']);
+            return view('places.index', ['places'=>$places->paginate(2), 'category'=>$category, 'place_menu'=>$place, 'active_menu'=>'places', 'cover'=>$cover]);
         }
 
         return Abort(404);
@@ -131,7 +136,7 @@ class PlaceController extends Controller
     {
         $user = Auth::user();
 
-        if(!$user->is_moderator){
+        if(!$user->isCreator()){
             return redirect()->back()->withErrors('No permission, you should be moderator for a create new place');
         }
 
@@ -176,7 +181,7 @@ class PlaceController extends Controller
 
         $user = Auth::user();
 
-        if(!$user->is_moderator){
+        if(!$user->isCreator()){
             return redirect()->back()->withErrors('No permission, you should be moderator for a create new place');
         }
 
@@ -257,8 +262,10 @@ class PlaceController extends Controller
         $place = Place::findOrFail($id);
         $user = Auth::user();
 
-        if($user->cannot("edit", $place)){
-            return redirect()->back()->withErrors('No permission.');
+        if(!Admin::where('user_id', $user->id)->first()){
+            if($user->cannot("edit", $place)){
+                return redirect()->back()->withErrors('No permission.');
+            }
         }
 
         $categories = Category::orderBy('name')->pluck('name');
@@ -288,9 +295,13 @@ class PlaceController extends Controller
         $user = Auth::user();
         $place = Place::findOrFail($id);
 
-        if($user->cannot("update", $place)){
-            return redirect()->back()->withErrors('Permission denied');
+
+        if(!Admin::where('user_id', $user->id)->first()){
+            if($user->cannot("update", $place)){
+                return redirect()->back()->withErrors('Permission denied');
+            }
         }
+
 
         if($request->has('image_id') and $request->has('place_id')) {
             if(empty($old_image = Image::where('id', $request->get('image_id'))->first())){
@@ -421,8 +432,10 @@ class PlaceController extends Controller
         $user = Auth::user();
         $place = Place::findOrFail($id);
 
-        if($user->cannot("destroy", $place)){
-            return redirect()->back()->withErrors('khkh');
+        if(!Admin::where('user_id', $user->id)->first()){
+            if($user->cannot("destroy", $place)){
+                return redirect()->back()->withErrors('No permissions');
+            }
         }
 
         $place->favorites()->delete();
@@ -446,7 +459,6 @@ class PlaceController extends Controller
             }
 
         }
-
 
         $old_images = $place->images;
         $place->images()->detach();
