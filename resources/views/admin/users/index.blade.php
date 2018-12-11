@@ -42,40 +42,44 @@
 
         <div class="col s12 m12 l8">
             <div class="row">
-                {{--<div class="input-field col s6">
-                    <form action="{{route('adminplaces.index')}}">
-                        <select name="place">
-                            <option value="all" {{($active == 'all')?'selected':''}}>all</option>
-                            <option value="not_moderated" {{($active == 'not_moderated')?'selected':''}}>Not moderated</option>
-                            @foreach($categories as $category)
-                                <option value="{{$category}}" {{($active == $category)?'selected':''}}>{{$category}}</option>
-                            @endforeach
-                        </select>
-                        <label>Select category</label>
-                        <button class='btn ' type="submit">Show</button>
-                    </form>--}}
-                </div>
+                    vernagir
             </div>
 
 
             <div class="row">
-                {{--@if($places->first())
-                    @foreach($places as $place)
-                        @include('admin.inc.place_card', [
-                        'star'=> $user->favoritePlaces->contains($place->id),
-                        'place'=>$place,
-                        ])
+                <table class="highlight ">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>set/unset</th>
+                        <th>set/unset</th>
+                        <th>user edit</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach($users as $user)
+                        <tr>
+                            <td >{{$user->id}}</td>
+                            <td><img src="{{$user->avatar}}" alt="" class="notification-thumb"> {{$user->email}}</td>
+                            @if($user->isAdmin())
+                                <td>admin</td>
+                            @else
+                                <td>user</td>
+                            @endif
+                            <td><a href="#!" data-id='{{$user->id}}' class="set-admin btn {{($user->isAdmin())?'green':''}}" >Admin</a></td>
+                            <td><a href="#!" data-id='{{$user->id}}' class="set-creator btn {{($user->isCreator())?'green':''}}">Creator</a></td>
+                            <td><a href="{{route('profiles.edit', $user->id)}}" class="btn" target="_blank">Edit</a></td>
+                        </tr>
                     @endforeach
-                @else
-                    <p class="flow-text center">No places</p>
-                    <p class="center"><a href="{{route('places.create')}}" class="btn-flat" target="_blank">create a new</a></p>
-
-                @endif--}}
+                    </tbody>
+                </table>
             </div>
 
-            <div class="row">
-
-
+            <div class="row center">
+                {{$users->appends($_GET)->links()}}
             </div>
         </div>
 
@@ -97,6 +101,64 @@
 
 
             $('select').formSelect();
+
+            $("a.set-creator").click(function () {
+                var btn = $(this);
+                $.ajax({
+                    method: 'POST',
+                    url: '/admin/setcreator',
+                    dataType: "json",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data :{
+                        "id":$(this).data("id"),
+                    },
+                    success: function(data){
+                        console.log(data);
+                        if(data.status === "success"){
+                            btn.toggleClass("green");
+                        }
+                    },
+                    error: function(xhr, desc, err){
+                        console.log(err);
+                    }
+                });
+            });
+
+
+
+            $("a.set-admin").click(function () {
+                var btn = $(this);
+                if(confirm('Do want really change admin status?')){
+                    if(confirm('Really real?')){
+
+                        $.ajax({
+                            method: 'POST',
+                            url: '/admin/setadmin',
+                            dataType: "json",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data :{
+                                "id":$(this).data("id"),
+                            },
+                            success: function(data){
+                                console.log(data);
+                                if(data.status === "success"){
+                                    btn.toggleClass("green");
+                                }
+                            },
+                            error: function(xhr, desc, err){
+                                console.log(err);
+                            }
+                        });
+                    }
+                }
+
+            });
+
+
         });
     </script>
 

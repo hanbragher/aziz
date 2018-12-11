@@ -3,8 +3,8 @@
 @section('content')
     <div class="row">
         <div class="col s12">
-            @include('widgets.parallax', ['cover'=>$user->cover])
-            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'Profile settings'])
+            @include('widgets.parallax', ['cover'=>$pick_user->cover])
+            @include('inc.middlemenu', ['avatar'=>$pick_user->avatar, 'header'=>'Profile settings'])
         </div>
     </div>
 
@@ -23,10 +23,9 @@
 
         <div class="col s12 m12 l8">
 
-            <form action="{{route('profiles.update', $user->id)}}"  method="post" enctype="multipart/form-data">
+            <form action="{{route('profiles.update', $pick_user->id)}}"  method="post" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
-
 
                 <div class="input-field">
                     <i class="material-icons prefix">dialpad</i>
@@ -45,7 +44,6 @@
                     <input id="password" type="password" class="validate" name="password_confirmation" required>
                     <label for="password">Password confirmation</label>
                 </div>
-
 
                 <button class="btn">Save password<i class="material-icons right">save</i></button>
             </form>

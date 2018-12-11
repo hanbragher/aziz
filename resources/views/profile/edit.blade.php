@@ -3,8 +3,8 @@
 @section('content')
     <div class="row">
         <div class="col s12">
-            @include('widgets.parallax', ['cover'=>$user->cover])
-            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'Profile settings'])
+            @include('widgets.parallax', ['cover'=>$pick_user->cover])
+            @include('inc.middlemenu', ['avatar'=>$pick_user->avatar, 'header'=>'Profile settings'])
         </div>
     </div>
 
@@ -23,16 +23,16 @@
 
         <div class="col s12 m12 l8">
 
-            <form action="{{route('profiles.update', $user->id)}}"  method="post" enctype="multipart/form-data">
+            <form action="{{route('profiles.update', $pick_user->id)}}"  method="post" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="row">
                     <div class="input-field col s4">
-                        <input id="input_text" type="text" data-length="100" name="first_name" value="{{$user->first_name}}">
+                        <input id="input_text" type="text" data-length="100" name="first_name" value="{{$pick_user->first_name}}">
                         <label for="input_text">First Name</label>
                     </div>
                     <div class="input-field col s4">
-                        <input id="input_text" type="text" data-length="100" name="last_name" value="{{$user->last_name}}">
+                        <input id="input_text" type="text" data-length="100" name="last_name" value="{{$pick_user->last_name}}">
                         <label for="input_text">Last Name</label>
                     </div>
                 </div>
@@ -58,10 +58,10 @@
                     </div>
                 </div>
 
-                @if($user->is_blogger)
+                @if($pick_user->is_blogger)
                 <div class="row">
                     <div class="input-field col s6 m6 l4">
-                        <input value="{{$user->blog->name}}" id="input_text" type="text" data-length="100" name="blog_name">
+                        <input value="{{$pick_user->blog->name}}" id="input_text" type="text" data-length="100" name="blog_name">
                         <label for="input_text">Blog Name</label>
                     </div>
                     <div class="file-field input-field col s6 m6 l4">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s12 m12 l8">
-                        <textarea id="textarea1" class="materialize-textarea" name="description" required>{{$user->blog->description}}</textarea>
+                        <textarea id="textarea1" class="materialize-textarea" name="description" required>{{$pick_user->blog->description}}</textarea>
                         <label for="textarea1">Blog description</label>
                     </div>
                 </div>
@@ -84,12 +84,12 @@
 
                 <div class="row">
                     <label>
-                        <input id="indeterminate-checkbox" type="checkbox" name="is_blogger" {{$user->is_blogger? 'checked=""' : ''}}/>
+                        <input id="indeterminate-checkbox" type="checkbox" name="is_blogger" {{$pick_user->is_blogger? 'checked=""' : ''}}/>
                         <span>I'm a blogger</span>
                     </label>
                 </div>
                 <button class="btn">Save<i class="material-icons right">save</i></button>
-                <a href='{{route('profile.password_change')}}' class="btn grey">Change password<i class="material-icons right teal-text">lock</i></a>
+                <a href='{{route('profile.password_change', $pick_user->id)}}' class="btn grey">Change password<i class="material-icons right teal-text">lock</i></a>
             </form>
 
             <a class="waves-effect waves-light modal-trigger" href="#modal1">

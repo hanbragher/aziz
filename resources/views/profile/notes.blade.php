@@ -26,7 +26,9 @@
                     @foreach($show_user->notes as $note)
                             @include('inc.note', [
                             'note'=>$note,
-                            'editable'=>false])
+                            'editable'=>false,
+                            'guest'=>true
+                            ])
                     @endforeach
                 @else
                     <p class="flow-text center">Do not have posts</p>

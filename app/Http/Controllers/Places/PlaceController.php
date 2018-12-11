@@ -182,7 +182,7 @@ class PlaceController extends Controller
         $user = Auth::user();
 
         if(!$user->isCreator()){
-            return redirect()->back()->withErrors('No permission, you should be moderator for a create new place');
+            return redirect()->back()->withErrors('No permission, you should be creator for a create new place');
         }
 
         if(!empty($request->get('category'))){
@@ -262,7 +262,7 @@ class PlaceController extends Controller
         $place = Place::findOrFail($id);
         $user = Auth::user();
 
-        if(!Admin::where('user_id', $user->id)->first()){
+        if(!$user->isAdmin()){
             if($user->cannot("edit", $place)){
                 return redirect()->back()->withErrors('No permission.');
             }
@@ -296,7 +296,7 @@ class PlaceController extends Controller
         $place = Place::findOrFail($id);
 
 
-        if(!Admin::where('user_id', $user->id)->first()){
+        if(!$user->isAdmin()){
             if($user->cannot("update", $place)){
                 return redirect()->back()->withErrors('Permission denied');
             }
@@ -432,7 +432,7 @@ class PlaceController extends Controller
         $user = Auth::user();
         $place = Place::findOrFail($id);
 
-        if(!Admin::where('user_id', $user->id)->first()){
+        if(!$user->isAdmin()){
             if($user->cannot("destroy", $place)){
                 return redirect()->back()->withErrors('No permissions');
             }

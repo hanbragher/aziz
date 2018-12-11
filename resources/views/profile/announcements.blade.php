@@ -35,7 +35,8 @@
                                 @endauth
                                 @include('inc.announcement', [
                                        'starable' => true,
-                                       'star'=>$star])
+                                       'star'=>$star,
+                                       ])
                             </div>
                         @endforeach
 

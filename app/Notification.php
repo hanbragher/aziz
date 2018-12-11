@@ -75,6 +75,8 @@ class Notification extends Model
             }else{
                 return 'Your place have one more star.';
             }
+        }elseif ($this->type == 'text'){
+            return $this->text;
         };
 
         return false;

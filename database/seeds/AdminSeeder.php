@@ -25,5 +25,11 @@ class AdminSeeder extends Seeder
                 'user_id' => $admin->id,
             ]
         );
+
+        \Azizner\Creator::create(
+            [
+                'user_id' => $admin->id,
+            ]
+        );
     }
 }

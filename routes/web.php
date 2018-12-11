@@ -118,7 +118,7 @@ Route::get('/profile/{id}/photos', [
     'uses' => 'Profiles\ProfileController@profilePhotos'
 ]);
 
-Route::get('/profile/password/change', [
+Route::get('/profile/{id}/password/change', [
     "as" => "profile.password_change",
     'uses' => 'Profiles\ProfileController@changePassword'
 ]);
@@ -161,6 +161,22 @@ Route::prefix('admin')->middleware('auth', 'admin_auth')->group( function () {
     Route::post('/moderate/places/{id}/',[
         'as'=>'moderate.places',
         'uses'=>'Admin\Places\PlaceController@moderate',
+    ]);
+
+    Route::get('/setcreator', function () {
+        return Abort(404);
+    });
+
+    Route::post('/setcreator',[
+        'uses'=>'Admin\Users\UserController@setCreator',
+    ]);
+
+    Route::get('/setadmin', function () {
+        return Abort(404);
+    });
+
+    Route::post('/setadmin',[
+        'uses'=>'Admin\Users\UserController@setAdmin',
     ]);
 
 

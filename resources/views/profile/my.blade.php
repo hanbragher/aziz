@@ -25,7 +25,39 @@
 
             @include('inc.overview-selector-bar', ['active'=>$active])
 
-            <div class="col s12 m6 l6">
+            <div class="col s12">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        {{--<img src="/images/card.jpg">--}}
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>Total favorites count: {{$user->totalfavorites()}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{{route('favorites.index')}}">Jump to favorites</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        <i class="material-icons">add</i>
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>Total favorites count: {{$user->totalfavorites()}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{{route('favorites.index')}}">Jump to favorites</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{--<div class="col s12 m6 l6">
                 <div class="card horizontal">
                     <div class="card-image">
                         <img src="/images/card.jpg">
@@ -54,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
 
 
         </div>

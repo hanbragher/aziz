@@ -107,6 +107,10 @@ class User extends Authenticatable
     }
 
 
+    public function totalFavorites(){
+        return $this->favoriteAnnouncements()->count() + $this->favoritePhotos()->count() + $this->favoritePlaces()->count();
+    }
+
 
     public function favoriteAnnouncements(){
         return $this->belongsToMany("Azizner\Announcement", "favorite_announcements");
@@ -122,6 +126,13 @@ class User extends Authenticatable
 
     public function isCreator(){
         if(Creator::where('user_id', $this->id)->first()){
+            return true;
+        }
+        return false;
+    }
+
+    public function isAdmin(){
+        if(Admin::where('user_id', $this->id)->first()){
             return true;
         }
         return false;

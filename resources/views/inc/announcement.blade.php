@@ -1,11 +1,10 @@
 <div class="card small">
     <div class="row card-content margin-bottom-0">
 
-        <a href="{{route('announcements.show', $announcement->id)}}" >
-            <img src="{{$announcement->thumb}}" class="announcement-card-image">
-        </a>
+            <a href="{{route('announcements.show', $announcement->id)}}" class="hide-on-small-only">
+                <img src="{{$announcement->thumb}}" class="announcement-card-image">
+            </a>
 
-{{--todo nkary poxel mobile depqum--}}
         @if($starable === true)
             @auth
                 <a href="#!" data-type="announcement" data-id='{{$announcement->id}}' class="set-favorite secondary-content right"><i class="material-icons {{($star)?'orange-text':''}}">star</i></a>

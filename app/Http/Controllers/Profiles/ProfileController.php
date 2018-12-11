@@ -2,6 +2,7 @@
 
 namespace Azizner\Http\Controllers\Profiles;
 
+use Azizner\Admin;
 use Azizner\Blogger;
 use Azizner\Http\Controllers\ImageController;
 use Azizner\Image;
@@ -110,16 +111,24 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $user = Auth::user();
+        $pick_user = Auth::user();
 
-        return view('profile.edit');
+        if(Admin::where('user_id', $pick_user->id)->first()){
+            $pick_user = User::findOrFail($id);
+        }
+
+        return view('profile.edit', ['pick_user'=>$pick_user]);
     }
 
-    public function changePassword()
+    public function changePassword($id)
     {
-        $user = Auth::user();
+        $pick_user = Auth::user();
 
-        return view('profile.change_password');
+        if(Admin::where('user_id', $pick_user->id)->first()){
+            $pick_user = User::findOrFail($id);
+        }
+
+        return view('profile.change_password', ['pick_user'=>$pick_user]);
     }
 
     /**
@@ -139,12 +148,21 @@ class ProfileController extends Controller
 
         $user = Auth::user();
 
-        if($user->id != $id){
-            return redirect()->back()->withErrors('No permission');
+        if(!$user->isAdmin()){
+            if($user->id != $id){
+                return redirect()->back()->withErrors('No permission');
+            }
+        }else{
+            $user = User::findOrFail($id);
         }
 
 
+
+
         if($request->has('old_password') and $request->has('password')){
+            if(empty($request->get('password'))){
+                return redirect()->back()->withErrors('Password can not be empty.');
+            }
             if(Hash::check($request->get('old_password'), $user->getAuthPassword())){
                 $user->update([
                    'password'=> Hash::make($request->get('password')),

@@ -16,6 +16,7 @@ class CategorySeeder extends Seeder
         "church",
         "museum",
         "park",
+        "square",
         "shop",
         "food",
         "education",
