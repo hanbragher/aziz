@@ -111,7 +111,25 @@ class User extends Authenticatable
         return $this->favoriteAnnouncements()->count() + $this->favoritePhotos()->count() + $this->favoritePlaces()->count();
     }
 
+    public function totalNotes(){
+        return $this->notes()->count();
+    }
 
+    public function totalPhotos(){
+        return $this->photos()->count();
+    }
+
+    public function totalPosts(){
+        if($this->is_blogger){
+            if($this->blog->posts()->first()){
+                return $this->blog->posts->count();
+            }
+        }
+
+        return 0;
+    }
+
+//todo nayel is blogger
     public function favoriteAnnouncements(){
         return $this->belongsToMany("Azizner\Announcement", "favorite_announcements");
     }

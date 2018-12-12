@@ -17,10 +17,39 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(50);
-        return view('admin.users.index', ['users'=>$users]);
+
+        $id = '%';
+        $email = '%';
+        $search_type = null;
+        $search = null;
+
+        if($request->has('search_type')){
+            $search_type = $request->get('search_type');
+            if(!empty($request->get('search'))){
+                $search = $request->get('search');
+                if($search_type == 'id' ){
+                    $id = $request->get('search');
+                }elseif($search_type == 'email'){
+                    $email = $request->get('search');
+                }
+            }
+        }
+
+        if(empty($request->all()) or $request->has('search') or $request->has('all')){
+            $users = User::where('id', 'like', $id)->where('email', 'like', '%'.$email.'%');
+            $active_bar = 'all';
+        }elseif ($request->has('admins')){
+            $users = Admin::where('id', 'like', $id);
+            $active_bar = 'admins';
+        }elseif ($request->has('creators')){
+            $users = Creator::where('id', 'like', $id);
+            $active_bar = 'creators';
+        }
+
+
+        return view('admin.users.index', ['users'=>$users->paginate(50), 'active_bar'=>$active_bar, 'search'=>$search, 'search_type'=>$search_type]);
     }
 
     public function setCreator(Request $request)

@@ -32,7 +32,7 @@
                     </div>
                     <div class="card-stacked">
                         <div class="card-content">
-                            <p>Total favorites count: {{$user->totalfavorites()}}</p>
+                            <p>Total favorites count: {{$user->totalFavorites()}}</p>
                         </div>
                         <div class="card-action">
                             <a href="{{route('favorites.index')}}">Jump to favorites</a>
@@ -44,14 +44,49 @@
             <div class="col s12">
                 <div class="card horizontal">
                     <div class="card-image">
-                        <i class="material-icons">add</i>
+                        {{--<img src="/images/card.jpg">--}}
+                        {{--<i class="material-icons">add</i>--}}
                     </div>
                     <div class="card-stacked">
                         <div class="card-content">
-                            <p>Total favorites count: {{$user->totalfavorites()}}</p>
+                            <p>Total notes count: {{$user->totalNotes()}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="{{route('favorites.index')}}">Jump to favorites</a>
+                            <a href="{{route('notes.my')}}">Jump to notes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        {{--<img src="/images/card.jpg">--}}
+                        {{--<i class="material-icons">add</i>--}}
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>Total photos count: {{$user->totalPhotos()}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{{route('photos.my')}}">Jump to photos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        {{--<img src="/images/card.jpg">--}}
+                        {{--<i class="material-icons">add</i>--}}
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>Total posts count: {{$user->totalPosts()}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{{route('posts.my')}}">Jump to posts</a>
                         </div>
                     </div>
                 </div>

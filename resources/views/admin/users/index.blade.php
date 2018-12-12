@@ -41,8 +41,28 @@
         </div>
 
         <div class="col s12 m12 l8">
+
             <div class="row">
-                    vernagir
+                @include('admin.inc.users-selector-bar', ['active'=>$active_bar])
+            </div>
+
+            <div class="row">
+                <form action="{{route('users.index')}}" method="get" enctype="multipart/form-data">
+                    <div class="input-field col s5 m4 l3">
+                        <select name="search_type" >
+                            <option value="id" selected>ID</option>
+                            <option value="email" {{($search_type == 'email')?'selected':''}}>Email</option>
+                        </select>
+                        <label>Search by:</label>
+                    </div>
+                    <div class="input-field col s5 m4 l3">
+                        <input id="text" type="text" class="validate" name="search" value="{{$search}}" required>
+                        <label for="text">Search</label>
+                    </div>
+                    <div class="input-field col ">
+                        <button class="btn"><i class="material-icons">search</i></button>
+                    </div>
+                </form>
             </div>
 
 
@@ -52,7 +72,6 @@
                     <tr>
                         <th>Id</th>
                         <th>Email</th>
-                        <th>Role</th>
                         <th>set/unset</th>
                         <th>set/unset</th>
                         <th>user edit</th>
@@ -61,17 +80,17 @@
 
                     <tbody>
                     @foreach($users as $user)
+                        @if($active_bar == 'admins' or $active_bar == 'creators')
+                            @php $link = $user->user @endphp
+                        @else
+                            @php $link = $user@endphp
+                        @endif
                         <tr>
-                            <td >{{$user->id}}</td>
-                            <td><img src="{{$user->avatar}}" alt="" class="notification-thumb"> {{$user->email}}</td>
-                            @if($user->isAdmin())
-                                <td>admin</td>
-                            @else
-                                <td>user</td>
-                            @endif
-                            <td><a href="#!" data-id='{{$user->id}}' class="set-admin btn {{($user->isAdmin())?'green':''}}" >Admin</a></td>
-                            <td><a href="#!" data-id='{{$user->id}}' class="set-creator btn {{($user->isCreator())?'green':''}}">Creator</a></td>
-                            <td><a href="{{route('profiles.edit', $user->id)}}" class="btn" target="_blank">Edit</a></td>
+                            <td >{{$link->id}}</td>
+                            <td><img src="{{$link->avatar}}" alt="" class="notification-thumb"> <a href="{{route('profiles.show', $link->id )}}" class="black-text" target="_blank">{{$link->email}}</a></td>
+                            <td><a href="#!" data-id='{{$link->id}}' class="set-admin btn {{($link->isAdmin())?'green':''}}" >Admin</a></td>
+                            <td><a href="#!" data-id='{{$link->id}}' class="set-creator btn {{($link->isCreator())?'green':''}}">Creator</a></td>
+                            <td><a href="{{route('profiles.edit', $link->id)}}" class="btn" target="_blank">Edit</a></td>
                         </tr>
                     @endforeach
                     </tbody>

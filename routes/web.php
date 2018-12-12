@@ -81,8 +81,8 @@ Route::post('/message/{id}', [
     'uses' => 'Messages\MessageController@downloadAttachment'
 ]);
 
-Route::get('/mypage', [
-    "as" => "profiles.my",
+Route::get('/overview', [
+    "as" => "profiles.overview",
     'uses' => 'Profiles\ProfileController@myPage'
 ]);
 

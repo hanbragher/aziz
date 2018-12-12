@@ -21,9 +21,70 @@
 
         <div class="col s12 m12 l8">
 
-            <h4>
-                This is an example quotation that uses the blockquote tag.
-            </h4>
+            <h5>
+                {{$show_user->first_name}} {{$show_user->last_name}}
+            </h5>
+
+            <a href="{{route('messages.create', ['email'=>$show_user->email])}}" class="btn">send message</a>
+
+            <div class="col s12">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        {{--<img src="/images/card.jpg">--}}
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>Total posts count: {{$show_user->totalPosts()}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{{route('favorites.index')}}">Jump to favorites</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        {{--<img src="/images/card.jpg">--}}
+                        {{--<i class="material-icons">add</i>--}}
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>Total notes count: {{$show_user->totalNotes()}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{{route('notes.my')}}">Jump to notes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12">
+                <div class="card horizontal">
+                    <div class="card-image">
+                        {{--<img src="/images/card.jpg">--}}
+                        {{--<i class="material-icons">add</i>--}}
+                    </div>
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <p>Total photos count: {{$show_user->totalPhotos()}}</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="{{route('photos.my')}}">Jump to photos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+{{--
+            <a href="{{route('profile.posts', $show_user->id)}}" class="collection-item @if($active == 'user_posts') active @endif ">Posts</a>
+            <a href="{{route('profile.notes', $show_user->id)}}" class="collection-item @if($active == 'user_notes') active @endif ">Notes</a>
+            <a href="{{route('profile.announcements', $show_user->id)}}" class="collection-item @if($active == 'user_announcements') active @endif ">Announcements</a>
+
+--}}
 
 
         </div>

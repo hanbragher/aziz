@@ -1,5 +1,5 @@
 <div class="collection">
-    <a href="/mypage" class="collection-item @if($active == 'mypage') active @endif "><i class="material-icons">perm_identity</i> My page @if($user->hasNewNotification()) <i class="material-icons right">fiber_new</i> @endif</a>
+    <a href="{{route('profiles.overview')}}" class="collection-item @if($active == 'mypage') active @endif "><i class="material-icons">perm_identity</i> My page @if($user->hasNewNotification()) <i class="material-icons right">fiber_new</i> @endif</a>
 
     <p class="collection-item sidenav-divader"></p>
     <a href="{{route('favorites.index', ['photos'])}}" class="collection-item @if($active == 'favorite') active @endif "><i class="material-icons">star_border</i> Favorites</a>

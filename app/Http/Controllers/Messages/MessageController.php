@@ -76,9 +76,13 @@ class MessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('messages.create');
+        $email = null;
+        if($request->has('email')){
+            $email = $request->get('email');
+        }
+        return view('messages.create', ['email'=>$email]);
     }
 
     /**

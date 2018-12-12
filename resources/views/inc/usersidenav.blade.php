@@ -13,7 +13,10 @@
         <a href="{{route('posts.create')}}" class="collection-item @if($active == 'newpost') active @endif ">New post</a>
     @endif--}}
 
+    <a href="{{route('profile.posts', $show_user->id)}}" class="collection-item @if($active == 'user_posts') active @endif ">Places</a>
+    {{--//todo--}}
     <a href="{{route('profile.posts', $show_user->id)}}" class="collection-item @if($active == 'user_posts') active @endif ">Posts</a>
+    <a href="{{route('profile.posts', $show_user->id)}}" class="collection-item @if($active == 'user_posts') active @endif ">Photos</a>
     <a href="{{route('profile.notes', $show_user->id)}}" class="collection-item @if($active == 'user_notes') active @endif ">Notes</a>
     <a href="{{route('profile.announcements', $show_user->id)}}" class="collection-item @if($active == 'user_announcements') active @endif ">Announcements</a>
 </div>

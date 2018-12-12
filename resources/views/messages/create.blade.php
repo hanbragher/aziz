@@ -26,7 +26,7 @@
                 @csrf
                 <div class="row">
                     <div class="input-field col s12 m6 l6">
-                        <input value='{{old("to")}}' id="to" type="email" data-length="100" name="to" required>
+                        <input value='{{old("to")?'sd':$email}}' id="to" type="email" data-length="100" name="to" required>
                         <label>TO</label>
                     </div>
                 </div>

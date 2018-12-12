@@ -21,7 +21,7 @@
                     <li><a href="{{route('posts.index')}}" class="{{(!empty($active_menu) and $active_menu == 'posts')?'teal':''}}">Posts</a></li>
                     <li><a href="{{route('announcements.index')}}" class="{{(!empty($active_menu) and $active_menu == 'announcements')?'teal':''}}">Announcements</a></li>
                     @auth
-                        <li><a class='btn' href='/mypage'><i class="material-icons">account_circle</i></a></li>
+                        <li><a class='btn' href='{{route('profiles.overview')}}'><i class="material-icons">account_circle</i></a></li>
                     @else
                         <li><a href="{{route('login')}}" class="white black-text">Log in</a></li>
                         <li><a href="{{route('register')}}">Sign up</a></li>
