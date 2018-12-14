@@ -40,21 +40,21 @@ class FavoriteController extends Controller
     {
         $user = Auth::user();
         $announcements = $user->favoriteAnnouncements()->paginate(2);
-        return view('favorites.announcements', ['announcements'=>$announcements, 'active'=>'announcements']);
+        return view('favorites.announcements', ['announcements'=>$announcements, 'active'=>'announcements', 'active_menu'=>'favorites']);
     }
 
     public function photos()
     {
         $user = Auth::user();
         $photos = $user->favoritePhotos()->paginate(2);
-        return view('favorites.photos', ['photos'=>$photos, 'active'=>'photos']);
+        return view('favorites.photos', ['photos'=>$photos, 'active'=>'photos', 'active_menu'=>'favorites']);
     }
 
     public function places()
     {
         $user = Auth::user();
         $places = $user->favoritePlaces()->paginate(2);
-        return view('favorites.places', ['places'=>$places, 'active'=>'places']);
+        return view('favorites.places', ['places'=>$places, 'active'=>'places', 'active_menu'=>'favorites']);
     }
 
 

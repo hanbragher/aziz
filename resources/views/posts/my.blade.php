@@ -14,8 +14,8 @@
 
     <div class="row">
         <div class="col s12">
-            @include('widgets.parallax', ['cover'=>$user->cover])
-            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>'My posts'])
+            @include('widgets.parallax', ['cover'=>$user->blog->cover])
+            @include('inc.middlemenu', ['avatar'=>$user->avatar, 'header'=>$user->blog->name])
         </div>
     </div>
 
@@ -30,7 +30,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'myposts'])
+            @include('inc.mysidenav', ['active'=>$active_menu])
         </div>
 
         <div class="col s12 m12 l8">

@@ -97,9 +97,19 @@ Route::post('/myannouncements/{id}/reply', [
     'uses' => 'Announcements\AnnouncementController@announcementReply'
 ]);
 
+Route::get('/profile/{id}/places', [
+    "as" => "profile.places",
+    'uses' => 'Profiles\ProfileController@profilePlaces'
+]);
+
 Route::get('/profile/{id}/posts', [
     "as" => "profile.posts",
     'uses' => 'Profiles\ProfileController@profilePosts'
+]);
+
+Route::get('/profile/{id}/photos', [
+    "as" => "profile.photos",
+    'uses' => 'Profiles\ProfileController@profilePhotos'
 ]);
 
 Route::get('/profile/{id}/notes', [
@@ -113,10 +123,7 @@ Route::get('/profile/{id}/announcements', [
     'uses' => 'Profiles\ProfileController@profileAnnouncements'
 ]);
 
-Route::get('/profile/{id}/photos', [
-    "as" => "profile.photos",
-    'uses' => 'Profiles\ProfileController@profilePhotos'
-]);
+
 
 Route::get('/profile/{id}/password/change', [
     "as" => "profile.password_change",

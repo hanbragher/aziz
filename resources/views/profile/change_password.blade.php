@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col s12">
             @include('widgets.parallax', ['cover'=>$pick_user->cover])
-            @include('inc.middlemenu', ['avatar'=>$pick_user->avatar, 'header'=>'Profile settings'])
+            @include('inc.middlemenu', ['avatar'=>$pick_user->avatar, 'header'=>'Change Password'])
         </div>
     </div>
 
@@ -18,7 +18,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'mysettings'])
+            @include('inc.mysidenav', ['active'=>$active_menu])
         </div>
 
         <div class="col s12 m12 l8">

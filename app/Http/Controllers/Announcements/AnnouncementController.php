@@ -67,7 +67,7 @@ class AnnouncementController extends Controller
     {
         $user = Auth::user();
         $announcements = $user->announcements()->paginate(2);
-        return view('announcements.my', ['announcements'=>$announcements]);
+        return view('announcements.my', ['active_menu'=>'myannouncements', 'announcements'=>$announcements]);
     }
 
     /**
@@ -92,7 +92,7 @@ class AnnouncementController extends Controller
     public function create()
     {
         $tags = Tag::all()->pluck('name');
-        return view('announcements.create', ['tags'=>$tags]);
+        return view('announcements.create', ['active_menu'=>'newannouncement', 'tags'=>$tags]);
     }
 
     /**
@@ -158,7 +158,7 @@ class AnnouncementController extends Controller
             return redirect()->back()->withErrors('No permission');
         }
         $tags = Tag::all()->pluck('name');
-        return view('announcements.edit', ['announcement'=>$announcement, 'tags'=>$tags]);
+        return view('announcements.edit', ['active_menu'=>'myannouncements', 'announcement'=>$announcement, 'tags'=>$tags]);
     }
 
     /**

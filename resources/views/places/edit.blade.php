@@ -31,7 +31,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'myplaces'])
+            @include('inc.mysidenav', ['active'=>$active_menu])
         </div>
 
         <div class="col s12 m12 l8">
@@ -86,8 +86,8 @@
                         </div>
                         <div class="input-field col s12 m6 l6">
                             <i class="material-icons prefix">clear_all</i>
-                            <select name="category">
-                                <option value="" selected>Without category</option>
+                            <select name="category" required>
+                                <option value="" disabled selected>Choose category</option>
                                 @php if(!empty($place->category)){$place_category_name = $place->category->name;}else{$place_category_name = null;}@endphp
                                 @foreach($categories as $category)
                                         <option  value="{{$category}}" {{($category == $place_category_name)?'selected':''}}>{{$category}}</option>
@@ -101,7 +101,7 @@
                     <div class="row">
                         <div class="input-field col s12 m12 l4">
                             <i class="material-icons prefix">language</i>
-                            <select name="country">
+                            <select name="country" required>
                                 <option value="Armenia" selected>Armenia</option>
                             </select>
                             <label>Country</label>
@@ -109,7 +109,7 @@
 
                         <div class="input-field col s12 m12 l4">
                             <i class="material-icons prefix">explore</i>
-                            <select name="region">
+                            <select name="region" required>
                                 <option value="" disabled selected>Choose from list</option>
                                 @php if(!empty($place->region)){$place_region_name = $place->region->name;}else{$place_region_name = null;}@endphp
                                 @foreach($regions as $region)
@@ -124,7 +124,7 @@
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">gps_fixed</i>
                                     @php if(!empty($place->city)){$place_city_name = $place->city->name;}else{$place_city_name = null;}@endphp
-                                    <input type="text" id="city" name='city' class="autocomplete" placeholder="Type and select" value="{{$place_city_name}}">
+                                    <input type="text" id="city" name='city' class="autocomplete" placeholder="Type and select" value="{{$place_city_name}}" required>
                                     <label for="state">City</label>
                                 </div>
                             </div>
@@ -227,16 +227,6 @@
     <script>
 
         $(document).ready(function(){
-            var elems = document.getElementsByClassName('modal delete');
-            var instance = M.Modal.init(elems[0]);
-            $("a.modal-open-delete").click(function () {
-
-                $("input#image_id").val($(this).data("imageid"));
-                $("input#place_id").val($(this).data("placeid"));
-                instance.open()
-            });
-
-        $(document).ready(function(){
             var elems = document.getElementsByClassName('modal title');
             var instance = M.Modal.init(elems[0]);
             $("a.modal-open-title").click(function () {
@@ -248,8 +238,24 @@
             });
         });
 
-            $(document).ready(function(){
-                $('select').formSelect();
+        $(document).ready(function(){
+            var elems = document.getElementsByClassName('modal delete');
+            var instance = M.Modal.init(elems[0]);
+            $("a.modal-open-delete").click(function () {
+
+                $("input#image_id").val($(this).data("imageid"));
+                $("input#place_id").val($(this).data("placeid"));
+                instance.open()
+            });
+
+
+
+            $('select').formSelect();
+            $("select[required]").css({
+                display: "inline",
+                height: 0,
+                padding: 0,
+                width: 0
             });
 
             $('#form').on('keyup keypress', function(e) {

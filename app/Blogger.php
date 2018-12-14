@@ -17,4 +17,8 @@ class Blogger extends Model
     public function user(){
         return $this->belongsTo("Azizner\User", "user_id", "id");
     }
+
+    public function cover(){
+        return $this->hasOne("Azizner\Image", "id", "cover_id");
+    }
 }

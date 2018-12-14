@@ -3,8 +3,8 @@
 @section('content')
     <div class="row">
         <div class="col s12">
-            @include('widgets.parallax', ['cover'=>$show_user->cover])
-            @include('inc.middlemenu', ['avatar'=>$show_user->avatar, 'header'=>'Posts'])
+            @include('widgets.parallax', ['cover'=>$show_user->blog->cover])
+            @include('inc.middlemenu', ['avatar'=>$show_user->avatar, 'header'=>$show_user->blog->name])
         </div>
     </div>
 
@@ -40,6 +40,7 @@
 
         </div>
     </div>
+    <script src="/js/slider_mini_script.js"></script>
 
 @endsection
 

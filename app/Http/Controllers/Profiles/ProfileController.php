@@ -22,7 +22,7 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function __construct() {
-        $this->middleware(['auth']);
+        $this->middleware(['auth'])->only(['create', 'edit', 'store', 'update', 'destroy', 'myPage']);
     }
 
     protected function validator(array $data)
@@ -74,6 +74,12 @@ class ProfileController extends Controller
         return view('profile.show', ['show_user'=>$show_user]);
     }
 
+    public function profilePlaces($id)
+    {
+        $show_user = User::findOrFail($id);
+        return view('profile.places', ['show_user'=>$show_user]);
+    }
+
     public function profilePosts($id)
     {
         $show_user = User::findOrFail($id);
@@ -100,7 +106,7 @@ class ProfileController extends Controller
 
     public function myPage()
     {
-        return view('profile.my', ['active'=>'overview']);
+        return view('profile.my', ['active'=>'overview', 'active_menu'=>'mypage']);
     }
 
     /**
@@ -117,7 +123,7 @@ class ProfileController extends Controller
             $pick_user = User::findOrFail($id);
         }
 
-        return view('profile.edit', ['pick_user'=>$pick_user]);
+        return view('profile.edit', ['active_menu'=>'mysettings', 'pick_user'=>$pick_user]);
     }
 
     public function changePassword($id)
@@ -128,7 +134,7 @@ class ProfileController extends Controller
             $pick_user = User::findOrFail($id);
         }
 
-        return view('profile.change_password', ['pick_user'=>$pick_user]);
+        return view('profile.change_password', ['active_menu'=>'mysettings', 'pick_user'=>$pick_user]);
     }
 
     /**

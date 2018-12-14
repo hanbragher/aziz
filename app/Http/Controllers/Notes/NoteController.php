@@ -49,7 +49,7 @@ class NoteController extends Controller
 
         $notes = $user->notes()->orderBy('created_at', 'desc')->paginate(5);
 
-        return view('notes.my', ['notes'=>$notes]);
+        return view('notes.my', ['notes'=>$notes, 'active_menu'=>'mynotes']);
     }
 
     /**
@@ -131,7 +131,7 @@ class NoteController extends Controller
         }
 
 
-        return view('notes.edit', ['note'=>$note]);
+        return view('notes.edit', ['note'=>$note, 'active_menu'=>'mynotes']);
     }
 
     /**

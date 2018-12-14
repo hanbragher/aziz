@@ -1,7 +1,7 @@
 <div class="card small">
     <div class="row card-content margin-bottom-0">
 
-            <a href="{{route('announcements.show', $announcement->id)}}" class="hide-on-small-only">
+            <a href="{{route('announcements.show', $announcement->id)}}" {{--class="hide-on-small-only"--}}>
                 <img src="{{$announcement->thumb}}" class="announcement-card-image">
             </a>
 

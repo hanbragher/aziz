@@ -18,7 +18,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'mysettings'])
+            @include('inc.mysidenav', ['active'=>$active_menu])
         </div>
 
         <div class="col s12 m12 l8">
@@ -60,11 +60,11 @@
 
                 @if($pick_user->is_blogger)
                 <div class="row">
-                    <div class="input-field col s6 m6 l4">
+                    <div class="input-field col s12 m6 l4">
                         <input value="{{$pick_user->blog->name}}" id="input_text" type="text" data-length="100" name="blog_name">
                         <label for="input_text">Blog Name</label>
                     </div>
-                    <div class="file-field input-field col s6 m6 l4">
+                    <div class="file-field input-field col s12 m6 l4">
                         <div class="btn">
                             <span>Blog Cover image</span>
                             <input type="file" name="blog_cover">

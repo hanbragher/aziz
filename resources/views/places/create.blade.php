@@ -18,7 +18,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'newplace'])
+            @include('inc.mysidenav', ['active'=>$active_menu])
         </div>
 
         <div class="col s12 m12 l8">
@@ -31,10 +31,10 @@
                         <label>Place Name</label>
                     </div>
 
-                    <div class="input-field col s12 m6 l6">
+                    <div class="input-field col s12 m6 l6 ">
                         <i class="material-icons prefix">clear_all</i>
-                        <select name="category">
-                            <option value="" selected>Without category</option>
+                        <select  name="category" required >
+                            <option value="" disabled selected>Choose category</option>
                             @foreach($categories as $category)
                                 <option  value="{{$category}}" {{($category == old("category"))?'selected':''}}>{{$category}}</option>
                             @endforeach
@@ -47,7 +47,7 @@
                 <div class="row">
                     <div class="input-field col s12 m12 l4">
                         <i class="material-icons prefix">language</i>
-                        <select name="country">
+                        <select required="" aria-required="true" name="country">
                             <option value="Armenia" selected>Armenia</option>
                         </select>
                         <label>Country</label>
@@ -55,7 +55,7 @@
 
                     <div class="input-field col s12 m12 l4">
                         <i class="material-icons prefix">explore</i>
-                        <select name="region">
+                        <select name="region" required>
                             <option value="" disabled selected>Choose from list</option>
                             @foreach($regions as $region)
                                 <option value="{{$region}}" {{($region == old("region"))?'selected':''}}>{{$region}}</option>
@@ -68,7 +68,7 @@
                         <div class="row">
                             <div class="input-field col s12">
                                 <i class="material-icons prefix">gps_fixed</i>
-                                <input type="text" id="city" name='city' class="autocomplete" placeholder="Type and select" value="{{old('city')}}">
+                                <input type="text" id="city" name='city' class="autocomplete" placeholder="Type and select" value="{{old('city')}}" required>
                                 <label for="state">City</label>
                             </div>
                         </div>
@@ -132,8 +132,12 @@
     <script>
         $(document).ready(function() {
 
-            $(document).ready(function(){
-                $('select').formSelect();
+            $('select').formSelect();
+            $("select[required]").css({
+                display: "inline",
+                height: 0,
+                padding: 0,
+                width: 0
             });
 
             $('#form').on('keyup keypress', function(e) {

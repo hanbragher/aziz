@@ -64,7 +64,7 @@ class MessageController extends Controller
         }
 
         if(!empty($messages)){
-            return view('messages.index', ['active'=>$active, 'messages'=>$messages->paginate(2)]);
+            return view('messages.index', ['active_menu'=>'messeges', 'active'=>$active, 'messages'=>$messages->paginate(2)]);
         }
 
         return Abort(404);
@@ -82,7 +82,7 @@ class MessageController extends Controller
         if($request->has('email')){
             $email = $request->get('email');
         }
-        return view('messages.create', ['email'=>$email]);
+        return view('messages.create', ['active_menu'=>'newmessege', 'email'=>$email]);
     }
 
     /**
@@ -159,7 +159,7 @@ class MessageController extends Controller
                 'updated_at'=>Carbon::now()
             ]);
         }
-        return view('messages.show', ['message'=>$message]);
+        return view('messages.show', ['active_menu'=>'messeges', 'message'=>$message]);
     }
 
     public function downloadAttachment($id)

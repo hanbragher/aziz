@@ -51,7 +51,17 @@
 
         </div>
     </div>
+
+
+    <script src="/js/slider_mini_script.js"></script>
     <script src="/js/set-favorite.js"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            $('.modal').modal();
+        });
+    </script>
 
 
 @endsection

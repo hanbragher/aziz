@@ -41,7 +41,7 @@ class PhotoController extends Controller
     {
         $user = Auth::user();
         $photos = $user->photos()->paginate(2);
-        return view('photos.my', ['photos'=>$photos]);
+        return view('photos.my', ['active_menu'=>'myphotos', 'photos'=>$photos]);
     }
 
     public function comments($id)
@@ -56,7 +56,7 @@ class PhotoController extends Controller
 
         $photo->comments()->update(['is_read'=> true]);
 
-        return view('photos.comments', ['comments'=>$comments, 'photo'=>$photo]);
+        return view('photos.comments', ['active_menu'=>'myphotos', 'comments'=>$comments, 'photo'=>$photo]);
 
     }
 
@@ -85,7 +85,7 @@ class PhotoController extends Controller
     public function create()
     {
         $tags = Tag::all()->pluck('name');
-        return view('photos.create', ['tags'=>$tags]);
+        return view('photos.create', ['active_menu'=>'newphoto', 'tags'=>$tags]);
     }
 
     /**
@@ -157,7 +157,7 @@ class PhotoController extends Controller
         }
 
         $tags = Tag::all()->pluck('name');
-        return view('photos.edit', ['photo'=>$photo, 'tags'=>$tags]);
+        return view('photos.edit', ['active_menu'=>'myphotos', 'photo'=>$photo, 'tags'=>$tags]);
     }
 
     /**

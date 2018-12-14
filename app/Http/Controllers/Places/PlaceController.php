@@ -41,7 +41,7 @@ class PlaceController extends Controller
             'gallery.*' => [ 'image', 'mimes:jpeg,bmp,png', 'max:2048'],
             'inf' => ['required_without:image_id', 'string'],
             'map' => ['nullable', 'string'],
-            'category' => ['nullable', 'regex:/^[a-zA-Z ]+$/'],
+            'category' => ['regex:/^[a-zA-Z ]+$/'],
             'country' => ['required_without:image_id', 'regex:/^[a-zA-Z ]+$/'],
             'region' => ['required_without:image_id', 'regex:/^[a-zA-Z ]+$/'],
             'city' => ['required_without:image_id', 'regex:/^[a-zA-Z ]+$/'],
@@ -143,10 +143,10 @@ class PlaceController extends Controller
         $countries = Country::all()->pluck('name');
         $regions = Region::orderBy('name')->pluck('name');
         $cities = City::orderBy('name')->pluck('name');
-        $categories = Category::orderBy('name')->pluck('name');
+        $categories = Category::all()->whereNotIn('name', 'all')->pluck('name');
 
         $tags = Tag::all()->pluck('name');
-        return view('places.create', ['tags'=>$tags, 'countries'=>$countries, 'regions'=>$regions, 'cities'=>$cities, 'categories'=>$categories ]);
+        return view('places.create', ['active_menu'=>'newplace', 'tags'=>$tags, 'countries'=>$countries, 'regions'=>$regions, 'cities'=>$cities, 'categories'=>$categories ]);
     }
 
     /**
@@ -185,15 +185,9 @@ class PlaceController extends Controller
             return redirect()->back()->withErrors('No permission, you should be creator for a create new place');
         }
 
-        if(!empty($request->get('category'))){
-            if(!$category = Category::where('name',  $request->get('category'))->first()){
-                return redirect()->back()->withErrors('Check category field');
-            }
-            $category_id = $category->id;
-        }else{
-            $category_id = Category::where('name',  "without category")->first()->id;
+        if(!$category = Category::where('name',  $request->get('category'))->first()){
+            return redirect()->back()->withErrors('Check category field');
         }
-
 
         if(!$country = Country::where('name', $request->get('country'))->first()){
             return redirect()->back()->withErrors('Check country field');
@@ -215,7 +209,7 @@ class PlaceController extends Controller
             "name"=>$request->get('name'),
             "inf"=>$request->get('inf'),
             "map"=>$map,
-            "category_id"=>$category_id,
+            "category_id"=>$category->id,
             "country_id"=>$country->id,
             "region_id"=>$region->id,
             "city_id"=>$city->id,
@@ -268,13 +262,13 @@ class PlaceController extends Controller
             }
         }
 
-        $categories = Category::orderBy('name')->pluck('name');
+        $categories = Category::all()->whereNotIn('name', 'all')->pluck('name');
         $countries = Country::all()->pluck('name');
         $regions = Region::orderBy('name')->pluck('name');
         $cities = City::orderBy('name')->pluck('name');
 
         $tags = Tag::all()->pluck('name');
-        return view('places.edit', ['place'=>$place, 'tags'=>$tags, 'categories'=>$categories, 'countries'=>$countries, 'regions'=>$regions, 'cities'=>$cities]);
+        return view('places.edit', ['active_menu'=>'myplaces', 'place'=>$place, 'tags'=>$tags, 'categories'=>$categories, 'countries'=>$countries, 'regions'=>$regions, 'cities'=>$cities]);
     }
 
     /**
@@ -330,13 +324,8 @@ class PlaceController extends Controller
             return redirect()->back()->withErrors('Permission denied');
         }
 
-        if(!empty($request->get('category'))){
-            if(!$category = Category::where('name',  $request->get('category'))->first()){
-                return redirect()->back()->withErrors('Check category field');
-            }
-            $category_id = $category->id;
-        }else{
-            $category_id = Category::where('name',  "without category")->first()->id;
+        if(!$category = Category::where('name',  $request->get('category'))->first()){
+            return redirect()->back()->withErrors('Check category field');
         }
 
         if(!$country = Country::where('name', $request->get('country'))->first()){
@@ -347,12 +336,7 @@ class PlaceController extends Controller
             return redirect()->back()->withErrors('Check state/region field');
         }
 
-
-
-
         $city = City::firstOrCreate(['name'=>$request->get('city'), 'region_id'=>$region->id]);
-
-
 
         if(!empty($request->get('map'))){
             $map = $this->map($request->get('map'));
@@ -363,7 +347,7 @@ class PlaceController extends Controller
                 "name"=>$request->get('name'),
                 "inf"=>$request->get('inf'),
                 "map"=>$map,
-                "category_id"=>$category_id,
+                "category_id"=>$category->id,
                 "country_id"=>$country->id,
                 "region_id"=>$region->id,
                 "city_id"=>$city->id,
@@ -373,17 +357,13 @@ class PlaceController extends Controller
             $place->update([
                 "name"=>$request->get('name'),
                 "inf"=>$request->get('inf'),
-                "category_id"=>$category_id,
+                "category_id"=>$category->id,
                 "country_id"=>$country->id,
                 "region_id"=>$region->id,
                 "city_id"=>$city->id,
                 'updated_at'=>Carbon::now()
             ]);
         }
-
-
-
-
 
         if(!empty($obj = json_decode($request->get('tags')))){
             $tags = null;

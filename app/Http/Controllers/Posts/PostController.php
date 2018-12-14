@@ -70,7 +70,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $posts = $user->blog->posts()->paginate(2);
-        return view('posts.my', ['posts'=>$posts]);
+        return view('posts.my', ['active_menu'=>'myposts', 'posts'=>$posts]);
     }
 
     /**
@@ -104,7 +104,7 @@ class PostController extends Controller
 
         }
         $tags = Tag::all()->pluck('name');
-        return view('posts.create', ['tags'=>$tags]);
+        return view('posts.create', ['active_menu'=>'newpost', 'tags'=>$tags]);
     }
 
     /**
@@ -178,7 +178,7 @@ class PostController extends Controller
         }
 
         $tags = Tag::all()->pluck('name');
-        return view('posts.edit', ['post'=>$post, 'tags'=>$tags]);
+        return view('posts.edit', ['active_menu'=>'myposts', 'post'=>$post, 'tags'=>$tags]);
     }
 
     /**

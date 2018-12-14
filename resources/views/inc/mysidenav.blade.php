@@ -2,7 +2,7 @@
     <a href="{{route('profiles.overview')}}" class="collection-item @if($active == 'mypage') active @endif "><i class="material-icons">perm_identity</i> My page @if($user->hasNewNotification()) <i class="material-icons right">fiber_new</i> @endif</a>
 
     <p class="collection-item sidenav-divader"></p>
-    <a href="{{route('favorites.index', ['photos'])}}" class="collection-item @if($active == 'favorite') active @endif "><i class="material-icons">star_border</i> Favorites</a>
+    <a href="{{route('favorites.index', ['photos'])}}" class="collection-item @if($active == 'favorites') active @endif "><i class="material-icons">star_border</i> Favorites</a>
     <a href="{{route('notes.my')}}" class="collection-item @if($active == 'mynotes') active @endif "><i class="material-icons">chat_bubble_outline</i> My notes</a>
 
     @if($user->isCreator())

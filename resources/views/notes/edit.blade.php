@@ -26,7 +26,7 @@
         <div class="col s12 m12 l1 hide-on-med-and-down"></div>
 
         <div class="col s12 m12 l2 hide-on-med-and-down">
-            @include('inc.mysidenav', ['active'=>'mynotes'])
+            @include('inc.mysidenav', ['active'=>$active_menu])
         </div>
 
         <div class="col s12 m12 l8">
@@ -102,7 +102,7 @@
 
 
 
-                <a class='btn' href="{{route('notes.index')}}" > <i class="material-icons left">chevron_left</i> Back</a>
+                <a class='btn' href="{{route('notes.my')}}" > <i class="material-icons left">chevron_left</i> Back</a>
                 <button class="btn">Update<i class="material-icons right">send</i></button>
             </form>
         </div>

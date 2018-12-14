@@ -19,13 +19,6 @@ span.place-header{
 }
 
 
-img.announcement-card-image{
-    height: 190px;
-    float: left;
-    vertical-align: top;
-    margin: 5px;
-}
-
 img.notification-thumb{
     width: 25px;
     height: 25px;
@@ -102,37 +95,74 @@ a.active-tab {
 }
 
 
+/*img.announcement-card-image{
+    height: 190px;
+    float: left;
+    vertical-align: top;
+    margin: 5px;
+}
+
+img.announcement-card-mob-image{
+    height: 80px;
+    float: left;
+    vertical-align: top;
+    margin: 5px;
+}*/
+
 @media only screen and (min-width : 601px) and (max-width : 1260px) {
     .toast {
         width: 100%;
-        border-radius: 0;} }
+        border-radius: 0;
+    }
 
-@media only screen and (min-width : 1261px) {
-    .toast {
-        width: 100%;
-        border-radius: 0; } }
-
-@media only screen and (min-width : 601px) and (max-width : 1260px) {
     #toast-container {
         min-width: 100%;
         bottom: 0%;
         top: 90%;
         right: 0%;
-        left: 0%;} }
+        left: 0%;
+    }
 
-/*@media only screen and (min-width : 1261px) {
-    #toast-container {
-        min-width: 100%;
-        bottom: 0%;
-        top: 90%;
-        right: 0%;
-        left: 0%; } }*/
+    img.announcement-card-image{
+        height: 150px;
+        float: left;
+        vertical-align: top;
+        margin: 5px;
+    }
 
+
+}
 
 @media only screen and (min-width : 1261px) {
+    .toast {
+        width: 100%;
+        border-radius: 0;
+    }
+
     #toast-container {
         top: auto !important;
         right: auto !important;
         bottom: 50%;
         left:45%;
-    } }
+    }
+
+    img.announcement-card-image{
+        height: 190px;
+        float: left;
+        vertical-align: top;
+        margin: 5px;
+    }
+}
+
+
+@media (max-width : 600px) {
+    img.announcement-card-image{
+        height: 100px;
+        float: left;
+        vertical-align: top;
+        margin: 5px;
+    }
+
+}
+
+
