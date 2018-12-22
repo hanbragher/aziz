@@ -27,17 +27,55 @@
 
             <a href="{{route('messages.create', ['email'=>$show_user->email])}}" class="btn">send message</a>
 
+
+            @if($qnt = $show_user->totalPlaces() > 0)
+                <div class="col s12">
+                    <div class="card horizontal">
+                        <div class="card-image">
+                            {{--<img src="/images/card.jpg">--}}
+                        </div>
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <p>Total places count: {{$qnt}}</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="{{route('profile.places', $show_user->id)}}">Jump to places</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if($qnt = $show_user->totalPosts() > 0)
+                <div class="col s12">
+                    <div class="card horizontal">
+                        <div class="card-image">
+                            {{--<img src="/images/card.jpg">--}}
+                        </div>
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <p>Total posts count: {{$qnt}}</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="{{route('profile.posts', $show_user->id)}}">Jump to blog</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <div class="col s12">
                 <div class="card horizontal">
                     <div class="card-image">
                         {{--<img src="/images/card.jpg">--}}
+                        {{--<i class="material-icons">add</i>--}}
                     </div>
                     <div class="card-stacked">
                         <div class="card-content">
-                            <p>Total posts count: {{$show_user->totalPosts()}}</p>
+                            <p>Total photos count: {{$show_user->totalPhotos()}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="{{route('favorites.index')}}">Jump to favorites</a>
+                            <a href="{{route('profile.photos', $show_user->id)}}">Jump to photos</a>
                         </div>
                     </div>
                 </div>
@@ -54,7 +92,7 @@
                             <p>Total notes count: {{$show_user->totalNotes()}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="{{route('notes.my')}}">Jump to notes</a>
+                            <a href="{{route('profile.notes', $show_user->id)}}">Jump to notes</a>
                         </div>
                     </div>
                 </div>
@@ -68,15 +106,14 @@
                     </div>
                     <div class="card-stacked">
                         <div class="card-content">
-                            <p>Total photos count: {{$show_user->totalPhotos()}}</p>
+                            <p>Total announcements count: {{$show_user->totalNotes()}}</p>
                         </div>
                         <div class="card-action">
-                            <a href="{{route('photos.my')}}">Jump to photos</a>
+                            <a href="{{route('profile.announcements', $show_user->id)}}">Jump to announcements</a>
                         </div>
                     </div>
                 </div>
             </div>
-
 
 
 {{--

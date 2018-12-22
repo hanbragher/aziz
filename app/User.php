@@ -111,12 +111,20 @@ class User extends Authenticatable
         return $this->favoriteAnnouncements()->count() + $this->favoritePhotos()->count() + $this->favoritePlaces()->count();
     }
 
+    public function totalAnnouncements(){
+        return $this->announcements()->count();
+    }
+
     public function totalNotes(){
         return $this->notes()->count();
     }
 
     public function totalPhotos(){
         return $this->photos()->count();
+    }
+
+    public function totalPlaces(){
+        return $this->places()->count();
     }
 
     public function totalPosts(){
@@ -129,7 +137,7 @@ class User extends Authenticatable
         return 0;
     }
 
-//todo nayel is blogger
+
     public function favoriteAnnouncements(){
         return $this->belongsToMany("Azizner\Announcement", "favorite_announcements");
     }
@@ -141,6 +149,7 @@ class User extends Authenticatable
     public function favoritePlaces(){
         return $this->belongsToMany("Azizner\Place", "favorite_places");
     }
+
 
     public function isCreator(){
         if(Creator::where('user_id', $this->id)->first()){

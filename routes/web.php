@@ -135,11 +135,6 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/page', function () {
-    return view('page');
-});
-
-
 
 Route::get( '/logout', [
     'as' => 'logout',
@@ -185,13 +180,6 @@ Route::prefix('admin')->middleware('auth', 'admin_auth')->group( function () {
     Route::post('/setadmin',[
         'uses'=>'Admin\Users\UserController@setAdmin',
     ]);
-
-
-
-
-
-
-
 
 
 });

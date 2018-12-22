@@ -75,22 +75,25 @@
                 </div>
             </div>
 
-            <div class="col s12">
-                <div class="card horizontal">
-                    <div class="card-image">
-                        {{--<img src="/images/card.jpg">--}}
-                        {{--<i class="material-icons">add</i>--}}
-                    </div>
-                    <div class="card-stacked">
-                        <div class="card-content">
-                            <p>Total posts count: {{$user->totalPosts()}}</p>
+            @if($user->totalPosts() > 0)
+                <div class="col s12">
+                    <div class="card horizontal">
+                        <div class="card-image">
+                            {{--<img src="/images/card.jpg">--}}
+                            {{--<i class="material-icons">add</i>--}}
                         </div>
-                        <div class="card-action">
-                            <a href="{{route('posts.my')}}">Jump to posts</a>
+                        <div class="card-stacked">
+                            <div class="card-content">
+                                <p>Total posts count: {{$user->totalPosts()}}</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="{{route('posts.my')}}">Jump to posts</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
 
             {{--<div class="col s12 m6 l6">
                 <div class="card horizontal">

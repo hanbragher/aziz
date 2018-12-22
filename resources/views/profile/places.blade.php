@@ -38,7 +38,7 @@
                         ])
                     @endforeach
                 @else
-                    <p class="flow-text center">Do not have posts</p>
+                    <p class="flow-text center">Do not have places</p>
                 @endif
 
 

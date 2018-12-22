@@ -12,10 +12,13 @@
     @if($user->is_moderator)
         <a href="{{route('posts.create')}}" class="collection-item @if($active == 'newpost') active @endif ">New post</a>
     @endif--}}
-
+    @if($show_user->places->first())
     <a href="{{route('profile.places', $show_user->id)}}" class="collection-item @if($active == 'user_places') active @endif ">Places</a>
+    @endif
+
+    @if($show_user->totalPosts() > 0)
     <a href="{{route('profile.posts', $show_user->id)}}" class="collection-item @if($active == 'user_posts') active @endif ">Posts</a>
-    {{--//todo--}}
+    @endif
     <a href="{{route('profile.photos', $show_user->id)}}" class="collection-item @if($active == 'user_photos') active @endif ">Photos</a>
     <a href="{{route('profile.notes', $show_user->id)}}" class="collection-item @if($active == 'user_notes') active @endif ">Notes</a>
     <a href="{{route('profile.announcements', $show_user->id)}}" class="collection-item @if($active == 'user_announcements') active @endif ">Announcements</a>
